@@ -100,6 +100,8 @@ $nav-link-font-weight:    400;      // как на hoger.pro (было: 600)
 $nav-link-text-transform: none;
 $dropdown-font-size:      0.875rem; // 14px
 $dropdown-font-weight:    400;      // .dropdown-item (было: $font-weight-bold = 700)
+$nav-tabs-basic-font-weight: 400;   // табы basic (было: 600)
+$nav-pills-font-weight:     400;   // табы pills (было: 600)
 
 // ── Аккордеон ──
 $accordion-button-font-size:   1rem; // было: 0.85rem (13.6px < body)
@@ -129,5 +131,5 @@ $breadcrumb-divider-color: #d2d2d7;
 //--------------------------------------------------------------
 
 //START IMPORT FONTS
-@import "fonts/GillSans";
+@import "fonts/Inter";
 //END IMPORT FONTS
