@@ -1,0 +1,133 @@
+//--------------------------------------------------------------
+// User Variables — hoger
+// Child тема: codeweber
+// Извлечено из: https://hoger.pro/
+// Дата: 2026-03-25
+//--------------------------------------------------------------
+// Порядок импорта: _theme-colors → _user-variables → _variables
+//
+// ВАЖНО: $primary и $white недоступны в этом файле!
+//         Используй $blue вместо $primary, #ffffff вместо $white.
+//--------------------------------------------------------------
+
+// ── Основные цвета ──
+$blue:  #9c886f;   // Primary → тёплый тауп (было: #3f78e0)
+$navy:  #1e2228;   // Dark sections (было: #343f52)
+
+$body-color:     #000000;   // (было: зависит от $navy)
+$headings-color: #000000;
+$dark:           #1e2228;   // (было: $navy)
+
+// Глобальное скругление — умеренное (pill только для кнопок и инпутов)
+$border-radius: 0.25rem;    // 4px (было: 0.4rem)
+
+// ── Типографика ──
+$path-to-fonts:          '';       // отключить Google Fonts Manrope (дефолт из parent)
+$font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;  // (было: Manrope)
+$font-size-root:         16px;     // (было: 20px) — соответствует MUI htmlFontSize
+$font-size-base:         1rem;     // 16px (было: 0.8rem)
+$font-size-sm:           0.875rem; // 14px
+$font-weight-normal:     300;      // (было: 500)
+$headings-font-weight:   300;      // light — как на hoger.pro (дефолт Bootstrap: 700)
+$display-font-weight:    300;      // display заголовки тоже light
+$line-height-base:       1.6;      // (было: 1.7)
+
+// Заголовки — MUI-совместимая шкала при root 16px
+$h1-font-size: 2.5rem;    // 40px  (сайт: 42px)
+$h2-font-size: 2.25rem;   // 36px  (сайт: 36px ✓)
+$h3-font-size: 1.75rem;   // 28px
+$h4-font-size: 1.375rem;  // 22px  (сайт: 20px)
+$h5-font-size: 1.125rem;  // 18px
+$h6-font-size: 1rem;      // 16px
+
+// ── Кнопки ──
+$btn-border-width:  2px;
+$btn-font-weight:   400;       // (было: 700) — как на hoger.pro
+$btn-border-radius: 50rem;     // pill! (было: 0.4rem)
+
+// Default = hoger.pro .btn-lg при root 20px → конвертировано на наш root 16px
+$btn-padding-y:  0.5rem;    // 8px
+$btn-padding-x:  1.75rem;   // 28px
+$btn-font-size:  1rem;      // 16px
+
+// XS
+$btn-padding-y-xs:     0.25rem;
+$btn-padding-x-xs:     1.0rem;
+$btn-font-size-xs:     0.75rem;
+$btn-border-radius-xs: $btn-border-radius;
+$btn-font-weight-xs:   $btn-font-weight;
+
+// SM
+$btn-padding-y-sm:     0.375rem;
+$btn-padding-x-sm:     1.25rem;
+$btn-font-size-sm:     0.875rem;
+$btn-border-radius-sm: $btn-border-radius;
+$btn-font-weight-sm:   $btn-font-weight;
+
+// MD = Default
+$btn-padding-y-md:     $btn-padding-y;
+$btn-padding-x-md:     $btn-padding-x;
+$btn-font-size-md:     $btn-font-size;
+$btn-border-radius-md: $btn-border-radius;
+$btn-font-weight-md:   $btn-font-weight;
+
+// LG
+$btn-padding-y-lg:     0.65rem;
+$btn-padding-x-lg:     2.0rem;
+$btn-font-size-lg:     1.125rem;
+$btn-border-radius-lg: $btn-border-radius;
+$btn-font-weight-lg:   $btn-font-weight;
+
+// ELG
+$btn-padding-y-elg:     0.8rem;
+$btn-padding-x-elg:     2.25rem;
+$btn-font-size-elg:     1.25rem;
+$btn-border-radius-elg: $btn-border-radius;
+$btn-font-weight-elg:   $btn-font-weight;
+
+// ── Формы ──
+$input-font-size:          1rem;     // 16px
+$input-border-radius:      50rem;    // pill
+$input-border-color:       #9c886f;
+$input-padding-y:          0.938rem; // 15px
+$input-padding-x:          1.25rem;  // 20px
+$input-focus-border-color: #9c886f;
+$input-focus-box-shadow:   none;
+
+// ── Навигация ──
+$nav-link-font-size:      1rem; // 18px
+$nav-link-font-weight:    400;      // как на hoger.pro (было: 600)
+$nav-link-text-transform: none;
+$dropdown-font-size:      0.875rem; // 14px
+$dropdown-font-weight:    400;      // .dropdown-item (было: $font-weight-bold = 700)
+
+// ── Аккордеон ──
+$accordion-button-font-size:   1rem; // было: 0.85rem (13.6px < body)
+$accordion-button-font-weight: 400;  // было: $font-weight-bold (700)
+
+// ── Пагинация ──
+$pagination-font-weight: 400;        // было: $font-weight-bold (700)
+
+// ── Blockquote ──
+$blockquote-footer-weight: 400;      // было: $font-weight-bold (700)
+
+// ── Breadcrumb ──
+$breadcrumb-divider-color: #d2d2d7;
+
+//--------------------------------------------------------------
+// CSS overrides
+//--------------------------------------------------------------
+
+// Uppercase + letter-spacing для кнопок
+.btn {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+//--------------------------------------------------------------
+// Импорт шрифтов
+//--------------------------------------------------------------
+
+//START IMPORT FONTS
+@import "fonts/Inter";
+//END IMPORT FONTS

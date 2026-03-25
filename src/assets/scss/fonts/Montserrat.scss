@@ -1,0 +1,274 @@
+// Font Import
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-Black.woff2') format('woff2'),
+    url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-BlackItalic.woff2') format('woff2'),
+    url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-BlackItalic.woff') format('woff');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-ExtraBold.woff2') format('woff2'),
+    url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-ExtraBold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-ExtraBoldItalic.woff2') format('woff2'),
+    url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-ExtraBoldItalic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-ExtraLight.woff2') format('woff2'),
+    url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-ExtraLight.woff') format('woff');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-ExtraLightItalic.woff2') format('woff2'),
+    url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-ExtraLightItalic.woff') format('woff');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-Italic.woff2') format('woff2'),
+    url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-Italic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-Light.woff2') format('woff2'),
+    url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-LightItalic.woff2') format('woff2'),
+    url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-LightItalic.woff') format('woff');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-Medium.woff2') format('woff2'),
+    url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-MediumItalic.woff2') format('woff2'),
+    url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-MediumItalic.woff') format('woff');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-Regular.woff2') format('woff2'),
+    url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-SemiBold.woff2') format('woff2'),
+    url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-SemiBoldItalic.woff2') format('woff2'),
+    url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-SemiBoldItalic.woff') format('woff');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-Thin.woff2') format('woff2'),
+    url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-Thin.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-ThinItalic.woff2') format('woff2'),
+    url('../../../../codeweber/src/assets/fonts/Montserrat/Montserrat-ThinItalic.woff') format('woff');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+// Bootstrap Configuration
+@import "../../../../../codeweber/node_modules/bootstrap/scss/mixins";
+
+// Font Variables
+$font-family-base: "Montserrat", sans-serif;
+$font-family-secondary: "Montserrat", sans-serif;
+$font-size-base: 0.85rem;
+
+// Font Specific Settings
+* {
+  word-spacing: normal !important;
+}
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+}
+.nav-link,
+.dropdown-item,
+.btn {
+  letter-spacing: normal;
+}
+.btn,
+.navbar .btn-sm,
+.nav-link,
+.nav-link p,
+.lg-sub-html p {
+  @include font-size($font-size-base);
+}
+.dropdown-menu {
+  @include font-size($font-size-base - 0.05);
+}
+.share-dropdown .dropdown-menu .dropdown-item,
+.btn-sm,
+.btn-group-sm>.btn,
+.post-meta {
+  @include font-size($font-size-base - 0.1);
+}
+.meta,
+.post-category,
+.filter,
+.filter ul li a {
+  @include font-size($font-size-base - 0.15);
+}
+.post-header .post-meta {
+  @include font-size($font-size-base);
+}
+.nav-tabs .nav-link,
+.accordion-wrapper .card-header button,
+.collapse-link {
+  @include font-size($font-size-base + 0.05);
+}
+blockquote {
+  @include font-size($font-size-base + 0.05);
+}
+.blockquote-footer {
+  @include font-size($font-size-base - 0.2);
+}
+.blockquote-details p {
+  @include font-size($font-size-base);
+}
+.counter-wrapper {
+  p {
+    @include font-size($font-size-base);
+  }
+  .counter {
+    @include font-size(2.05rem);
+    &.counter-lg {
+      @include font-size(2.25rem)
+    }
+  }
+}
+.icon-list.bullet-bg i {
+  top: 0.25rem;
+}
+.accordion-wrapper .card-header button:before {
+  margin-top: -0.2rem;
+}
+.form-floating > label {
+  padding-top: 0.65rem;
+}
+.h1, h1 {
+  @include font-size(1.5rem);
+}
+.h2, h2 {
+  @include font-size(1.35rem);
+}
+.h3, h3 {
+  @include font-size(1.15rem);
+}
+.h4, h4 {
+  @include font-size(1rem);
+}
+.h5, h5 {
+  @include font-size(0.95rem);
+}
+.h6, h6 {
+  @include font-size(0.9rem);
+}
+.fs-sm {
+  @include font-size(0.75rem !important);
+}
+.fs-lg {
+  @include font-size(1.05rem !important);
+}
+.lead {
+  @include font-size(0.95rem);
+  line-height: 1.6;
+}
+.lead.fs-lg {
+  @include font-size(1.1rem !important);
+  line-height: 1.55;
+}
+.display-1 {
+  @include font-size(2.5rem);
+  font-family: $font-family-secondary;
+  line-height: 1.15;
+}
+.display-2 {
+  @include font-size(2.3rem);
+  font-family: $font-family-secondary;
+  line-height: 1.2;
+}
+.display-3 {
+  @include font-size(2.1rem);
+  font-family: $font-family-secondary;
+  line-height: 1.2;
+}
+.display-4 {
+  @include font-size(1.9rem);
+  font-family: $font-family-secondary;
+  line-height: 1.25;
+}
+.display-5 {
+  @include font-size(1.7rem);
+  font-family: $font-family-secondary;
+  line-height: 1.25;
+}
+.display-6 {
+  @include font-size(1.5rem);
+  font-family: $font-family-secondary;
+  line-height: 1.3;
+}
