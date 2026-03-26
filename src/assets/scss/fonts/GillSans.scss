@@ -170,6 +170,4 @@ blockquote {
 .accordion-wrapper .card-header button:before {
   margin-top: -0.2rem;
 }
-.form-floating > label {
-  padding-top: 0.65rem;
-}
+// form-floating line-height managed by $form-floating-line-height in _user-variables.scss

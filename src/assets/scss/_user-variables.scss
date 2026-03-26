@@ -28,8 +28,10 @@ $font-size-root:         16px;     // (было: 20px) — соответств�
 $font-size-base:         1rem;     // 16px (было: 0.8rem)
 $font-size-sm:           0.875rem; // 14px
 $font-weight-normal:     300;      // (было: 500)
+$font-weight-bold:       400;      // (было: 700)
 $headings-font-weight:   300;      // light — как на hoger.pro (дефолт Bootstrap: 700)
 $display-font-weight:    300;      // display заголовки тоже light
+$lead-font-weight:       300;      // normal (было: 500)
 $line-height-base:       1.6;      // (было: 1.7)
 
 // Заголовки — MUI-совместимая шкала при root 16px
@@ -86,13 +88,16 @@ $btn-border-radius-elg: $btn-border-radius;
 $btn-font-weight-elg:   $btn-font-weight;
 
 // ── Формы ──
-$input-font-size:          1rem;     // 16px
-$input-border-radius:      50rem;    // pill
+$input-font-size:          $font-size-sm; // 14px
+$input-font-weight:        300;           // normal (было: 500)
+$input-border-radius:      $border-radius; // 4px
 $input-border-color:       #9c886f;
-$input-padding-y:          0.938rem; // 15px
-$input-padding-x:          1.25rem;  // 20px
+$input-padding-y:          0.5rem;   // 8px
+$input-padding-x:          1rem;     // 16px
 $input-focus-border-color: #9c886f;
 $input-focus-box-shadow:   none;
+$form-floating-label-font-size: $font-size-sm; // 14px — как input и select
+$form-check-sm-scale: 0.9;
 
 // ── Навигация ──
 $nav-link-font-size:      1rem; // 18px

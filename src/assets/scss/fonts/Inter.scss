@@ -10,17 +10,17 @@
 }
 @font-face {
   font-family: 'Inter';
-  src: url('../fonts/Inter/Inter_18pt-Medium.woff2') format('woff2'),
-    url('../fonts/Inter/Inter_18pt-Medium.woff') format('woff');
-  font-weight: 500;
+  src: url('../fonts/Inter/Inter_18pt-Regular.woff2') format('woff2'),
+    url('../fonts/Inter/Inter_18pt-Regular.woff') format('woff');
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Inter';
-  src: url('../fonts/Inter/Inter_18pt-Regular.woff2') format('woff2'),
-    url('../fonts/Inter/Inter_18pt-Regular.woff') format('woff');
-  font-weight: 400;
+  src: url('../fonts/Inter/Inter_18pt-Medium.woff2') format('woff2'),
+    url('../fonts/Inter/Inter_18pt-Medium.woff') format('woff');
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
@@ -112,7 +112,7 @@ body {
   @include font-size(1rem);      // 16px
 }
 .dropdown-menu {
-  @include font-size($font-size-sm);  // 14px
+  @include font-size(0.875rem);  // 14px
 }
 .btn-sm,
 .btn-group-sm>.btn,
@@ -132,13 +132,13 @@ body {
 .nav-tabs .nav-link,
 .accordion-wrapper .card-header button,
 .collapse-link {
-  @include font-size(1rem);      // 16px (было 0.9rem)
+  @include font-size(1rem);      // 16px
 }
 blockquote {
   @include font-size(1.125rem);  // 18px
 }
 .blockquote-footer {
-  @include font-size(0.875rem);  // 14px (было 0.65rem)
+  @include font-size(0.875rem);  // 14px
 }
 .blockquote-details p {
   @include font-size(1rem);
@@ -157,7 +157,7 @@ blockquote {
 
 // Utility font sizes
 .fs-sm {
-  @include font-size($font-size-sm !important);  // 14px (было 0.75rem = 12px)
+  @include font-size(0.875rem !important);  // 14px
 }
 .fs-lg {
   @include font-size(1.125rem !important);  // 18px
@@ -177,7 +177,4 @@ blockquote {
 }
 .accordion-wrapper .card-header button:before {
   margin-top: -0.2rem;
-}
-.form-floating > label {
-  padding-top: 0.65rem;
 }
