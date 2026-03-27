@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Qty Input — варианты</title>
+  <link rel="stylesheet" href="../../asprocorp3/dist/assets/css/style.css">
+  <style>
+    body {
+      padding: 3rem;
+      background: #f8f9fa;
+    }
+
+    /* ── Нормализация высот ───────────────────────────────────────────── */
+    .cw-qty-h input,
+    .cw-qty-v input {
+      height: auto !important;
+    }
+
+    /* ── Вариант 1: Bootstrap input-group ────────────────────────────── */
+    .cw-qty-h {
+      align-items: stretch;
+    }
+
+    .cw-qty-h input {
+      text-align: center;
+    }
+
+    /* Тема ограничивает .input-group > .btn { max-height: 2.6rem } — снимаем */
+    .input-group.cw-qty-h>.btn {
+      max-height: none !important;
+      height: auto !important;
+    }
+
+    /* ── Вариант 2: вертикальные кнопки ──────────────────────────────── */
+    .cw-qty-v {
+      display: inline-flex;
+      align-items: stretch;
+    }
+
+    .cw-qty-v input {
+      text-align: center;
+      border-right: 0;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .cw-qty-v input:focus {
+      z-index: 1;
+    }
+
+    .cw-qty-v__btns {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cw-qty-v .btn {
+      flex: 1 1 50%;
+      padding: 0 .5rem;
+      line-height: 1;
+      border-radius: 0;
+      border-color: var(--bs-border-color);
+    }
+
+    .cw-qty-v .btn:first-child {
+      border-bottom-width: .5px;
+      border-top-right-radius: var(--bs-border-radius);
+    }
+
+    .cw-qty-v .btn:last-child {
+      border-top-width: .5px;
+      border-bottom-right-radius: var(--bs-border-radius);
+    }
+
+    /* ── Иконки ───────────────────────────────────────────────────────── */
+    .cw-qty-h .uil,
+    .cw-qty-v .uil {
+      display: block;
+      line-height: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-sm" style="max-width: 640px">
+    <!-- ══════════════════════════════════════════════════════════════════
+       Вариант 1 — Bootstrap input-group + Unicons
+       Кнопки внутри input-group-sm/lg НЕ нуждаются в btn-sm/btn-lg —
+       Bootstrap масштабирует их автоматически.
+  ══════════════════════════════════════════════════════════════════ -->
+    <h5 class="mb-4">Вариант 1 — горизонтальный</h5>
+    <div class="d-flex align-items-center gap-4 mb-3 flex-wrap">
+      <div class="input-group input-group-sm cw-qty-h" style="width:auto">
+        <button class="btn btn-outline-secondary" type="button" data-qty-dec>
+          <i class="uil uil-minus"></i>
+        </button>
+        <input class="form-control" type="text" inputmode="numeric" pattern="[0-9]*" value="1" style="width:3rem">
+        <button class="btn btn-outline-secondary" type="button" data-qty-inc>
+          <i class="uil uil-plus"></i>
+        </button>
+      </div>
+      <span class="text-muted small">sm</span>
+      <div class="input-group cw-qty-h" style="width:auto">
+        <button class="btn btn-outline-secondary" type="button" data-qty-dec>
+          <i class="uil uil-minus"></i>
+        </button>
+        <input class="form-control" type="text" inputmode="numeric" pattern="[0-9]*" value="1" style="width:3.5rem">
+        <button class="btn btn-outline-secondary" type="button" data-qty-inc>
+          <i class="uil uil-plus"></i>
+        </button>
+      </div>
+      <span class="text-muted small">md</span>
+      <div class="input-group input-group-lg cw-qty-h" style="width:auto">
+        <button class="btn btn-outline-secondary" type="button" data-qty-dec>
+          <i class="uil uil-minus"></i>
+        </button>
+        <input class="form-control" type="text" inputmode="numeric" pattern="[0-9]*" value="1" style="width:4rem">
+        <button class="btn btn-outline-secondary" type="button" data-qty-inc>
+          <i class="uil uil-plus"></i>
+        </button>
+      </div>
+      <span class="text-muted small">lg</span>
+    </div>
+    <div class="d-flex align-items-center gap-4 mb-5 flex-wrap">
+      <div class="input-group cw-qty-h" style="width:auto">
+        <button class="btn btn-primary" type="button" data-qty-dec>
+          <i class="uil uil-minus"></i>
+        </button>
+        <input class="form-control" type="text" inputmode="numeric" pattern="[0-9]*" value="1" style="width:3.5rem">
+        <button class="btn btn-primary" type="button" data-qty-inc>
+          <i class="uil uil-plus"></i>
+        </button>
+      </div>
+      <span class="text-muted small">solid</span>
+      <div class="input-group cw-qty-h" style="width:auto">
+        <button class="btn btn-soft-primary" type="button" data-qty-dec>
+          <i class="uil uil-minus"></i>
+        </button>
+        <input class="form-control" type="text" inputmode="numeric" pattern="[0-9]*" value="1" style="width:3.5rem">
+        <button class="btn btn-soft-primary" type="button" data-qty-inc>
+          <i class="uil uil-plus"></i>
+        </button>
+      </div>
+      <span class="text-muted small">soft</span>
+    </div>
+    <!-- ══════════════════════════════════════════════════════════════════
+       Вариант 2 — вертикальные кнопки + Unicons
+       Размер контролируется form-control-sm/lg на инпуте;
+       btn-sm/btn-lg не нужны — кнопки растягиваются через flex.
+  ══════════════════════════════════════════════════════════════════ -->
+    <h5 class="mb-4">Вариант 2 — вертикальные кнопки</h5>
+    <div class="d-flex align-items-center gap-4 mb-3 flex-wrap">
+      <div class="cw-qty-v">
+        <input class="form-control form-control-sm" type="text" inputmode="numeric" pattern="[0-9]*" value="1" style="width:3rem">
+        <div class="cw-qty-v__btns">
+          <button class="btn btn-outline-secondary" type="button" data-qty-inc>
+            <i class="uil uil-plus"></i>
+          </button>
+          <button class="btn btn-outline-secondary" type="button" data-qty-dec>
+            <i class="uil uil-minus"></i>
+          </button>
+        </div>
+      </div>
+      <span class="text-muted small">sm</span>
+      <div class="cw-qty-v">
+        <input class="form-control" type="text" inputmode="numeric" pattern="[0-9]*" value="1" style="width:3.5rem">
+        <div class="cw-qty-v__btns">
+          <button class="btn btn-outline-secondary" type="button" data-qty-inc>
+            <i class="uil uil-plus"></i>
+          </button>
+          <button class="btn btn-outline-secondary" type="button" data-qty-dec>
+            <i class="uil uil-minus"></i>
+          </button>
+        </div>
+      </div>
+      <span class="text-muted small">md</span>
+      <div class="cw-qty-v">
+        <input class="form-control form-control-lg" type="text" inputmode="numeric" pattern="[0-9]*" value="1" style="width:4rem">
+        <div class="cw-qty-v__btns">
+          <button class="btn btn-outline-secondary" type="button" data-qty-inc>
+            <i class="uil uil-plus"></i>
+          </button>
+          <button class="btn btn-outline-secondary" type="button" data-qty-dec>
+            <i class="uil uil-minus"></i>
+          </button>
+        </div>
+      </div>
+      <span class="text-muted small">lg</span>
+    </div>
+    <div class="d-flex align-items-center gap-4 mb-5 flex-wrap">
+      <div class="cw-qty-v">
+        <input class="form-control" type="text" inputmode="numeric" pattern="[0-9]*" value="1" style="width:3.5rem">
+        <div class="cw-qty-v__btns">
+          <button class="btn btn-primary" type="button" data-qty-inc>
+            <i class="uil uil-plus"></i>
+          </button>
+          <button class="btn btn-primary" type="button" data-qty-dec>
+            <i class="uil uil-minus"></i>
+          </button>
+        </div>
+      </div>
+      <span class="text-muted small">solid</span>
+      <div class="cw-qty-v">
+        <input class="form-control" type="text" inputmode="numeric" pattern="[0-9]*" value="1" style="width:3.5rem">
+        <div class="cw-qty-v__btns">
+          <button class="btn btn-soft-primary" type="button" data-qty-inc>
+            <i class="uil uil-plus"></i>
+          </button>
+          <button class="btn btn-soft-primary" type="button" data-qty-dec>
+            <i class="uil uil-minus"></i>
+          </button>
+        </div>
+      </div>
+      <span class="text-muted small">soft</span>
+    </div>
+    <!-- ══════════════════════════════════════════════════════════════════
+       На тёмном фоне
+  ══════════════════════════════════════════════════════════════════ -->
+    <h5 class="mb-4">На тёмном фоне</h5>
+    <div class="p-4 rounded-3 d-flex gap-4 flex-wrap align-items-center" style="background:#1e293b">
+      <div class="input-group cw-qty-h" style="width:auto">
+        <button class="btn btn-outline-light" type="button" data-qty-dec>
+          <i class="uil uil-minus"></i>
+        </button>
+        <input class="form-control text-white" type="text" inputmode="numeric" pattern="[0-9]*" value="1" style="width:3.5rem; background:transparent; border-color:rgba(255,255,255,.3)">
+        <button class="btn btn-outline-light" type="button" data-qty-inc>
+          <i class="uil uil-plus"></i>
+        </button>
+      </div>
+      <div class="cw-qty-v">
+        <input class="form-control text-white" type="text" inputmode="numeric" pattern="[0-9]*" value="1" style="width:3.5rem; background:transparent; border-color:rgba(255,255,255,.3)">
+        <div class="cw-qty-v__btns">
+          <button class="btn btn-outline-light" type="button" data-qty-inc>
+            <i class="uil uil-plus"></i>
+          </button>
+          <button class="btn btn-outline-light" type="button" data-qty-dec>
+            <i class="uil uil-minus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.querySelectorAll('[data-qty-inc],[data-qty-dec]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var input = btn.closest('.input-group, .cw-qty-v').querySelector('input');
+        var val = parseInt(input.value, 10) || 1;
+        var min = parseInt(input.dataset.min, 10) || 1;
+        var max = parseInt(input.dataset.max, 10) || Infinity;
+        if (btn.hasAttribute('data-qty-inc')) val = Math.min(max, val + 1);
+        if (btn.hasAttribute('data-qty-dec')) val = Math.max(min, val - 1);
+        input.value = val;
+      });
+    });
+    document.querySelectorAll('.cw-qty-h input, .cw-qty-v input').forEach(function(input) {
+      input.addEventListener('keypress', function(e) {
+        if (!/[0-9]/.test(e.key)) e.preventDefault();
+      });
+    });
+  </script>
+</body>
+
+</html>

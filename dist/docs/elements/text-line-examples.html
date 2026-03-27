@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text line — примеры</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      padding: 2rem;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    .label-u {
+      font-size: 0.85em;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+    }
+
+    .mb-2 {
+      margin-bottom: 0.5rem;
+    }
+
+    .mb-3 {
+      margin-bottom: 0.75rem;
+    }
+
+    .mb-4 {
+      margin-bottom: 1rem;
+    }
+
+    .text-line-before {
+      position: relative;
+      padding-left: 60px;
+      text-transform: uppercase;
+    }
+
+    .text-line-before::before {
+      content: "";
+      position: absolute;
+      display: inline-block;
+      top: 50%;
+      transform: translateY(-60%);
+      left: 0;
+      width: 30px;
+      height: 2px;
+      background: #FEBE10;
+    }
+
+    .text-line-after {
+      display: flex;
+      align-items: center;
+    }
+
+    .text-line-after::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background-color: #DDE4E6;
+      margin-left: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Text line — примеры</h1>
+  <section>
+    <h2 class="label-u mb-3" style="font-size:0.9rem; color:#666;">text-line-before</h2>
+    <div class="text-line-before label-u mb-2">News</div>
+    <div class="text-line-before label-u mb-2">О компании</div>
+  </section>
+  <section>
+    <h2 class="label-u mb-3" style="font-size:0.9rem; color:#666;">text-line-after</h2>
+    <div class="text-line-after label-u mb-3">Практики</div>
+    <div class="text-line-after label-u mb-4">Детали</div>
+    <div class="text-line-after label-u mb-4">Контактное лицо</div>
+  </section>
+</body>
+
+</html>

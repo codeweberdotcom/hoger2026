@@ -1,0 +1,121 @@
+@font-face {
+  font-family: SourceSansPro;
+  src: url(SourceSansPro/SourceSansPro-Black.woff2) format("woff2"), url(SourceSansPro/SourceSansPro-Black.woff) format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap
+}
+@font-face {
+  font-family: SourceSansPro;
+  src: url(SourceSansPro/SourceSansPro-BlackItalic.woff2) format("woff2"), url(SourceSansPro/SourceSansPro-BlackItalic.woff) format("woff");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap
+}
+@font-face {
+  font-family: SourceSansPro;
+  src: url(SourceSansPro/SourceSansPro-Bold.woff2) format("woff2"), url(SourceSansPro/SourceSansPro-Bold.woff) format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap
+}
+@font-face {
+  font-family: SourceSansPro;
+  src: url(SourceSansPro/SourceSansPro-BoldItalic.woff2) format("woff2"), url(SourceSansPro/SourceSansPro-BoldItalic.woff) format("woff");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap
+}
+@font-face {
+  font-family: SourceSansPro;
+  src: url(SourceSansPro/SourceSansPro-ExtraLight.woff2) format("woff2"), url(SourceSansPro/SourceSansPro-ExtraLight.woff) format("woff");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap
+}
+@font-face {
+  font-family: SourceSansPro;
+  src: url(SourceSansPro/SourceSansPro-ExtraLightItalic.woff2) format("woff2"), url(SourceSansPro/SourceSansPro-ExtraLightItalic.woff) format("woff");
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap
+}
+@font-face {
+  font-family: SourceSansPro;
+  src: url(SourceSansPro/SourceSansPro-Italic.woff2) format("woff2"), url(SourceSansPro/SourceSansPro-Italic.woff) format("woff");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap
+}
+@font-face {
+  font-family: SourceSansPro;
+  src: url(SourceSansPro/SourceSansPro-Light.woff2) format("woff2"), url(SourceSansPro/SourceSansPro-Light.woff) format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap
+}
+@font-face {
+  font-family: SourceSansPro;
+  src: url(SourceSansPro/SourceSansPro-LightItalic.woff2) format("woff2"), url(SourceSansPro/SourceSansPro-LightItalic.woff) format("woff");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap
+}
+@font-face {
+  font-family: SourceSansPro;
+  src: url(SourceSansPro/SourceSansPro-Regular.woff2) format("woff2"), url(SourceSansPro/SourceSansPro-Regular.woff) format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap
+}
+@font-face {
+  font-family: SourceSansPro;
+  src: url(SourceSansPro/SourceSansPro-SemiBold.woff2) format("woff2"), url(SourceSansPro/SourceSansPro-SemiBold.woff) format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap
+}
+@font-face {
+  font-family: SourceSansPro;
+  src: url(SourceSansPro/SourceSansPro-SemiBoldItalic.woff2) format("woff2"), url(SourceSansPro/SourceSansPro-SemiBoldItalic.woff) format("woff");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap
+}
+.body-l-l {
+  font-size: 18px;
+  line-height: 1.44;
+  font-weight: 300
+}
+.body-l-r {
+  font-size: 18px;
+  line-height: 1.44;
+  font-weight: 400
+}
+.body-m-l {
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 300
+}
+.body-m-r {
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400
+}
+.body-s {
+  font-size: 14px;
+  line-height: 1.428;
+  font-weight: 400
+}
+.label-u {
+  font-size: 14px;
+  line-height: 1.285;
+  font-weight: 400;
+  text-transform: uppercase
+}
+.label-s {
+  font-size: 14px;
+  line-height: 1.285;
+  font-weight: 600;
+  text-transform: uppercase
+}
