@@ -146,6 +146,47 @@ $breadcrumb-divider-color: #d2d2d7;
     letter-spacing: 0.05em;
 }
 
+// Word-spacing reset
+* {
+    word-spacing: normal !important;
+}
+
+// Letter-spacing reset для навигации
+.nav-link,
+.dropdown-item {
+    letter-spacing: normal;
+}
+
+// UI элементы — размеры шрифта
+.btn-sm,
+.btn-group-sm > .btn,
+.post-meta,
+.share-dropdown .dropdown-menu .dropdown-item {
+    font-size: 0.875rem;
+}
+.meta,
+.post-category,
+.filter,
+.filter ul li a {
+    font-size: 0.8125rem;
+}
+.counter-wrapper {
+    .counter {
+        font-size: 2.25rem;
+        &.counter-lg {
+            font-size: 2.5rem;
+        }
+    }
+}
+
+// Minor UI fixes
+.icon-list.bullet-bg i {
+    top: 0.25rem;
+}
+.accordion-wrapper .card-header button:before {
+    margin-top: -0.2rem;
+}
+
 //--------------------------------------------------------------
 // Импорт шрифтов
 //--------------------------------------------------------------
