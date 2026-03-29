@@ -14,6 +14,7 @@ var theme = {
     theme.offCanvas();
     theme.isotope();
     theme.onepageHeaderOffset();
+    theme.sectionHeaderOffset();
     theme.spyScroll();
     theme.anchorSmoothScroll();
     theme.svgInject();
@@ -241,6 +242,28 @@ var theme = {
       first_section.style.paddingTop = header_height + "px";
       first_section.style.marginTop = "-" + header_height + "px";
     }
+  },
+  /**
+   * Section Header Offset
+   * Adjusts the first min-vh-* section's padding/margin on pages
+   * where the navbar is positioned absolutely or fixed (overlaps content).
+   */
+  sectionHeaderOffset: () => {
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+    const pos = getComputedStyle(navbar).position;
+    if (pos !== 'absolute' && pos !== 'fixed') return;
+    const first = document.querySelector(
+      '.wp-block-codeweber-blocks-section[class*="min-vh-"]'
+    );
+    if (!first) return;
+    const apply = () => {
+      const h = navbar.offsetHeight;
+      first.style.paddingTop = h + 'px';
+      first.style.marginTop  = '-' + h + 'px';
+    };
+    apply();
+    window.addEventListener('resize', apply);
   },
   /**
    * Spy Scroll
