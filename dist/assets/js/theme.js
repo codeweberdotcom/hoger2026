@@ -253,6 +253,7 @@ var theme = {
     if (!navbar) return;
     const pos = getComputedStyle(navbar).position;
     if (pos !== 'absolute' && pos !== 'fixed') return;
+    if (!document.querySelector('.codeweber-top-header')) return;
     const first = document.querySelector(
       '.wp-block-codeweber-blocks-section[class*="min-vh-"]'
     );
