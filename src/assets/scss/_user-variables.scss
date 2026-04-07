@@ -16,7 +16,7 @@ $navy:  #1e2228;   // Dark sections (было: #343f52)
 
 $dark:           #21262c;   // (было: #1e2228)
 $body-color:     $dark;     // (было: #000000)
-$headings-color: $dark;     // (было: #000000)
+$headings-color: null;      // null → CSS cascade; позволяет text-inverse перекрашивать h1-h6
 
 // Глобальное скругление — умеренное (pill только для кнопок и инпутов)
 $border-radius: 0.25rem;    // 4px (было: 0.4rem)
