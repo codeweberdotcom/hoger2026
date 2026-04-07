@@ -662,6 +662,8 @@
                 <li><a class="nav-link scroll" href="#snippet-3">Text Slider</a></li>
                 <li><a class="nav-link scroll" href="#snippet-4">Image Slider</a></li>
                 <li><a class="nav-link scroll" href="#snippet-5">Thumbnail Slider</a></li>
+                <li><a class="nav-link scroll" href="#snippet-6">Vertical Thumbnail Slider</a></li>
+                <li><a class="nav-link scroll" href="#snippet-7">Video Slide</a></li>
                 <li><a class="nav-link scroll" href="#instructions">Instructions</a></li>
               </ul>
             </nav>
@@ -1091,10 +1093,13 @@
           </section>
           <section id="snippet-5" class="wrapper pt-16">
             <h2 class="mb-5">Thumbnail Slider</h2>
-            <div class="card">
+            <p class="mb-6">Add <code>data-thumbs-items="N"</code> to control the number of visible thumbnails. Add <code>data-thumbs-mousewheel="true"</code> to enable scroll on hover.</p>
+            <!-- 5 thumbs default -->
+            <h4 class="mb-3">5 Thumbnails (default)</h4>
+            <div class="card mb-8">
               <div class="card-body">
                 <div class="swiper-container swiper-thumbs-container dots-over" data-margin="10" data-dots="false" data-nav="true" data-thumbs="true">
-                  <div class="swiper">
+                  <div class="swiper overflow-hidden rounded">
                     <div class="swiper-wrapper">
                       <div class="swiper-slide">
                         <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group"><i class="uil uil-focus-add"></i></a></figure>
@@ -1118,6 +1123,14 @@
                   <!-- /.swiper -->
                   <div class="swiper swiper-thumbs">
                     <div class="swiper-wrapper">
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
                       <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
                       <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
                       <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
@@ -1178,6 +1191,615 @@
                   <!--/.code-wrapper-inner -->
                 </div>
                 <!--/.code-wrapper -->
+              </div>
+              <!--/.card-footer -->
+            </div>
+            <!--/.card -->
+            <!-- 3 thumbs -->
+            <h4 class="mb-3">3 Thumbnails</h4>
+            <div class="card mb-8">
+              <div class="card-body">
+                <div class="swiper-container swiper-thumbs-container dots-over" data-margin="10" data-dots="false" data-nav="true" data-thumbs="true" data-thumbs-items="3">
+                  <div class="swiper overflow-hidden rounded">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-h3"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-h3"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-h3"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-h3"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-h3"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-h3"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-h3"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-h3"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-h3"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-h3"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-h3"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-h3"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="swiper swiper-thumbs">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--/.card -->
+            <!-- 6 thumbs visible with mousewheel -->
+            <h4 class="mb-3">6 Thumbnails (with scroll)</h4>
+            <div class="card mb-8">
+              <div class="card-body">
+                <div class="swiper-container swiper-thumbs-container dots-over" data-margin="10" data-dots="false" data-nav="true" data-thumbs="true" data-thumbs-items="6" data-thumbs-mousewheel="true">
+                  <div class="swiper overflow-hidden rounded">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-h6s"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-h6s"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-h6s"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-h6s"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-h6s"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-h6s"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-h6s"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-h6s"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-h6s"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-h6s"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-h6s"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-h6s"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="swiper swiper-thumbs">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--/.card -->
+          </section>
+          <section id="snippet-6" class="wrapper pt-16">
+            <h2 class="mb-5">Vertical Thumbnail Slider</h2>
+            <p class="mb-6">Add <code>data-thumbs-direction="vertical"</code> and <code>data-thumbs-items="N"</code> to control layout and number of visible thumbs.</p>
+            <!-- 3 thumbs -->
+            <h4 class="mb-3">3 Thumbnails</h4>
+            <div class="card mb-8">
+              <div class="card-body">
+                <div class="swiper-container swiper-thumbs-container dots-over" data-margin="10" data-dots="false" data-nav="true" data-thumbs="true" data-thumbs-direction="vertical" data-thumbs-mousewheel="true" data-thumbs-items="3">
+                  <div class="swiper overflow-hidden rounded">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="swiper swiper-thumbs">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 4 thumbs -->
+            <h4 class="mb-3">4 Thumbnails</h4>
+            <div class="card mb-8">
+              <div class="card-body">
+                <div class="swiper-container swiper-thumbs-container dots-over" data-margin="10" data-dots="false" data-nav="true" data-thumbs="true" data-thumbs-direction="vertical" data-thumbs-mousewheel="true" data-thumbs-items="4">
+                  <div class="swiper overflow-hidden rounded">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="swiper swiper-thumbs">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 4 thumbs no mousewheel -->
+            <h4 class="mb-3">4 Thumbnails (no mousewheel)</h4>
+            <div class="card mb-8">
+              <div class="card-body">
+                <div class="swiper-container swiper-thumbs-container dots-over" data-margin="10" data-dots="false" data-nav="true" data-thumbs="true" data-thumbs-direction="vertical" data-thumbs-items="4">
+                  <div class="swiper overflow-hidden rounded">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="swiper swiper-thumbs">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 5 thumbs (default) -->
+            <h4 class="mb-3">5 Thumbnails (default)</h4>
+            <div class="card mb-8">
+              <div class="card-body">
+                <div class="swiper-container swiper-thumbs-container dots-over" data-margin="10" data-dots="false" data-nav="true" data-thumbs="true" data-thumbs-direction="vertical" data-thumbs-mousewheel="true" data-thumbs-items="5">
+                  <div class="swiper overflow-hidden rounded">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="swiper swiper-thumbs">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 6 thumbs -->
+            <h4 class="mb-3">6 Thumbnails</h4>
+            <div class="card mb-8">
+              <div class="card-body">
+                <div class="swiper-container swiper-thumbs-container dots-over" data-margin="10" data-dots="false" data-nav="true" data-thumbs="true" data-thumbs-direction="vertical" data-thumbs-mousewheel="true" data-thumbs-items="6">
+                  <div class="swiper overflow-hidden rounded">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs2@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs3@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs4@2x.jpg" data-glightbox data-gallery="product-group-v"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="swiper swiper-thumbs">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Code example -->
+            <div class="card">
+              <div class="card-footer position-relative">
+                <a class="collapse-link collapsed stretched-link" data-bs-toggle="collapse" href="#collapse-6">Показать примеры кода</a>
+              </div>
+              <div id="collapse-6" class="card-footer bg-dark p-0 accordion-collapse collapse">
+                <div class="code-wrapper">
+                  <div class="code-wrapper-inner">
+                    <pre class="language-html">
+<code>&lt;div class=&quot;swiper-container swiper-thumbs-container dots-over&quot;
+  data-margin=&quot;10&quot;
+  data-dots=&quot;false&quot;
+  data-nav=&quot;true&quot;
+  data-thumbs=&quot;true&quot;
+  data-thumbs-direction=&quot;vertical&quot;
+  data-thumbs-items=&quot;4&quot;&gt;
+  &lt;!-- Same inner structure as horizontal thumbs --&gt;
+&lt;/div&gt;
+
+&lt;!-- data-thumbs-direction: &quot;horizontal&quot; (default) | &quot;vertical&quot; --&gt;
+&lt;!-- data-thumbs-items: number of visible thumbs (default 5) --&gt;</code>
+</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="snippet-7" class="wrapper pt-16">
+            <h2 class="mb-5">Video Slide</h2>
+            <p class="mb-6">Add a play button over a poster image. Click opens the video via GLightbox. YouTube and Vimeo use direct URL. VK Video and Rutube require a hidden <code>&lt;iframe&gt;</code> in the DOM — the play button points to it by <code>id</code>.</p>
+            <!-- Hidden iframes for VK and Rutube -->
+            <div id="vk-demo" class="d-none">
+              <iframe src="https://vkvideo.ru/video_ext.php?oid=-227673890&id=456240183&hd=2" allowfullscreen allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"></iframe>
+            </div>
+            <div id="rutube-demo" class="d-none">
+              <iframe src="https://rutube.ru/play/embed/8754aee9ffe75bab76132a41a74e8777" allowfullscreen allow="clipboard-write; autoplay;"></iframe>
+            </div>
+            <div class="card mb-0">
+              <div class="card-body">
+                <div class="swiper-container swiper-thumbs-container dots-over" data-margin="10" data-dots="false" data-nav="true" data-thumbs="true" data-thumbs-items="6">
+                  <div class="swiper overflow-hidden rounded">
+                    <div class="swiper-wrapper">
+                      <!-- Photo slide -->
+                      <div class="swiper-slide">
+                        <figure class="rounded"><img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" /><a class="item-link" href="../../assets/img/photos/shs1@2x.jpg" data-glightbox data-gallery="video-slide-demo"><i class="uil uil-focus-add"></i></a></figure>
+                      </div>
+                      <!-- YouTube video slide -->
+                      <div class="swiper-slide">
+                        <figure class="rounded mb-0">
+                          <img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" />
+                          <a href="https://www.youtube.com/watch?v=yPGUicLQ7Ak" class="btn btn-circle btn-primary btn-play ripple position-absolute top-50 start-50 translate-middle z-3" data-glightbox data-gallery="video-slide-demo"><i class="icn-caret-right"></i></a>
+                        </figure>
+                      </div>
+                      <!-- Vimeo video slide -->
+                      <div class="swiper-slide">
+                        <figure class="rounded mb-0">
+                          <img src="../../assets/img/photos/shs3.jpg" srcset="../../assets/img/photos/shs3@2x.jpg 2x" alt="" />
+                          <a href="https://vimeo.com/90355541" class="btn btn-circle btn-primary btn-play ripple position-absolute top-50 start-50 translate-middle z-3" data-glightbox data-gallery="video-slide-demo"><i class="icn-caret-right"></i></a>
+                        </figure>
+                      </div>
+                      <!-- VK Video slide -->
+                      <div class="swiper-slide">
+                        <figure class="rounded mb-0">
+                          <img src="../../assets/img/photos/shs4.jpg" srcset="../../assets/img/photos/shs4@2x.jpg 2x" alt="" />
+                          <a href="#vk-demo" class="btn btn-circle btn-primary btn-play ripple position-absolute top-50 start-50 translate-middle z-3" data-glightbox="type: iframe; width: 90vw; height: 90vh;" data-gallery="video-slide-demo"><i class="icn-caret-right"></i></a>
+                        </figure>
+                      </div>
+                      <!-- Rutube video slide -->
+                      <div class="swiper-slide">
+                        <figure class="rounded mb-0">
+                          <img src="../../assets/img/photos/shs1.jpg" srcset="../../assets/img/photos/shs1@2x.jpg 2x" alt="" />
+                          <a href="#rutube-demo" class="btn btn-circle btn-primary btn-play ripple position-absolute top-50 start-50 translate-middle z-3" data-glightbox="type: iframe; width: 90vw; height: 90vh;" data-gallery="video-slide-demo"><i class="icn-caret-right"></i></a>
+                        </figure>
+                      </div>
+                      <!-- HTML5 video slide -->
+                      <div class="swiper-slide">
+                        <figure class="rounded mb-0">
+                          <img src="../../assets/img/photos/shs2.jpg" srcset="../../assets/img/photos/shs2@2x.jpg 2x" alt="" />
+                          <a href="../../assets/media/movie.mp4" class="btn btn-circle btn-primary btn-play ripple position-absolute top-50 start-50 translate-middle z-3" data-glightbox data-gallery="video-slide-demo"><i class="icn-caret-right"></i></a>
+                        </figure>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="swiper swiper-thumbs">
+                    <div class="swiper-wrapper">
+                      <!-- Photo thumb (no indicator) -->
+                      <div class="swiper-slide"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="" /></div>
+                      <!-- Video thumbs — play icon overlay -->
+                      <div class="swiper-slide">
+                        <div class="position-relative"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded w-100" alt="" /><a href="#" class="btn btn-circle btn-primary btn-sm position-absolute top-50 start-50 translate-middle pe-none"><i class="icn-caret-right fs-25"></i></a></div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="position-relative"><img src="../../assets/img/photos/shs3-th.jpg" srcset="../../assets/img/photos/shs3-th@2x.jpg 2x" class="rounded w-100" alt="" /><a href="#" class="btn btn-circle btn-primary btn-sm position-absolute top-50 start-50 translate-middle pe-none"><i class="icn-caret-right fs-25"></i></a></div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="position-relative"><img src="../../assets/img/photos/shs4-th.jpg" srcset="../../assets/img/photos/shs4-th@2x.jpg 2x" class="rounded w-100" alt="" /><a href="#" class="btn btn-circle btn-primary btn-sm position-absolute top-50 start-50 translate-middle pe-none"><i class="icn-caret-right fs-25"></i></a></div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="position-relative"><img src="../../assets/img/photos/shs1-th.jpg" srcset="../../assets/img/photos/shs1-th@2x.jpg 2x" class="rounded w-100" alt="" /><a href="#" class="btn btn-circle btn-primary btn-sm position-absolute top-50 start-50 translate-middle pe-none"><i class="icn-caret-right fs-25"></i></a></div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="position-relative"><img src="../../assets/img/photos/shs2-th.jpg" srcset="../../assets/img/photos/shs2-th@2x.jpg 2x" class="rounded w-100" alt="" /><a href="#" class="btn btn-circle btn-primary btn-sm position-absolute top-50 start-50 translate-middle pe-none"><i class="icn-caret-right fs-25"></i></a></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--/.card-body -->
+              <div class="card-footer position-relative">
+                <a class="collapse-link collapsed stretched-link" data-bs-toggle="collapse" href="#collapse-video-slide">Показать примеры кода</a>
+              </div>
+              <div id="collapse-video-slide" class="card-footer bg-dark p-0 accordion-collapse collapse">
+                <div class="code-wrapper">
+                  <div class="code-wrapper-inner">
+                    <pre class="language-html"><code>&lt;!-- YouTube / Vimeo / HTML5 — прямой URL --&gt;
+&lt;figure class=&quot;rounded mb-0&quot;&gt;
+  &lt;img src=&quot;poster.jpg&quot; alt=&quot;&quot; /&gt;
+  &lt;a href=&quot;https://www.youtube.com/watch?v=VIDEO_ID&quot;
+     class=&quot;btn btn-circle btn-primary btn-play ripple position-absolute&quot;
+     style=&quot;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;&quot;
+     data-glightbox data-gallery=&quot;gallery-name&quot;&gt;
+    &lt;i class=&quot;icn-caret-right&quot;&gt;&lt;/i&gt;
+  &lt;/a&gt;
+&lt;/figure&gt;
+
+&lt;!-- VK Video / Rutube — скрытый iframe + ссылка по id --&gt;
+&lt;div id=&quot;my-vk-video&quot; style=&quot;display:none&quot;&gt;
+  &lt;iframe src=&quot;https://vkvideo.ru/video_ext.php?oid=-OID&amp;id=ID&amp;hd=2&quot;
+          allowfullscreen allow=&quot;autoplay; encrypted-media; fullscreen;&quot;
+          style=&quot;border:none; width:720px; height:405px;&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;figure class=&quot;rounded mb-0&quot;&gt;
+  &lt;img src=&quot;poster.jpg&quot; alt=&quot;&quot; /&gt;
+  &lt;a href=&quot;#my-vk-video&quot;
+     class=&quot;btn btn-circle btn-primary btn-play ripple position-absolute&quot;
+     style=&quot;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;&quot;
+     data-glightbox=&quot;type: iframe; width: 90vw; height: 90vh;&quot;
+     data-gallery=&quot;gallery-name&quot;&gt;
+    &lt;i class=&quot;icn-caret-right&quot;&gt;&lt;/i&gt;
+  &lt;/a&gt;
+&lt;/figure&gt;
+
+&lt;!-- Rutube embed URL: https://rutube.ru/play/embed/HASH --&gt;</code></pre>
+                  </div>
+                </div>
               </div>
               <!--/.card-footer -->
             </div>

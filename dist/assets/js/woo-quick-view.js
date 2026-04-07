@@ -24,57 +24,13 @@
 	}
 
 	/**
-	 * Initialize the Swiper gallery — mirrors theme.swiperSlider()
-	 * but scoped to the given container.
+	 * Initialize the Swiper gallery inside a container.
+	 * Delegates to theme.swiperSlider() which skips already-initialized instances.
 	 */
-	function initSwiper(container) {
-		var slider1 = container.querySelector('.swiper-container');
-		if (!slider1) return;
-
-		var swiperEl = slider1.querySelector('.swiper');
-		if (!swiperEl) return;
-
-		// Build navigation controls (same as theme.swiperSlider)
-		var controls = document.createElement('div');
-		controls.className = 'swiper-controls';
-		var pagi = document.createElement('div');
-		pagi.className = 'swiper-pagination';
-		var navi = document.createElement('div');
-		navi.className = 'swiper-navigation';
-		var prev = document.createElement('div');
-		prev.className = 'swiper-button swiper-button-prev';
-		var next = document.createElement('div');
-		next.className = 'swiper-button swiper-button-next';
-		navi.appendChild(prev);
-		navi.appendChild(next);
-		controls.appendChild(navi);
-		controls.appendChild(pagi);
-		slider1.appendChild(controls);
-
-		new Swiper(swiperEl, {
-			loop: false,
-			slidesPerView: 1,
-			spaceBetween: Number(slider1.getAttribute('data-margin') || 0),
-			grabCursor: true,
-			navigation: {
-				prevEl: prev,
-				nextEl: next,
-			},
-			pagination: {
-				el: pagi,
-				clickable: true,
-			},
-			on: {
-				beforeInit: function () {
-					if (slider1.getAttribute('data-nav') !== 'true') navi.remove();
-					if (slider1.getAttribute('data-dots') !== 'true') pagi.remove();
-					if (slider1.getAttribute('data-nav') !== 'true' && slider1.getAttribute('data-dots') !== 'true') controls.remove();
-				},
-				init: function () {
-					this.update();
-				},
-			},
-		});
+	function initSwiper() {
+		if (typeof theme !== 'undefined' && theme.swiperSlider) {
+			theme.swiperSlider();
+		}
 	}
 
 	/**
@@ -158,7 +114,7 @@
 				if (data && data.success && data.data) {
 					body.innerHTML = data.data;
 
-					initSwiper(body);
+					initSwiper();
 					initVariationForm(body);
 
 					if (typeof jQuery !== 'undefined') {

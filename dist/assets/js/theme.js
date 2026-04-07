@@ -436,6 +436,7 @@ var theme = {
     var carousel = document.querySelectorAll(".swiper-container");
     for (let i = 0; i < carousel.length; i++) {
       var slider1 = carousel[i];
+      if (slider1.querySelector(".swiper.swiper-initialized")) continue;
       slider1.classList.add("swiper-container-" + i);
       var controls = document.createElement("div");
       controls.className = "swiper-controls";
@@ -522,15 +523,26 @@ var theme = {
       var sliderCentered = slider1.getAttribute("data-centered") === "true";
       var swiper = slider1.querySelector(".swiper:not(.swiper-thumbs)");
       var swiperTh = slider1.querySelector(".swiper-thumbs");
+      var thumbsDirection = slider1.getAttribute("data-thumbs-direction") || "horizontal";
+      var thumbsItems = slider1.getAttribute("data-thumbs-items")
+        ? Number(slider1.getAttribute("data-thumbs-items"))
+        : 5;
+      var thumbsMousewheel = slider1.getAttribute("data-thumbs-mousewheel") === "true";
       var sliderTh = new Swiper(swiperTh, {
-        slidesPerView: 5,
+        slidesPerView: thumbsItems,
         spaceBetween: 10,
         loop: false,
         threshold: 2,
         slideToClickedSlide: true,
+        direction: thumbsDirection,
+        mousewheel: thumbsMousewheel ? { forceToAxis: thumbsDirection === 'vertical' } : false,
+        freeMode: thumbsMousewheel,
       });
       if (slider1.getAttribute("data-thumbs") === "true") {
         var thumbsInit = sliderTh;
+        if (thumbsDirection === "vertical") {
+          slider1.classList.add("swiper-thumbs-v");
+        }
         var swiperMain = document.createElement("div");
         swiperMain.className = "swiper-main";
         swiper.parentNode.insertBefore(swiperMain, swiper);
@@ -594,6 +606,80 @@ var theme = {
         },
       });
       if (thumbsInit !== null) {
+        // Sync vertical thumbs height with main image height
+        if (thumbsDirection === "vertical") {
+          var syncThumbsHeight = function() {
+            var mainImg = swiper.querySelector(".swiper-slide img");
+            if (mainImg && swiperTh) {
+              var calcAndApply = function() {
+                var spaceBetween = 10; // Swiper spaceBetween for thumbs
+                var flexGap = 10; // CSS gap between thumbs and main
+                var containerW = slider1.clientWidth;
+                // Solve: containerW = mainSide + flexGap + thumbW
+                //        thumbW = thumbH = (mainSide - (items-1)*spaceBetween) / items
+                // => mainSide = (containerW - flexGap + (items-1)*spaceBetween/items) * items / (items+1)
+                var mainSide = (containerW - flexGap + (thumbsItems - 1) * spaceBetween / thumbsItems) * thumbsItems / (thumbsItems + 1);
+                mainSide = Math.floor(mainSide);
+                var thumbH = Math.floor((mainSide - spaceBetween * (thumbsItems - 1)) / thumbsItems);
+                var thumbW = thumbH;
+                // Recalculate mainSide from actual thumbH to avoid rounding mismatch
+                mainSide = thumbH * thumbsItems + spaceBetween * (thumbsItems - 1);
+
+                // Apply main square
+                var swiperMainEl = swiper.parentElement;
+                if (swiperMainEl && swiperMainEl.classList.contains("swiper-main")) {
+                  swiperMainEl.style.width = mainSide + "px";
+                  swiperMainEl.style.flex = "none";
+                }
+                swiper.style.height = mainSide + "px";
+                swiper.style.overflow = "hidden";
+                var mainSlides = swiper.querySelectorAll(".swiper-slide");
+                for (var m = 0; m < mainSlides.length; m++) {
+                  mainSlides[m].style.height = mainSide + "px";
+                  var fig = mainSlides[m].querySelector("figure");
+                  if (fig) { fig.style.height = "100%"; fig.style.margin = "0"; }
+                  var img = mainSlides[m].querySelector("img");
+                  if (img) { img.style.height = "100%"; img.style.width = "100%"; img.style.objectFit = "cover"; }
+                }
+
+                // Apply thumbs
+                swiperTh.style.height = mainSide + "px";
+                swiperTh.style.width = thumbW + "px";
+                var thumbSlides = swiperTh.querySelectorAll(".swiper-slide");
+                for (var t = 0; t < thumbSlides.length; t++) {
+                  thumbSlides[t].style.height = thumbH + "px";
+                }
+                sliderTh.update();
+                slider.update();
+              };
+              if (mainImg.complete) {
+                calcAndApply();
+              } else {
+                mainImg.addEventListener("load", calcAndApply);
+              }
+            }
+          };
+          syncThumbsHeight();
+          var resizeTimer;
+          window.addEventListener("resize", function() {
+            if (swiperTh) {
+              clearTimeout(resizeTimer);
+              resizeTimer = setTimeout(calcAndApply, 100);
+            }
+          });
+        }
+        // Gallery skeleton: скрыть скелетон и показать swiper после загрузки первого изображения
+        var firstSlideImg = swiper.querySelector(".swiper-slide img");
+        var markGalleryReady = function () {
+          slider1.classList.add("cw-gallery-ready");
+        };
+        if (!firstSlideImg || firstSlideImg.complete) {
+          markGalleryReady();
+        } else {
+          firstSlideImg.addEventListener("load",  markGalleryReady, { once: true });
+          firstSlideImg.addEventListener("error", markGalleryReady, { once: true });
+        }
+
         if (document.querySelector("input.variation_id") !== null) {
           document.querySelector("input.variation_id").onchange = function () {
             document.querySelector(
