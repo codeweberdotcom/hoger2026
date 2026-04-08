@@ -1,0 +1,238 @@
+//----------------------------------------------------------//
+//  FONT FACE
+//----------------------------------------------------------//
+
+@font-face {
+  font-family: 'SourceSansPro';
+  src: url('../fonts/SourceSansPro/SourceSansPro-Black.woff2') format('woff2'),
+    url('../fonts/SourceSansPro/SourceSansPro-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SourceSansPro';
+  src: url('../fonts/SourceSansPro/SourceSansPro-BlackItalic.woff2') format('woff2'),
+    url('../fonts/SourceSansPro/SourceSansPro-BlackItalic.woff') format('woff');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SourceSansPro';
+  src: url('../fonts/SourceSansPro/SourceSansPro-Bold.woff2') format('woff2'),
+    url('../fonts/SourceSansPro/SourceSansPro-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SourceSansPro';
+  src: url('../fonts/SourceSansPro/SourceSansPro-BoldItalic.woff2') format('woff2'),
+    url('../fonts/SourceSansPro/SourceSansPro-BoldItalic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SourceSansPro';
+  src: url('../fonts/SourceSansPro/SourceSansPro-ExtraLight.woff2') format('woff2'),
+    url('../fonts/SourceSansPro/SourceSansPro-ExtraLight.woff') format('woff');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SourceSansPro';
+  src: url('../fonts/SourceSansPro/SourceSansPro-ExtraLightItalic.woff2') format('woff2'),
+    url('../fonts/SourceSansPro/SourceSansPro-ExtraLightItalic.woff') format('woff');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SourceSansPro';
+  src: url('../fonts/SourceSansPro/SourceSansPro-Italic.woff2') format('woff2'),
+    url('../fonts/SourceSansPro/SourceSansPro-Italic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SourceSansPro';
+  src: url('../fonts/SourceSansPro/SourceSansPro-Light.woff2') format('woff2'),
+    url('../fonts/SourceSansPro/SourceSansPro-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SourceSansPro';
+  src: url('../fonts/SourceSansPro/SourceSansPro-LightItalic.woff2') format('woff2'),
+    url('../fonts/SourceSansPro/SourceSansPro-LightItalic.woff') format('woff');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SourceSansPro';
+  src: url('../fonts/SourceSansPro/SourceSansPro-Regular.woff2') format('woff2'),
+    url('../fonts/SourceSansPro/SourceSansPro-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SourceSansPro';
+  src: url('../fonts/SourceSansPro/SourceSansPro-SemiBold.woff2') format('woff2'),
+    url('../fonts/SourceSansPro/SourceSansPro-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SourceSansPro';
+  src: url('../fonts/SourceSansPro/SourceSansPro-SemiBoldItalic.woff2') format('woff2'),
+    url('../fonts/SourceSansPro/SourceSansPro-SemiBoldItalic.woff') format('woff');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+//----------------------------------------------------------//
+//  Bootstrap Configuration
+//----------------------------------------------------------//
+@import "../../../../../codeweber/node_modules/bootstrap/scss/mixins";
+
+//----------------------------------------------------------//
+//	FONT VARIABLES
+//----------------------------------------------------------//
+$font-family-base: "SourceSansPro", sans-serif;
+$font-family-secondary: "SourceSansPro", sans-serif;
+$font-size-base: 0.8rem;
+
+//----------------------------------------------------------//
+//	COLORS
+//----------------------------------------------------------//
+$main-dark: #1E1E1E;
+$secondary: #aab0bc;
+
+//----------------------------------------------------------//
+//	TYPOGRAPHY
+//----------------------------------------------------------//
+$font-size-sm: 0.7rem;
+$font-size-lg: 1rem;
+$font-weight-lighter: lighter !default;    // .fw-lighter - самый тонкий
+$font-weight-light: 300 !default;          // .fw-light, .fw-300 - легкий
+$font-weight-normal: 400 !default;         // .fw-normal, .fw-400 - обычный
+$font-weight-medium: 500 !default;         // .fw-medium, .fw-500 - средний
+$font-weight-semibold: 600 !default;       // .fw-semibold, .fw-600 - полужирный
+$font-weight-bold: 700 !default;           // .fw-bold, .fw-700 - жирный
+$font-weight-bolder: bolder !default;      // .fw-bolder - самый жирный
+$font-weight-base: 300;
+$letter-spacing-xs: -0.035em;
+$letter-spacing-sm: -0.03em;
+$letter-spacing: -0.01rem;
+$letter-spacing-lg: 0.02rem;
+$letter-spacing-xl: 0.05rem;
+$line-height-base: 1.7;
+$line-height-xxs: 1.05;
+$line-height-xs: 1.35;
+$line-height-sm: 1.5;
+$line-height-lg: 1.9;
+
+
+// H1-H6
+$h1-font-size: 2.4rem; // H1
+$h2-font-size: 1.8rem; // H2
+$h3-font-size: 1.4rem; // H3
+$h4-font-size: 1.1rem; // H4
+$h5-font-size: 1.0rem; // H5 
+$h6-font-size: 0.95rem;// H6
+$h1-line-height: 1.16; // H1
+$h2-line-height: 1.22; // H2
+$h3-line-height: 1.28; // H3
+$h4-line-height: 1.36; // H4
+$h5-line-height: 1.5; // H5
+$h6-line-height: 1.55; // H6
+
+$headings-font-weight: $font-weight-normal;
+$headings-color: $main-dark;
+
+$letter-spacing-xs: 0;
+$letter-spacing-sm: 0;
+$letter-spacing: 0;
+$letter-spacing-lg: 0;
+$letter-spacing-xl: 0;
+
+//DISPLAY
+$display-font-sizes: (
+  1: 3.2rem,     // ваша база (100%)
+  2: 2.53rem,    // 3.2 × 0.79 = 2.53rem
+  3: 2.02rem,    // 3.2 × 0.63 = 2.02rem
+  4: 1.57rem,    // 3.2 × 0.49 = 1.57rem
+  5: 1.34rem,    // 3.2 × 0.42 = 1.34rem
+  6: 1.12rem     // 3.2 × 0.35 = 1.12rem
+);
+
+$display-line-height: 1.25 !important;
+$display-font-weight: $font-weight-normal;
+
+.body-l-l{
+    font-size: 18px;
+    line-height: 1.44;
+    font-weight: $font-weight-light;
+}
+
+.body-l-r{
+    font-size: 18px;
+    line-height: 1.44;
+    font-weight: $font-weight-normal;
+}
+
+.body-m-l{
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: $font-weight-light;
+}
+
+.body-m-r{
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: $font-weight-normal;
+}
+
+.body-s{
+    font-size: 14px;
+    line-height: 1.428;
+    font-weight: $font-weight-normal;
+}
+
+.label-u{
+    font-size: 14px;
+    line-height: 1.285;
+    font-weight: $font-weight-normal;
+    text-transform: uppercase;
+}
+
+.label-s{
+    font-size: 14px;
+    line-height: 1.285;
+     font-weight: $font-weight-semibold;
+     text-transform: uppercase;
+}
+
+
+$lead-font-size: $font-size-base * 1.25 * 0.9;
+$lead-font-weight: 500;
+
+$small-font-size: 0.6rem;
+$text-muted: $secondary;
+
+//BLOCKQUOTE
+$blockquote-margin-y: 1rem;
+$blockquote-font-size: $font-size-base * 1.25 * 0.85;
+$blockquote-font-weight: $font-weight-base;
+$blockquote-footer-color: $secondary;
+$blockquote-footer-font-size: $small-font-size;
+$blockquote-footer-weight: $font-weight-bold;
