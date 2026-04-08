@@ -120,7 +120,8 @@ $nav-link-text-transform: none;
 $dropdown-font-size:      0.875rem; // 14px
 $dropdown-font-weight:    400;      // .dropdown-item (было: $font-weight-bold = 700)
 $nav-tabs-basic-font-weight: 400;   // табы basic (было: 600)
-$nav-pills-font-weight:     400;   // табы pills (было: 600)
+$nav-pills-font-weight:     400; 
+$navbar-dark-active-color: $blue;  // табы pills (было: 600)
 
 // ── Аккордеон ──
 $accordion-margin-bottom:      0.5rem;
