@@ -211,6 +211,11 @@ footer.bg-dark.angled {
     box-shadow: 0 .25rem 1.75rem rgba(156, 136, 111, 0.17) !important;
 }
 
+// Sticky navbar clone shadow
+.navbar-clone.navbar-stick {
+    box-shadow: 0 .25rem 1.75rem rgba(156, 136, 111, 0.17) !important;
+}
+
 // Minor UI fixes
 .icon-list.bullet-bg i {
     top: 0.25rem;
