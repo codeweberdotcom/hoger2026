@@ -189,6 +189,11 @@ h1, h2, h3, h4, h5, h6,
     }
 }
 
+// Custom shadow
+.shadow-hoger {
+    box-shadow: 0 .25rem 1.75rem rgba(156, 136, 111, 0.17) !important;
+}
+
 // Minor UI fixes
 .icon-list.bullet-bg i {
     top: 0.25rem;
