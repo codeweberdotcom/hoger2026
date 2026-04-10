@@ -25,7 +25,7 @@ $border-radius: 0.25rem;    // 4px (было: 0.4rem)
 $path-to-fonts:          '';       // отключить Google Fonts Manrope (дефолт из parent)
 $font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;  // (было: Manrope)
 $font-size-root:         16px;     // (было: 20px) — соответствует MUI htmlFontSize
-$font-size-base:         0.9rem;   // 14.4px
+$font-size-base:         0.875rem;  // 14px
 $font-size-sm:           0.875rem; // 14px
 $font-weight-normal:     300;      // (было: 500)
 $font-weight-bold:       400;      // (было: 700)
