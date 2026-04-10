@@ -23,12 +23,13 @@ $border-radius: 0.25rem;    // 4px (было: 0.4rem)
 
 // ── Типографика ──
 $path-to-fonts:          '';       // отключить Google Fonts Manrope (дефолт из parent)
-$font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;  // (было: Manrope)
+$font-family-sans-serif: 'GillSans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+$font-family-base:       'GillSans', sans-serif;
 $font-size-root:         16px;     // (было: 20px) — соответствует MUI htmlFontSize
 $font-size-base:         0.875rem;  // 14px
 $font-size-sm:           0.875rem; // 14px
-$font-weight-normal:     300;      // (было: 500)
-$font-weight-bold:       400;      // (было: 700)
+$font-weight-normal:     300;      // Light
+$font-weight-bold:       500;      // Medium
 $headings-font-weight:   300;      // light — как на hoger.pro (дефолт Bootstrap: 700)
 $display-font-weight:    300;      // display заголовки тоже light
 $lead-font-weight:       300;      // normal (было: 500)
@@ -54,7 +55,7 @@ $h6-font-size: 0.9rem;    // было 1rem    / 16px → ~14px
 
 // ── Кнопки ──
 $btn-border-width:  2px;
-$btn-font-weight:   400;       // (было: 700) — как на hoger.pro
+$btn-font-weight:   $font-weight-normal;
 $btn-border-radius: 50rem;     // pill! (было: 0.4rem)
 
 // Default = hoger.pro .btn-lg при root 20px → конвертировано на наш root 16px
@@ -115,24 +116,24 @@ $text-line-height: 1px;
 
 // ── Навигация ──
 $nav-link-font-size:      0.875rem; // 18px
-$nav-link-font-weight:    400;      // как на hoger.pro (было: 600)
+$nav-link-font-weight:    $font-weight-normal;
 $nav-link-text-transform: none;
 $dropdown-font-size:      0.875rem; // 14px
-$dropdown-font-weight:    400;      // .dropdown-item (было: $font-weight-bold = 700)
-$nav-tabs-basic-font-weight: 400;   // табы basic (было: 600)
-$nav-pills-font-weight:     400; 
+$dropdown-font-weight:    $font-weight-normal;
+$nav-tabs-basic-font-weight: $font-weight-normal;
+$nav-pills-font-weight:     $font-weight-normal; 
 $navbar-dark-active-color: $blue;  // табы pills (было: 600)
 
 // ── Аккордеон ──
 $accordion-margin-bottom:      0.5rem;
 $accordion-button-font-size:   1rem; // было: 0.85rem (13.6px < body)
-$accordion-button-font-weight: 400;  // было: $font-weight-bold (700)
+$accordion-button-font-weight: $font-weight-normal;
 
 // ── Пагинация ──
-$pagination-font-weight: 400;        // было: $font-weight-bold (700)
+$pagination-font-weight: $font-weight-normal;
 
 // ── Blockquote ──
-$blockquote-footer-weight: 400;      // было: $font-weight-bold (700)
+$blockquote-footer-weight: $font-weight-normal;
 
 // ── Breadcrumb ──
 $breadcrumb-divider-color: #d2d2d7;

@@ -1,18 +1,18 @@
-// Font Import
+// Font Import — GillSans Pro Cyrillic
 
 @font-face {
   font-family: 'GillSans';
-  src: url('../fonts/GillSans/GillSans-Light.woff2') format('woff2'),
-    url('../fonts/GillSans/GillSans-Light.woff') format('woff');
+  src: url('../fonts/GillSans/GillSansProCyrillic-Light.woff2') format('woff2'),
+    url('../fonts/GillSans/GillSansProCyrillic-Light.woff') format('woff');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'GillSans';
-  src: url('../fonts/GillSans/GillSans-Regular.woff2') format('woff2'),
-    url('../fonts/GillSans/GillSans-Regular.woff') format('woff');
-  font-weight: 400;
+  src: url('../fonts/GillSans/GillSansProCyrillic-Medium.woff2') format('woff2'),
+    url('../fonts/GillSans/GillSansProCyrillic-Medium.woff') format('woff');
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
@@ -24,4 +24,3 @@
 // Font Variables
 $font-family-base:      "GillSans", sans-serif;
 $font-family-secondary: "GillSans", sans-serif;
-
