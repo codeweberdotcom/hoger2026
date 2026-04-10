@@ -14,7 +14,7 @@
 $blue:  #9c886f;   // Primary → тёплый тауп (было: #3f78e0)
 $navy:  #1e2228;   // Dark sections (было: #343f52)
 
-$dark:           #292728;   // (было: #21262c)
+$dark:           #21262c;   // (было: #1e2228)
 $body-color:     $dark;     // (было: #000000)
 $headings-color: null;      // null → CSS cascade; позволяет text-inverse перекрашивать h1-h6
 
@@ -55,24 +55,24 @@ $h6-font-size: 0.9rem;    // было 1rem    / 16px → ~14px
 // ── Кнопки ──
 $btn-border-width:  2px;
 $btn-font-weight:   400;       // (было: 700) — как на hoger.pro
-$btn-border-radius: 50rem;     // pill!
+$btn-border-radius: 50rem;     // pill! (было: 0.4rem)
 
-// Base (MD) — ~40px высота, Material Design Medium
-$btn-padding-y:  0.55rem;   // 8.8px
+// Default = hoger.pro .btn-lg при root 20px → конвертировано на наш root 16px
+$btn-padding-y:  0.5rem;    // 8px
 $btn-padding-x:  1.75rem;   // 28px
-$btn-font-size:  0.875rem;  // 14px
+$btn-font-size:  1rem;      // 16px
 
-// XS — ~24px высота
-$btn-padding-y-xs:     0.2rem;      // 3.2px
-$btn-padding-x-xs:     0.875rem;    // 14px
-$btn-font-size-xs:     0.6875rem;   // 11px
+// XS
+$btn-padding-y-xs:     0.25rem;
+$btn-padding-x-xs:     1.0rem;
+$btn-font-size-xs:     0.75rem;
 $btn-border-radius-xs: $btn-border-radius;
 $btn-font-weight-xs:   $btn-font-weight;
 
-// SM — ~32px высота
-$btn-padding-y-sm:     0.4rem;      // 6.4px
-$btn-padding-x-sm:     1.25rem;     // 20px
-$btn-font-size-sm:     0.75rem;     // 12px
+// SM
+$btn-padding-y-sm:     0.375rem;
+$btn-padding-x-sm:     1.25rem;
+$btn-font-size-sm:     0.875rem;
 $btn-border-radius-sm: $btn-border-radius;
 $btn-font-weight-sm:   $btn-font-weight;
 
@@ -83,17 +83,17 @@ $btn-font-size-md:     $btn-font-size;
 $btn-border-radius-md: $btn-border-radius;
 $btn-font-weight-md:   $btn-font-weight;
 
-// LG — ~48px высота
-$btn-padding-y-lg:     0.7rem;      // 11.2px
-$btn-padding-x-lg:     2.25rem;     // 36px
-$btn-font-size-lg:     1rem;        // 16px
+// LG
+$btn-padding-y-lg:     0.65rem;
+$btn-padding-x-lg:     2.0rem;
+$btn-font-size-lg:     1.125rem;
 $btn-border-radius-lg: $btn-border-radius;
 $btn-font-weight-lg:   $btn-font-weight;
 
-// ELG — ~56px высота
-$btn-padding-y-elg:     0.85rem;    // 13.6px
-$btn-padding-x-elg:     2.75rem;    // 44px
-$btn-font-size-elg:     1.125rem;   // 18px
+// ELG
+$btn-padding-y-elg:     0.8rem;
+$btn-padding-x-elg:     2.25rem;
+$btn-font-size-elg:     1.25rem;
 $btn-border-radius-elg: $btn-border-radius;
 $btn-font-weight-elg:   $btn-font-weight;
 
@@ -135,7 +135,6 @@ $pagination-font-weight: 400;        // было: $font-weight-bold (700)
 $blockquote-footer-weight: 400;      // было: $font-weight-bold (700)
 
 // ── Breadcrumb ──
-$breadcrumb-font-size:    0.875rem;  // 14px
 $breadcrumb-divider-color: #d2d2d7;
 
 //--------------------------------------------------------------
@@ -189,33 +188,6 @@ h1, h2, h3, h4, h5, h6,
     }
 }
 
-// navbar/footer bg-dark — use $dark instead of hardcoded $gray-800
-.navbar.navbar-bg-dark,
-footer.bg-dark,
-.footer.bg-dark {
-    background: $dark !important;
-}
-footer.bg-dark.angled {
-    &.lower-end:after,
-    &.upper-end:before {
-        border-right-color: $dark !important;
-    }
-    &.lower-start:after,
-    &.upper-start:before {
-        border-left-color: $dark !important;
-    }
-}
-
-// Custom shadow
-.shadow-hoger {
-    box-shadow: 0 .25rem 1.75rem rgba(156, 136, 111, 0.17) !important;
-}
-
-// Sticky navbar clone shadow
-.navbar-clone.navbar-stick {
-    box-shadow: 0 .25rem 1.75rem rgba(156, 136, 111, 0.17) !important;
-}
-
 // Minor UI fixes
 .icon-list.bullet-bg i {
     top: 0.25rem;
@@ -231,5 +203,5 @@ $swiper-arrow-bg: transparent;
 //--------------------------------------------------------------
 
 //START IMPORT FONTS
-@import "fonts/Inter";
+@import "fonts/GillSans";
 //END IMPORT FONTS
