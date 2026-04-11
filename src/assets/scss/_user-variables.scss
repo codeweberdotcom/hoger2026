@@ -206,6 +206,13 @@ $swiper-arrow-bg-disabled: tint-color($blue, 90.5%);
 $swiper-arrow-color:       $blue;
 $swiper-arrow-color-hover: $blue;
 
+.text-line::before {
+  top: 48%;
+  transform: translateY(-50%) rotate(45deg);
+  width: .3rem;
+  height: .3rem;
+}
+
 //--------------------------------------------------------------
 // Импорт шрифтов
 //--------------------------------------------------------------
