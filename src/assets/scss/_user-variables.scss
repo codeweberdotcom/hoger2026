@@ -135,6 +135,10 @@ $pagination-font-weight: $font-weight-normal;
 // ── Blockquote ──
 $blockquote-footer-weight: $font-weight-normal;
 
+// ── Meta / Post-category / Filter ──
+$meta-font-weight: $font-weight-normal;
+$meta-font-size:   0.8rem;
+
 // ── Breadcrumb ──
 $breadcrumb-divider-color: #d2d2d7;
 
@@ -173,12 +177,6 @@ h1, h2, h3, h4, h5, h6,
 .post-meta,
 .share-dropdown .dropdown-menu .dropdown-item {
     font-size: 0.875rem;
-}
-.meta,
-.post-category,
-.filter,
-.filter ul li a {
-    font-size: 0.8125rem;
 }
 .counter-wrapper {
     .counter {
