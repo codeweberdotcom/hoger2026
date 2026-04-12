@@ -213,6 +213,13 @@ $swiper-arrow-color-hover: $blue;
   height: .3rem!important;
 }
 
+
+// Sticky navbar clone shadow
+.navbar-clone.navbar-stick {
+    box-shadow: 0 .25rem 1.75rem rgba(156, 136, 111, 0.17) !important;
+}
+
+
 //--------------------------------------------------------------
 // Импорт шрифтов
 //--------------------------------------------------------------
