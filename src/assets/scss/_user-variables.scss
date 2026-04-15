@@ -35,6 +35,10 @@ $display-font-weight:    300;      // display заголовки тоже light
 $lead-font-weight:       300;      // normal (было: 500)
 $line-height-base:       1.6;      // (было: 1.7)
 
+// Icon list — коррекция под GillSans (метрики отличаются от Manrope)
+$icon-list-icon-top:    -0.1rem;
+$icon-list-bg-top:       0.25rem;
+
 // Display заголовки (−10% для компенсации uppercase)
 $display-font-sizes: (
   1: 3.15rem,  // было 3.5rem / 56px → ~50px
@@ -193,9 +197,6 @@ h1, h2, h3, h4, h5, h6,
 }
 
 // Minor UI fixes
-.icon-list.bullet-bg i {
-    top: 0.25rem;
-}
 .accordion-wrapper .card-header button:before {
     margin-top: -0.2rem;
 }
