@@ -35,8 +35,9 @@ $display-font-weight:    300;      // display заголовки тоже light
 $lead-font-weight:       300;      // normal (было: 500)
 $line-height-base:       1.6;      // (было: 1.7)
 
-// Icon list — коррекция под GillSans (метрики отличаются от Manrope)
-$icon-list-icon-top:    -0.1rem;
+// Коррекция под GillSans (метрики отличаются от Manrope)
+$unordered-list-dot-top: 0;
+$icon-list-icon-top:    -0.05rem;
 $icon-list-bg-top:       0.25rem;
 
 // Display заголовки (−10% для компенсации uppercase)
