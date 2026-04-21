@@ -221,18 +221,12 @@ $swiper-arrow-color-hover: $blue;
     box-shadow: 0 .25rem 1.75rem rgba(156, 136, 111, 0.17) !important;
 }
 
-// Solid overlay backgrounds (no transparency)
-.overlay span.bg {
-    background: #212529;
-}
-.overlay.color span.bg {
-    background: #9c886f;
-}
-.overlay.overlay-5 span.bg {
-    background: #212529;
-}
+// Solid overlay-5-primary background (no transparency)
 .overlay.overlay-5.color span.bg {
-    background: #9c886f;
+    background: $blue !important;
+}
+.overlay.overlay-5:hover span.bg {
+    opacity: 1 !important;
 }
 
 
