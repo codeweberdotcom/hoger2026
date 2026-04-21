@@ -221,6 +221,11 @@ $swiper-arrow-color-hover: $blue;
     box-shadow: 0 .25rem 1.75rem rgba(156, 136, 111, 0.17) !important;
 }
 
+// Solid overlay-5 background (no transparency)
+.overlay-5:hover span.bg {
+    opacity: 1;
+}
+
 
 //--------------------------------------------------------------
 // Импорт шрифтов
