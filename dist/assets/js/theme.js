@@ -509,14 +509,14 @@ var theme = {
         : 30;
       var sliderLoop = slider1.getAttribute("data-loop") === "true";
       var sliderCentered = slider1.getAttribute("data-centered") === "true";
-      var swiper = slider1.querySelector(".swiper:not(.swiper-thumbs)");
-      var swiperTh = slider1.querySelector(".swiper-thumbs");
-      var thumbsDirection = slider1.getAttribute("data-thumbs-direction") || "horizontal";
-      var thumbsItems = slider1.getAttribute("data-thumbs-items")
+      let swiper = slider1.querySelector(".swiper:not(.swiper-thumbs)");
+      let swiperTh = slider1.querySelector(".swiper-thumbs");
+      let thumbsDirection = slider1.getAttribute("data-thumbs-direction") || "horizontal";
+      let thumbsItems = slider1.getAttribute("data-thumbs-items")
         ? Number(slider1.getAttribute("data-thumbs-items"))
         : 5;
-      var thumbsMousewheel = slider1.getAttribute("data-thumbs-mousewheel") === "true";
-      var sliderTh = new Swiper(swiperTh, {
+      let thumbsMousewheel = slider1.getAttribute("data-thumbs-mousewheel") === "true";
+      let sliderTh = new Swiper(swiperTh, {
         slidesPerView: thumbsItems,
         spaceBetween: 10,
         loop: false,
