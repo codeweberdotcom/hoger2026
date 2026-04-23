@@ -468,7 +468,10 @@ var theme = {
           : Number(sliderItemsLg); // 1200 - end
         var sliderItemsXxl = slider1.getAttribute("data-items-xxl")
           ? slider1.getAttribute("data-items-xxl")
-          : Number(sliderItemsXl); // 1500 - end
+          : Number(sliderItemsXl); // 1400 - 1920
+        var sliderItemsXxxl = slider1.getAttribute("data-items-xxxl")
+          ? slider1.getAttribute("data-items-xxxl")
+          : Number(sliderItemsXxl); // 1921 - end
         var slidesPerViewInit = sliderItems;
         var breakpointsInit = {
           0: {
@@ -488,6 +491,9 @@ var theme = {
           },
           1400: {
             slidesPerView: Number(sliderItemsXxl),
+          },
+          1921: {
+            slidesPerView: Number(sliderItemsXxxl),
           },
         };
       }
