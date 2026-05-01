@@ -14,7 +14,166 @@ document.addEventListener("DOMContentLoaded", function() {
     const triggerType = modalElement.getAttribute('data-trigger-type');
     const triggerInactivity = modalElement.getAttribute('data-trigger-inactivity');
     const triggerViewport = modalElement.getAttribute('data-trigger-viewport');
+    const triggerUtmParam = modalElement.getAttribute('data-trigger-utm-param') || '';
+    const triggerUtmValue = modalElement.getAttribute('data-trigger-utm-value') || '';
     const waitDelay = modalElement.getAttribute('data-wait') || 200;
+    const notifId    = modalElement.getAttribute('data-notification-id') || '';
+    const maxFirings = parseInt(modalElement.getAttribute('data-max-firings') || '1', 10);
+    const countReset = parseFloat(modalElement.getAttribute('data-count-reset') || '720');
+
+    // --- Firing counter (cookie-based) ---
+    const countCookieName = notifId ? 'cw_notif_' + notifId + '_count' : '';
+
+    function getCookieVal(name) {
+        var m = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '=([^;]*)'));
+        return m ? parseInt(decodeURIComponent(m[1]), 10) : 0;
+    }
+    function setCookieVal(name, val, hours) {
+        var cookie = name + '=' + encodeURIComponent(val) + '; path=/; SameSite=Lax';
+        if (hours > 0) {
+            cookie += '; expires=' + new Date(Date.now() + hours * 3600000).toUTCString();
+        }
+        document.cookie = cookie;
+    }
+
+    function canFire() {
+        if (!notifId || maxFirings === 0) return true;
+        return getCookieVal(countCookieName) < maxFirings;
+    }
+    function recordFire() {
+        if (!notifId || maxFirings === 0) return;
+        var current = getCookieVal(countCookieName);
+        setCookieVal(countCookieName, current + 1, countReset);
+    }
+
+    function checkUtmMatch() {
+        if (!triggerUtmParam || !triggerUtmValue) return false;
+        const params = new URLSearchParams(window.location.search);
+        return params.get(triggerUtmParam) === triggerUtmValue;
+    }
+
+    // --- Composite Chain Mode ---
+    const compositeRaw      = modalElement.getAttribute('data-composite') || '';
+    const compositeLifetime = parseFloat(modalElement.getAttribute('data-composite-lifetime') || '24');
+    let   compositeSteps    = null;
+    try { if (compositeRaw) compositeSteps = JSON.parse(compositeRaw); } catch(e) {}
+
+    if (compositeSteps && compositeSteps.length > 0 && notifId) {
+        const cookieName     = 'cw_notif_' + notifId + '_chain';
+        const chainNotifType = modalElement.getAttribute('data-notification-type') || '';
+
+        function chainGetCookie() {
+            const m = document.cookie.match(new RegExp('(?:^|; )' + cookieName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '=([^;]*)'));
+            return m ? parseInt(decodeURIComponent(m[1]), 10) : 0;
+        }
+        function chainSetCookie(val) {
+            const exp = new Date(Date.now() + compositeLifetime * 3600000).toUTCString();
+            document.cookie = cookieName + '=' + encodeURIComponent(val) + '; expires=' + exp + '; path=/; SameSite=Lax';
+        }
+
+        function chainFire() {
+            if (!canFire()) return;
+            recordFire();
+            if (chainNotifType === 'cw_notify') {
+                if (typeof window.CWNotify === 'undefined') return;
+                window.CWNotify.show(
+                    modalElement.getAttribute('data-cw-message') || '',
+                    {
+                        type:     modalElement.getAttribute('data-cw-type')     || 'info',
+                        position: modalElement.getAttribute('data-cw-position') || 'bottom-end',
+                        delay:    parseInt(modalElement.getAttribute('data-cw-delay') || '5000', 10)
+                    }
+                );
+            } else if (chainNotifType === 'telegram') {
+                const fd   = new FormData();
+                const utmP = new URLSearchParams(window.location.search);
+                fd.append('action', 'codeweber_notification_telegram');
+                fd.append('nonce', modalElement.getAttribute('data-nonce') || '');
+                fd.append('notification_id', notifId);
+                fd.append('page_url', window.location.href);
+                ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(function(k) {
+                    fd.append(k, utmP.get(k) || '');
+                });
+                const aj = (typeof theme_scripts_ajax !== 'undefined') ? theme_scripts_ajax.ajax_url : '/wp-admin/admin-ajax.php';
+                fetch(aj, { method: 'POST', body: fd });
+            } else {
+                if (typeof bootstrap !== 'undefined') {
+                    try { new bootstrap.Modal(modalElement).show(); } catch(e) {}
+                }
+            }
+        }
+
+        let chainStep = chainGetCookie();
+
+        function chainAdvance() {
+            chainStep++;
+            chainSetCookie(chainStep);
+            if (chainStep >= compositeSteps.length) {
+                chainFire();
+            } else {
+                chainInitStep(chainStep);
+            }
+        }
+
+        function chainInitStep(idx) {
+            if (idx >= compositeSteps.length) return;
+            const step = compositeSteps[idx];
+
+            if (step.type === 'page') {
+                var val = step.value || '';
+                var hit = false;
+                if (val === 'home' || val === 'front-page') {
+                    hit = document.body.classList.contains('home') || document.body.classList.contains('front-page');
+                } else if (val) {
+                    hit = document.body.classList.contains('page-id-' + val) ||
+                          document.body.classList.contains('postid-' + val);
+                }
+                if (hit) chainAdvance();
+
+            } else if (step.type === 'utm_param') {
+                var p = new URLSearchParams(window.location.search);
+                if (step.utm_param && step.utm_value && p.get(step.utm_param) === step.utm_value) {
+                    chainAdvance();
+                }
+
+            } else if (step.type === 'codeweber_form') {
+                document.addEventListener('codeweber_form_success', chainAdvance, { once: true });
+
+            } else if (step.type === 'cf7_form') {
+                document.addEventListener('wpcf7mailsent', chainAdvance, { once: true });
+                document.addEventListener('cf7_form_success', chainAdvance, { once: true });
+
+            } else if (step.type === 'woocommerce_order') {
+                if (document.body.classList.contains('woocommerce-order-received')) { chainAdvance(); return; }
+                document.addEventListener('woocommerce_order_success', chainAdvance, { once: true });
+
+            } else if (step.type === 'scroll_middle') {
+                var smDone = false;
+                function smCheck() {
+                    if (smDone) return;
+                    if ((window.pageYOffset + window.innerHeight) / document.documentElement.scrollHeight >= 0.5) {
+                        smDone = true; chainAdvance();
+                    }
+                }
+                smCheck();
+                window.addEventListener('scroll', smCheck, { passive: true });
+
+            } else if (step.type === 'scroll_end') {
+                var seDone = false;
+                function seCheck() {
+                    if (seDone) return;
+                    if ((window.pageYOffset + window.innerHeight) / document.documentElement.scrollHeight >= 0.95) {
+                        seDone = true; chainAdvance();
+                    }
+                }
+                seCheck();
+                window.addEventListener('scroll', seCheck, { passive: true });
+            }
+        }
+
+        chainInitStep(chainStep);
+        return; // skip single-trigger logic
+    }
 
     // --- CW Notify (Toast) type ---
     const notificationType = modalElement.getAttribute('data-notification-type');
@@ -26,7 +185,9 @@ document.addEventListener("DOMContentLoaded", function() {
         const cwDelay    = parseInt(modalElement.getAttribute('data-cw-delay') || '5000', 10);
 
         function showCwNotify() {
+            if (!canFire()) return;
             if (typeof window.CWNotify === 'undefined') return;
+            recordFire();
             window.CWNotify.show(cwMessage, { type: cwType, position: cwPosition, delay: cwDelay });
         }
 
@@ -83,11 +244,108 @@ document.addEventListener("DOMContentLoaded", function() {
                 document.addEventListener('woocommerce_order_success', showCwNotify);
             } else if (triggerType === 'page') {
                 setTimeout(showCwNotify, parseInt(waitDelay));
+            } else if (triggerType === 'utm_param') {
+                if (checkUtmMatch()) { showCwNotify(); }
             }
         }
 
         initCwNotifyTriggers();
         return; // не инициализируем Bootstrap Modal
+    }
+
+    // --- Telegram Notification type ---
+    if (notificationType === 'telegram') {
+        if (!triggerType) return;
+        const notificationId = modalElement.getAttribute('data-notification-id');
+        const nonce = modalElement.getAttribute('data-nonce');
+
+        function getUtmParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                utm_source:   params.get('utm_source')   || '',
+                utm_medium:   params.get('utm_medium')   || '',
+                utm_campaign: params.get('utm_campaign') || '',
+                utm_term:     params.get('utm_term')     || '',
+                utm_content:  params.get('utm_content')  || '',
+            };
+        }
+
+        function sendTelegramNotification() {
+            if (!canFire()) return;
+            recordFire();
+            const utm = getUtmParams();
+            const formData = new FormData();
+            formData.append('action', 'codeweber_notification_telegram');
+            formData.append('nonce', nonce);
+            formData.append('notification_id', notificationId);
+            formData.append('page_url', window.location.href);
+            Object.entries(utm).forEach(function([k, v]) { formData.append(k, v); });
+            const ajaxUrl = (typeof theme_scripts_ajax !== 'undefined' && theme_scripts_ajax.ajax_url)
+                ? theme_scripts_ajax.ajax_url
+                : '/wp-admin/admin-ajax.php';
+            fetch(ajaxUrl, { method: 'POST', body: formData });
+        }
+
+        function initTelegramTriggers() {
+            if (triggerType === 'delay') {
+                setTimeout(sendTelegramNotification, parseInt(waitDelay));
+            } else if (triggerType === 'inactivity') {
+                var inactivityDelay = triggerInactivity ? parseInt(triggerInactivity) : 30000;
+                var inactivityTimer;
+                function resetTimerTg() {
+                    clearTimeout(inactivityTimer);
+                    inactivityTimer = setTimeout(sendTelegramNotification, inactivityDelay);
+                }
+                ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(function(evt) {
+                    document.addEventListener(evt, resetTimerTg, true);
+                });
+                resetTimerTg();
+            } else if (triggerType === 'viewport' && triggerViewport) {
+                var elementId = triggerViewport.replace('#', '');
+                var targetEl = document.getElementById(elementId) || document.querySelector(triggerViewport);
+                if (targetEl) {
+                    var obs = new IntersectionObserver(function(entries) {
+                        entries.forEach(function(entry) {
+                            if (entry.isIntersecting) { sendTelegramNotification(); obs.disconnect(); }
+                        });
+                    }, { threshold: 0.1 });
+                    obs.observe(targetEl);
+                }
+            } else if (triggerType === 'scroll_middle') {
+                var triggeredMid = false;
+                function checkMidTg() {
+                    if (triggeredMid) return;
+                    var pct = (window.pageYOffset + window.innerHeight) / document.documentElement.scrollHeight;
+                    if (pct >= 0.5) { triggeredMid = true; sendTelegramNotification(); }
+                }
+                checkMidTg();
+                window.addEventListener('scroll', checkMidTg, { passive: true });
+            } else if (triggerType === 'scroll_end') {
+                var triggeredEnd = false;
+                function checkEndTg() {
+                    if (triggeredEnd) return;
+                    var pct = (window.pageYOffset + window.innerHeight) / document.documentElement.scrollHeight;
+                    if (pct >= 0.95) { triggeredEnd = true; sendTelegramNotification(); }
+                }
+                checkEndTg();
+                window.addEventListener('scroll', checkEndTg, { passive: true });
+            } else if (triggerType === 'codeweber_form') {
+                document.addEventListener('codeweber_form_success', sendTelegramNotification);
+            } else if (triggerType === 'cf7_form') {
+                document.addEventListener('wpcf7mailsent', sendTelegramNotification);
+                document.addEventListener('cf7_form_success', sendTelegramNotification);
+            } else if (triggerType === 'woocommerce_order') {
+                if (document.body.classList.contains('woocommerce-order-received')) { sendTelegramNotification(); }
+                document.addEventListener('woocommerce_order_success', sendTelegramNotification);
+            } else if (triggerType === 'page') {
+                setTimeout(sendTelegramNotification, parseInt(waitDelay));
+            } else if (triggerType === 'utm_param') {
+                if (checkUtmMatch()) { sendTelegramNotification(); }
+            }
+        }
+
+        initTelegramTriggers();
+        return;
     }
 
     // --- Modal type ---
@@ -152,18 +410,23 @@ document.addEventListener("DOMContentLoaded", function() {
         if (triggerHandled) {
             return;
         }
-        
+
+        if (!canFire()) {
+            return;
+        }
+
         if (isHigherPriorityModalOpen()) {
             return;
         }
-        
+
         triggerHandled = true;
-        
+
         setTimeout(function() {
             if (isHigherPriorityModalOpen()) {
                 triggerHandled = false;
                 return;
             }
+            recordFire();
             modal.show();
         }, parseInt(waitDelay));
     }
@@ -341,6 +604,9 @@ document.addEventListener("DOMContentLoaded", function() {
     
     else if (triggerType === 'page') {
         showNotificationModal();
+    }
+    else if (triggerType === 'utm_param') {
+        if (checkUtmMatch()) { showNotificationModal(); }
     }
         else {
         }
