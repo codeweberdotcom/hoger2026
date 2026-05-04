@@ -980,8 +980,15 @@ document.addEventListener("DOMContentLoaded", () => {
     newForm.addEventListener("submit", function(e) {
       e.preventDefault();
       e.stopPropagation();
-      
-      
+
+      if (!newForm.checkValidity()) {
+        newForm.classList.add("was-validated");
+        const firstInvalid = newForm.querySelector(":invalid");
+        if (firstInvalid) firstInvalid.focus();
+        return;
+      }
+      newForm.classList.remove("was-validated");
+
       const formData = new FormData(newForm);
       const submitButton = newForm.querySelector('button[type="submit"]');
       const originalButtonHTML = submitButton ? submitButton.innerHTML : '';
@@ -1021,6 +1028,16 @@ document.addEventListener("DOMContentLoaded", () => {
         document_id: parseInt(formData.get('document_id')),
         email: formData.get('email')
       };
+
+      // Collect consent checkboxes
+      const consents = {};
+      newForm.querySelectorAll('input[type="checkbox"][name^="form_consents_"]').forEach(function(cb) {
+        const key = cb.name.replace('form_consents_', '');
+        consents[key] = cb.checked ? '1' : '0';
+      });
+      if (Object.keys(consents).length > 0) {
+        requestData.consents = consents;
+      }
       
       
       fetch(wpApiSettings.root + 'codeweber/v1/documents/send-email', {
@@ -1034,9 +1051,12 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .then(function(response) {
         if (!response.ok) {
+          var httpStatus = response.status;
           return response.json().then(function(err) {
             const serverErrorText = typeof codeweberDocumentEmail !== 'undefined' ? codeweberDocumentEmail.serverError : 'Server error';
-            throw new Error(err.message || serverErrorText + ': ' + response.status);
+            var error = new Error(err.message || serverErrorText + ': ' + httpStatus);
+            error.httpStatus = httpStatus;
+            throw error;
           });
         }
         return response.json();
@@ -1089,31 +1109,27 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .catch(function(error) {
         console.error('[Document Email] Error:', error);
-        
+
         if (submitButton) {
           submitButton.disabled = originalButtonDisabled;
           submitButton.innerHTML = originalButtonHTML;
-          // Восстанавливаем оригинальный minHeight или очищаем
           if (originalMinHeight) {
             submitButton.style.minHeight = originalMinHeight;
           } else {
             submitButton.style.minHeight = '';
           }
         }
-        
-        // Показываем ошибку в модальном окне, не закрывая его
-        const errorText = typeof codeweberDocumentEmail !== 'undefined' ? codeweberDocumentEmail.errorText : 'Error sending email. Please try again.';
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'alert alert-danger mt-3';
-        errorDiv.textContent = error.message || errorText;
-        newForm.appendChild(errorDiv);
-        
-        // Убираем сообщение об ошибке через 5 секунд
-        setTimeout(function() {
-          if (errorDiv.parentNode) {
-            errorDiv.parentNode.removeChild(errorDiv);
-          }
-        }, 5000);
+
+        var messagesDiv = newForm.querySelector('.document-email-form-messages');
+        if (messagesDiv) {
+          var isRateLimit = error.httpStatus === 429;
+          var rateLimitText = typeof codeweberDocumentEmail !== 'undefined' && codeweberDocumentEmail.rateLimitText
+            ? codeweberDocumentEmail.rateLimitText
+            : 'File already sent. Check your Spam folder or use a different email address.';
+          messagesDiv.textContent = isRateLimit ? rateLimitText : (error.message || '');
+          messagesDiv.style.display = 'block';
+          setTimeout(function() { messagesDiv.style.display = 'none'; }, 7000);
+        }
       });
     });
   }
