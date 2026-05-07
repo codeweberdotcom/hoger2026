@@ -50,7 +50,7 @@ function hoger_partners_shortcode( $atts ) {
 		$email   = get_post_meta( $id, 'partner_email', true );
 		$website = get_post_meta( $id, 'partner_website', true );
 		?>
-		<div class="row g-3 flex-column-reverse flex-md-row mb-6">
+		<div class="row g-3 flex-column flex-md-row mb-6">
 
 			<div class="col-xl-4">
 				<div class="card h-100 image-wrapper bg-image rounded"<?php if ( $thumb_url ) : ?> style="background-image: url('<?php echo esc_url( $thumb_url ); ?>');"<?php endif; ?>>
