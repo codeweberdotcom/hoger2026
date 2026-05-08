@@ -37,3 +37,13 @@ Uses Inter font via _user-variables.scss
 
 // User custom styles (from parent)
 @import 'user';
+
+.plane_1 {
+  left: -700px;
+  top: 0;
+}
+
+.plane_2 {
+  right: -700px;
+  bottom: 90px;
+}
