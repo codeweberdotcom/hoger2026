@@ -329,6 +329,8 @@ function hoger_models_new_admin_scripts( $hook ) {
 	}
 
 	wp_enqueue_media();
+	wp_enqueue_style( 'wp-color-picker' );
+	wp_enqueue_script( 'wp-color-picker' );
 
 	wp_add_inline_style( 'wp-admin', '
 		.mn-swatch-grid { display:flex;flex-wrap:wrap;gap:3px;margin-bottom:4px; }

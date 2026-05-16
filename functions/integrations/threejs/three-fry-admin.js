@@ -15,6 +15,9 @@ const statusEl  = document.getElementById("mn-load-status");
 let colorMap = {};
 try { colorMap = JSON.parse(jsonInput.value || "{}"); } catch(e) {}
 
+// mesh name → THREE.Mesh reference (for live preview updates)
+let meshMap = {};
+
 let renderer, animId;
 
 // ── Get model URL via WP REST API ──────────────────────────────────────────
@@ -22,12 +25,8 @@ function getModelUrl() {
   const id = (document.getElementById("mn_model_file") || {}).value;
   if (!id || id === "0") return Promise.resolve(null);
 
-  const root = (window.wpApiSettings && window.wpApiSettings.root)
-    ? window.wpApiSettings.root
-    : "/wp-json/";
-  const nonce = (window.wpApiSettings && window.wpApiSettings.nonce)
-    ? window.wpApiSettings.nonce
-    : "";
+  const root  = (window.wpApiSettings && window.wpApiSettings.root)  || "/wp-json/";
+  const nonce = (window.wpApiSettings && window.wpApiSettings.nonce) || "";
 
   return fetch(`${root}wp/v2/media/${id}`, {
     headers: nonce ? { "X-WP-Nonce": nonce } : {},
@@ -38,7 +37,7 @@ function getModelUrl() {
 }
 
 // ── Center object in scene ─────────────────────────────────────────────────
-function centerAndFit(object, camera, controls) {
+function centerAndFit(object, camera) {
   object.updateMatrixWorld(true);
   const b    = new THREE.Box3().setFromObject(object);
   const size = b.getSize(new THREE.Vector3());
@@ -48,95 +47,124 @@ function centerAndFit(object, camera, controls) {
   const b2     = new THREE.Box3().setFromObject(object);
   const center = b2.getCenter(new THREE.Vector3());
   object.position.sub(center);
-  const fov     = camera.fov * (Math.PI / 180);
-  const fitted  = (b2.getSize(new THREE.Vector3()).y / 2) / Math.tan(fov / 2) * 1.5;
+  const fov    = camera.fov * (Math.PI / 180);
+  const fitted = (b2.getSize(new THREE.Vector3()).y / 2) / Math.tan(fov / 2) * 1.5;
   camera.position.set(0, 0, Math.max(fitted, 3));
   camera.lookAt(0, 0, 0);
 }
 
-// ── Apply saved colorMap to preview model ──────────────────────────────────
-function applyColorMap(object) {
+// ── Apply saved colorMap to preview meshes ─────────────────────────────────
+function applyColorMap() {
+  Object.entries(colorMap).forEach(([name, hex]) => {
+    const mesh = meshMap[name];
+    if (!mesh) return;
+    mesh.material = new THREE.MeshStandardMaterial({
+      color: new THREE.Color(hex),
+      side: THREE.DoubleSide,
+    });
+  });
+}
+
+// ── Build mesh list with wp-color-picker inputs ────────────────────────────
+function buildMeshList(object) {
+  meshList.innerHTML = "";
+  meshMap = {};
+
+  const meshes = [];
   let idx = 0;
   object.traverse(child => {
     if (!child.isMesh) return;
     const name = child.name || `mesh_${idx++}`;
-    if (colorMap[name]) {
-      child.material = new THREE.MeshStandardMaterial({
-        color: new THREE.Color(colorMap[name]),
-        side: THREE.DoubleSide,
-      });
-    }
-  });
-}
-
-// ── Build color-picker rows ────────────────────────────────────────────────
-function buildMeshList(object) {
-  meshList.innerHTML = "";
-  const meshes = [];
-  let idx = 0;
-  object.traverse(child => {
-    if (child.isMesh) meshes.push({ mesh: child, name: child.name || `mesh_${idx++}` });
+    meshes.push({ mesh: child, name });
+    meshMap[name] = child;
+    child.userData.origMat = child.material;
   });
 
   if (!meshes.length) {
-    meshList.innerHTML = '<p style="color:#999;font-size:13px">No meshes found in this model.</p>';
+    meshList.innerHTML = '<p style="color:#999;font-size:13px">No meshes found.</p>';
     return;
   }
 
   const header = document.createElement("p");
-  header.style.cssText = "font-weight:600;font-size:13px;margin:0 0 8px";
+  header.style.cssText = "font-weight:600;font-size:13px;margin:0 0 10px";
   header.textContent = `${meshes.length} mesh${meshes.length > 1 ? "es" : ""} found:`;
   meshList.appendChild(header);
 
   meshes.forEach(({ mesh, name }) => {
     const current = colorMap[name] || "";
+
     const row = document.createElement("div");
-    row.style.cssText = "display:flex;align-items:center;gap:8px;margin-bottom:5px;";
+    row.style.cssText = "display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;";
 
-    const picker = document.createElement("input");
-    picker.type  = "color";
-    picker.value = current || "#cccccc";
-    picker.style.cssText = "width:36px;height:26px;padding:1px;border:1px solid #ccc;cursor:pointer;border-radius:3px;flex-shrink:0;";
-
+    // Label
     const label = document.createElement("span");
-    label.style.cssText = "font-size:12px;font-family:monospace;word-break:break-all;";
+    label.style.cssText = "font-size:12px;font-family:monospace;word-break:break-all;flex:1;padding-top:5px;";
     label.textContent = name;
 
-    const clearBtn = document.createElement("button");
-    clearBtn.type = "button";
-    clearBtn.title = "Reset (use default color)";
-    clearBtn.style.cssText = "background:none;border:none;cursor:pointer;color:#aaa;font-size:14px;padding:0;flex-shrink:0;";
-    clearBtn.textContent = "×";
+    // Color input (will be enhanced by wpColorPicker)
+    const input = document.createElement("input");
+    input.type        = "text";
+    input.value       = current;
+    input.placeholder = "#rrggbb";
+    input.dataset.mesh = name;
+    input.className   = "mn-mesh-color-pick small-text";
+    input.style.cssText = "width:80px;";
 
-    // sync color changes to colorMap + preview
-    picker.addEventListener("input", e => {
-      colorMap[name] = e.target.value;
-      jsonInput.value = JSON.stringify(colorMap);
-      mesh.material = new THREE.MeshStandardMaterial({
-        color: new THREE.Color(e.target.value),
-        side: THREE.DoubleSide,
-      });
-    });
+    // Reset button
+    const clearBtn = document.createElement("button");
+    clearBtn.type  = "button";
+    clearBtn.title = "Reset to default";
+    clearBtn.style.cssText = "background:none;border:none;cursor:pointer;color:#aaa;font-size:16px;padding:0;line-height:1;flex-shrink:0;padding-top:3px;";
+    clearBtn.textContent = "×";
 
     clearBtn.addEventListener("click", () => {
       delete colorMap[name];
       jsonInput.value = JSON.stringify(colorMap);
-      picker.value = "#cccccc";
+      // reset wpColorPicker value
+      if (window.jQuery) {
+        window.jQuery(input).wpColorPicker("color", "");
+        window.jQuery(input).val("").trigger("change");
+      }
       mesh.material = mesh.userData.origMat || new THREE.MeshStandardMaterial({ color: 0xcccccc });
     });
 
-    // store original material for reset
-    mesh.userData.origMat = mesh.material.clone ? mesh.material.clone() : mesh.material;
-
-    row.appendChild(picker);
     row.appendChild(label);
+    row.appendChild(input);
     row.appendChild(clearBtn);
     meshList.appendChild(row);
   });
 
-  // Apply existing colorMap to mesh materials
-  applyColorMap(object);
+  // Apply existing colorMap to preview
+  applyColorMap();
   jsonInput.value = JSON.stringify(colorMap);
+
+  // Init wpColorPicker after DOM is ready
+  if (window.jQuery && window.jQuery.fn.wpColorPicker) {
+    window.jQuery(".mn-mesh-color-pick").wpColorPicker({
+      change(event, ui) {
+        const name  = event.target.dataset.mesh;
+        const color = ui.color.toString();
+        colorMap[name] = color;
+        jsonInput.value = JSON.stringify(colorMap);
+        const mesh = meshMap[name];
+        if (mesh) {
+          mesh.material = new THREE.MeshStandardMaterial({
+            color: new THREE.Color(color),
+            side: THREE.DoubleSide,
+          });
+        }
+      },
+      clear(event) {
+        const name = event.target.dataset.mesh;
+        delete colorMap[name];
+        jsonInput.value = JSON.stringify(colorMap);
+        const mesh = meshMap[name];
+        if (mesh) {
+          mesh.material = mesh.userData.origMat || new THREE.MeshStandardMaterial({ color: 0xcccccc });
+        }
+      },
+    });
+  }
 }
 
 // ── Load model & init mini scene ───────────────────────────────────────────
@@ -145,11 +173,10 @@ function loadModel(url) {
   loadBtn.disabled = true;
   meshList.innerHTML = "";
 
-  // Cleanup previous renderer
   if (animId) cancelAnimationFrame(animId);
   if (renderer) renderer.dispose();
 
-  const scene    = new THREE.Scene();
+  const scene  = new THREE.Scene();
   scene.background = new THREE.Color(0xf0f2f5);
 
   const w = canvas.offsetWidth  || 300;
@@ -165,7 +192,6 @@ function loadModel(url) {
   dir.position.set(10, 20, 15);
   scene.add(dir);
 
-  // Simple rotation for preview
   let rotY = 0;
 
   function onLoad(object) {
@@ -204,15 +230,11 @@ function loadModel(url) {
 
 // ── Button handler ─────────────────────────────────────────────────────────
 loadBtn.addEventListener("click", () => {
-  getModelUrl().then(url => {
-    if (url) {
-      loadModel(url);
-    } else {
-      statusEl.textContent = "No 3D model file assigned yet.";
-    }
-  }).catch(() => {
-    statusEl.textContent = "Could not fetch model URL.";
-  });
+  getModelUrl()
+    .then(url => {
+      url ? loadModel(url) : (statusEl.textContent = "No 3D model file assigned yet.");
+    })
+    .catch(() => { statusEl.textContent = "Could not fetch model URL."; });
 });
 
 // ── Auto-load if model already assigned ───────────────────────────────────
