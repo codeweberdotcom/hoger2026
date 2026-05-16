@@ -30,7 +30,7 @@ function initScene(canvas, modelUrl) {
     antialias: true,
     alpha: true,
   });
-  const size = Math.min(window.innerWidth, window.innerHeight);
+  const size = canvas.parentElement.offsetWidth;
   renderer.setSize(size, size);
 
   const isMobile = window.innerWidth <= 768;
@@ -255,7 +255,7 @@ function initScene(canvas, modelUrl) {
   animate();
 
   window.addEventListener("resize", () => {
-    const newSize = Math.min(window.innerWidth, window.innerHeight);
+    const newSize = canvas.parentElement.offsetWidth;
     renderer.setSize(newSize, newSize);
     camera.aspect = 1;
     camera.updateProjectionMatrix();
