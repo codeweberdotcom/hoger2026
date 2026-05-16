@@ -19,18 +19,20 @@ while ( have_posts() ) :
 
 	// Supports both native array format and ACF repeater format
 	$params_raw = get_post_meta( $post_id, 'perechen_parametrov_pod_zagolovokom', true );
-	if ( is_array( $params_raw ) ) {
+	if ( is_array( $params_raw ) && ! empty( $params_raw ) ) {
 		$params = $params_raw;
-	} elseif ( is_numeric( $params_raw ) && (int) $params_raw > 0 ) {
-		$params = [];
-		for ( $i = 0; $i < (int) $params_raw; $i++ ) {
-			$item = get_post_meta( $post_id, 'perechen_parametrov_pod_zagolovokom_' . $i . '_element_spiska', true );
-			if ( $item !== '' ) {
-				$params[] = [ 'element_spiska' => $item ];
-			}
-		}
 	} else {
+		// ACF repeater stores items as individual meta keys; main key may be empty or integer count
 		$params = [];
+		$i      = 0;
+		while ( true ) {
+			$item = get_post_meta( $post_id, 'perechen_parametrov_pod_zagolovokom_' . $i . '_element_spiska', true );
+			if ( $item === '' || $item === false ) {
+				break;
+			}
+			$params[] = [ 'element_spiska' => $item ];
+			$i++;
+		}
 	}
 
 	$description = get_post_meta( $post_id, 'opisanie_modeli', true );
@@ -70,14 +72,6 @@ while ( have_posts() ) :
 					<?php if ( $subtitle ) : ?>
 						<p class="lead fs-25 lh-sm mb-3"><?php echo esc_html( $subtitle ); ?></p>
 					<?php endif; ?>
-
-					<!-- DEBUG params_raw: <?php echo esc_html( print_r( get_post_meta( $post_id, 'perechen_parametrov_pod_zagolovokom', true ), true ) ); ?> -->
-					<!-- DEBUG params_0: <?php echo esc_html( print_r( get_post_meta( $post_id, 'perechen_parametrov_pod_zagolovokom_0_element_spiska', true ), true ) ); ?> -->
-					<!-- DEBUG relevant meta: <?php
-						$all      = get_post_meta( $post_id );
-						$relevant = array_filter( $all, fn( $k ) => str_contains( $k, 'perechen' ), ARRAY_FILTER_USE_KEY );
-						echo esc_html( print_r( $relevant, true ) );
-					?> -->
 
 					<?php if ( ! empty( $params ) ) : ?>
 						<ul class="icon-list bullet-bg bullet-soft-dark mb-5">
