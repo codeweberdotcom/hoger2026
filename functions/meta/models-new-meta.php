@@ -172,19 +172,61 @@ function hoger_models_new_viewer_settings_cb( $post ) {
 	$auto_rotate = get_post_meta( $post->ID, 'mn_auto_rotate', true );
 	$auto_rotate = $auto_rotate === '' ? '1' : $auto_rotate;
 	?>
+	<?php
+	$bg_colors = [
+		'#f2f2fb' => __( 'Light Gray (default)', 'hoger' ),
+		'#ffffff' => __( 'White', 'hoger' ),
+		'#1e2228' => __( 'Navy', 'hoger' ),
+		'#292728' => __( 'Dark', 'hoger' ),
+		'#9c886f' => __( 'Taupe (Primary)', 'hoger' ),
+	];
+	$edge_colors = [
+		'#0057b8' => __( 'Blue (fryreglet)', 'hoger' ),
+		'#9c886f' => __( 'Taupe (Primary)', 'hoger' ),
+		'#1e2228' => __( 'Navy', 'hoger' ),
+		'#292728' => __( 'Dark', 'hoger' ),
+		'#ffffff' => __( 'White', 'hoger' ),
+	];
+
+	$bg_is_custom   = ! array_key_exists( $bg_color, $bg_colors );
+	$edge_is_custom = ! array_key_exists( $edge_color, $edge_colors );
+	?>
 	<div style="margin-bottom:12px">
-		<label for="mn_bg_color" style="display:block;font-weight:600;margin-bottom:4px">
+		<label for="mn_bg_color_select" style="display:block;font-weight:600;margin-bottom:4px">
 			<?php esc_html_e( 'Background Color', 'hoger' ); ?>
 		</label>
-		<input type="color" id="mn_bg_color" name="mn_bg_color"
-			value="<?php echo esc_attr( $bg_color ); ?>">
+		<select id="mn_bg_color_select" class="mn-color-select" data-target="mn_bg_color">
+			<?php foreach ( $bg_colors as $hex => $label ) : ?>
+				<option value="<?php echo esc_attr( $hex ); ?>" <?php selected( ! $bg_is_custom && $bg_color === $hex ); ?>>
+					<?php echo esc_html( $hex . ' — ' . $label ); ?>
+				</option>
+			<?php endforeach; ?>
+			<option value="custom" <?php selected( $bg_is_custom ); ?>><?php esc_html_e( '— Custom color —', 'hoger' ); ?></option>
+		</select>
+		<input type="text" id="mn_bg_color_picker" class="mn-color-picker"
+			value="<?php echo esc_attr( $bg_color ); ?>"
+			placeholder="#rrggbb"
+			style="margin-top:6px;width:120px;display:<?php echo $bg_is_custom ? 'block' : 'none'; ?>">
+		<input type="hidden" id="mn_bg_color" name="mn_bg_color" value="<?php echo esc_attr( $bg_color ); ?>">
 	</div>
+
 	<div style="margin-bottom:12px">
-		<label for="mn_edge_color" style="display:block;font-weight:600;margin-bottom:4px">
+		<label for="mn_edge_color_select" style="display:block;font-weight:600;margin-bottom:4px">
 			<?php esc_html_e( 'Edge Color', 'hoger' ); ?>
 		</label>
-		<input type="color" id="mn_edge_color" name="mn_edge_color"
-			value="<?php echo esc_attr( $edge_color ); ?>">
+		<select id="mn_edge_color_select" class="mn-color-select" data-target="mn_edge_color">
+			<?php foreach ( $edge_colors as $hex => $label ) : ?>
+				<option value="<?php echo esc_attr( $hex ); ?>" <?php selected( ! $edge_is_custom && $edge_color === $hex ); ?>>
+					<?php echo esc_html( $hex . ' — ' . $label ); ?>
+				</option>
+			<?php endforeach; ?>
+			<option value="custom" <?php selected( $edge_is_custom ); ?>><?php esc_html_e( '— Custom color —', 'hoger' ); ?></option>
+		</select>
+		<input type="text" id="mn_edge_color_picker" class="mn-color-picker"
+			value="<?php echo esc_attr( $edge_color ); ?>"
+			placeholder="#rrggbb"
+			style="margin-top:6px;width:120px;display:<?php echo $edge_is_custom ? 'block' : 'none'; ?>">
+		<input type="hidden" id="mn_edge_color" name="mn_edge_color" value="<?php echo esc_attr( $edge_color ); ?>">
 	</div>
 	<div style="margin-bottom:12px">
 		<label style="display:flex;align-items:center;gap:6px;font-weight:600">
@@ -263,6 +305,26 @@ function hoger_models_new_admin_scripts( $hook ) {
 			$(document).on('click', '.mn-param-remove', function(e) {
 				e.preventDefault();
 				$(this).closest('.mn-param-row').remove();
+			});
+
+			// Color select + custom text field
+			$(document).on('change', '.mn-color-select', function() {
+				var target  = $(this).data('target');
+				var val     = $(this).val();
+				var picker  = $(this).next('.mn-color-picker');
+				if (val === 'custom') {
+					picker.show();
+					$('#' + target).val(picker.val());
+				} else {
+					picker.hide();
+					$('#' + target).val(val);
+				}
+			});
+
+			$(document).on('input', '.mn-color-picker', function() {
+				var target = $(this).prev('select').data('target') ||
+				             $(this).closest('div').find('input[type=hidden]').attr('id');
+				$('#' + target).val($(this).val());
 			});
 		});
 	" );
