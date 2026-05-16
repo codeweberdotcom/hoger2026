@@ -1,5 +1,26 @@
 <?php
 
+// ─── Allow 3D file types in media library ─────────────────────────────────
+
+add_filter( 'upload_mimes', 'hoger_models_new_upload_mimes' );
+function hoger_models_new_upload_mimes( $mimes ) {
+	$mimes['fbx']  = 'application/octet-stream';
+	$mimes['obj']  = 'application/octet-stream';
+	$mimes['glb']  = 'model/gltf-binary';
+	$mimes['gltf'] = 'model/gltf+json';
+	return $mimes;
+}
+
+add_filter( 'wp_check_filetype_and_ext', 'hoger_models_new_check_filetype', 10, 4 );
+function hoger_models_new_check_filetype( $data, $file, $filename, $mimes ) {
+	$ext = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
+	if ( in_array( $ext, [ 'fbx', 'obj', 'glb', 'gltf' ], true ) ) {
+		$data['ext']  = $ext;
+		$data['type'] = isset( $mimes[ $ext ] ) ? $mimes[ $ext ] : 'application/octet-stream';
+	}
+	return $data;
+}
+
 // ─── Meta boxes registration ───────────────────────────────────────────────
 
 add_action( 'add_meta_boxes', 'hoger_models_new_meta_boxes' );
