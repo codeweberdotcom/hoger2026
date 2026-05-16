@@ -88,7 +88,9 @@ function hoger_threejs_module_type( $tag, $handle ) {
 	if ( $handle !== 'hoger-threejs' ) {
 		return $tag;
 	}
-	return str_replace( ' src=', ' type="module" src=', $tag );
+	$tag = str_replace( "type='text/javascript'", '', $tag );
+	$tag = str_replace( 'type="text/javascript"', '', $tag );
+	return str_replace( '<script ', '<script type="module" ', $tag );
 }
 
 add_action( 'wp_enqueue_scripts', 'hoger_enqueue_styles' );
