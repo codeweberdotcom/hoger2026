@@ -246,47 +246,65 @@ function hoger_models_new_viewer_settings_cb( $post ) {
 		</p>
 	</div>
 
-	<div style="margin-bottom:12px">
-		<label for="mn_bg_color_select" style="display:block;font-weight:600;margin-bottom:4px">
+	<div style="margin-bottom:14px">
+		<label style="display:block;font-weight:600;margin-bottom:5px">
 			<?php esc_html_e( 'Background Color', 'hoger' ); ?>
 		</label>
-		<select id="mn_bg_color_select" class="mn-color-select" data-target="mn_bg_color">
-			<?php foreach ( $bg_colors as $hex => $label ) : ?>
-				<option value="<?php echo esc_attr( $hex ); ?>" <?php selected( ! $bg_is_custom && $bg_color === $hex ); ?>>
-					<?php echo esc_html( $hex . ' — ' . $label ); ?>
-				</option>
+		<div class="mn-swatch-grid" data-target="mn_bg_color">
+			<?php foreach ( $bg_colors as $hex => $label ) :
+				$active = ( ! $bg_is_custom && $bg_color === $hex );
+			?>
+			<span class="mn-swatch<?php echo $active ? ' mn-swatch--active' : ''; ?>"
+				data-hex="<?php echo esc_attr( $hex ); ?>"
+				title="<?php echo esc_attr( $label ); ?>"
+				style="background:<?php echo esc_attr( $hex ); ?>;"
+			></span>
 			<?php endforeach; ?>
-			<option value="custom" <?php selected( $bg_is_custom ); ?>><?php esc_html_e( '— Custom —', 'hoger' ); ?></option>
-		</select>
-		<input type="text" id="mn_bg_color_picker" class="mn-color-picker"
-			value="<?php echo esc_attr( $bg_color ); ?>"
-			placeholder="#rrggbb"
-			style="margin-top:6px;width:120px;display:<?php echo $bg_is_custom ? 'block' : 'none'; ?>">
+			<span class="mn-swatch mn-swatch--custom<?php echo $bg_is_custom ? ' mn-swatch--active' : ''; ?>"
+				data-hex="custom"
+				title="<?php esc_attr_e( 'Custom hex', 'hoger' ); ?>">+</span>
+		</div>
+		<div class="mn-swatch-label">
+			<?php echo esc_html( $bg_is_custom ? $bg_color : ( $bg_colors[ $bg_color ] ?? '' ) ); ?>
+		</div>
 		<input type="hidden" id="mn_bg_color" name="mn_bg_color" value="<?php echo esc_attr( $bg_color ); ?>">
-		<label style="display:flex;align-items:center;gap:6px;margin-top:6px;font-size:12px">
+		<input type="text" class="mn-color-custom-input"
+			value="<?php echo $bg_is_custom ? esc_attr( $bg_color ) : ''; ?>"
+			placeholder="#rrggbb"
+			style="display:<?php echo $bg_is_custom ? 'block' : 'none'; ?>">
+		<label class="mn-soft-label">
 			<input type="checkbox" name="mn_bg_soft" value="1" <?php checked( $bg_soft, '1' ); ?>>
 			<?php esc_html_e( 'Soft (lighten 70%)', 'hoger' ); ?>
 		</label>
 	</div>
 
-	<div style="margin-bottom:12px">
-		<label for="mn_edge_color_select" style="display:block;font-weight:600;margin-bottom:4px">
+	<div style="margin-bottom:14px">
+		<label style="display:block;font-weight:600;margin-bottom:5px">
 			<?php esc_html_e( 'Edge Color', 'hoger' ); ?>
 		</label>
-		<select id="mn_edge_color_select" class="mn-color-select" data-target="mn_edge_color">
-			<?php foreach ( $edge_colors as $hex => $label ) : ?>
-				<option value="<?php echo esc_attr( $hex ); ?>" <?php selected( ! $edge_is_custom && $edge_color === $hex ); ?>>
-					<?php echo esc_html( $hex . ' — ' . $label ); ?>
-				</option>
+		<div class="mn-swatch-grid" data-target="mn_edge_color">
+			<?php foreach ( $edge_colors as $hex => $label ) :
+				$active = ( ! $edge_is_custom && $edge_color === $hex );
+			?>
+			<span class="mn-swatch<?php echo $active ? ' mn-swatch--active' : ''; ?>"
+				data-hex="<?php echo esc_attr( $hex ); ?>"
+				title="<?php echo esc_attr( $label ); ?>"
+				style="background:<?php echo esc_attr( $hex ); ?>;"
+			></span>
 			<?php endforeach; ?>
-			<option value="custom" <?php selected( $edge_is_custom ); ?>><?php esc_html_e( '— Custom —', 'hoger' ); ?></option>
-		</select>
-		<input type="text" id="mn_edge_color_picker" class="mn-color-picker"
-			value="<?php echo esc_attr( $edge_color ); ?>"
-			placeholder="#rrggbb"
-			style="margin-top:6px;width:120px;display:<?php echo $edge_is_custom ? 'block' : 'none'; ?>">
+			<span class="mn-swatch mn-swatch--custom<?php echo $edge_is_custom ? ' mn-swatch--active' : ''; ?>"
+				data-hex="custom"
+				title="<?php esc_attr_e( 'Custom hex', 'hoger' ); ?>">+</span>
+		</div>
+		<div class="mn-swatch-label">
+			<?php echo esc_html( $edge_is_custom ? $edge_color : ( $edge_colors[ $edge_color ] ?? '' ) ); ?>
+		</div>
 		<input type="hidden" id="mn_edge_color" name="mn_edge_color" value="<?php echo esc_attr( $edge_color ); ?>">
-		<label style="display:flex;align-items:center;gap:6px;margin-top:6px;font-size:12px">
+		<input type="text" class="mn-color-custom-input"
+			value="<?php echo $edge_is_custom ? esc_attr( $edge_color ) : ''; ?>"
+			placeholder="#rrggbb"
+			style="display:<?php echo $edge_is_custom ? 'block' : 'none'; ?>">
+		<label class="mn-soft-label">
 			<input type="checkbox" name="mn_edge_soft" value="1" <?php checked( $edge_soft, '1' ); ?>>
 			<?php esc_html_e( 'Soft (lighten 70%)', 'hoger' ); ?>
 		</label>
@@ -311,6 +329,22 @@ function hoger_models_new_admin_scripts( $hook ) {
 	}
 
 	wp_enqueue_media();
+
+	wp_add_inline_style( 'wp-admin', '
+		.mn-swatch-grid { display:flex;flex-wrap:wrap;gap:3px;margin-bottom:4px; }
+		.mn-swatch {
+			display:inline-flex;align-items:center;justify-content:center;
+			width:24px;height:24px;border-radius:3px;cursor:pointer;
+			border:2px solid transparent;box-sizing:border-box;
+			transition:border-color .12s,box-shadow .12s;
+		}
+		.mn-swatch:hover { border-color:#999; }
+		.mn-swatch--active { border-color:#2271b1 !important;box-shadow:0 0 0 1px #2271b1; }
+		.mn-swatch--custom { background:#e8e8e8;font-size:15px;color:#555;font-weight:700;line-height:1; }
+		.mn-swatch-label { font-size:11px;color:#777;min-height:14px;margin-bottom:4px; }
+		.mn-color-custom-input { width:90px;font-size:12px;margin-bottom:4px; }
+		.mn-soft-label { display:flex;align-items:center;gap:6px;font-size:12px;margin-top:2px; }
+	' );
 
 	wp_add_inline_script( 'jquery', "
 		jQuery(function($) {
@@ -370,24 +404,33 @@ function hoger_models_new_admin_scripts( $hook ) {
 				$(this).closest('.mn-param-row').remove();
 			});
 
-			// Color select + custom text field
-			$(document).on('change', '.mn-color-select', function() {
-				var target  = $(this).data('target');
-				var val     = $(this).val();
-				var picker  = $(this).next('.mn-color-picker');
-				if (val === 'custom') {
-					picker.show();
-					$('#' + target).val(picker.val());
+			// Color swatch click
+			$(document).on('click', '.mn-swatch', function() {
+				var \$grid   = $(this).closest('.mn-swatch-grid');
+				var target  = \$grid.data('target');
+				var hex     = $(this).data('hex');
+				var label   = $(this).attr('title');
+				var \$wrap   = \$grid.closest('div');
+				var \$custom = \$wrap.find('.mn-color-custom-input');
+				var \$lbl    = \$wrap.find('.mn-swatch-label');
+
+				\$grid.find('.mn-swatch').removeClass('mn-swatch--active');
+				$(this).addClass('mn-swatch--active');
+				\$lbl.text(label);
+
+				if (hex === 'custom') {
+					\$custom.show();
+					\$('#' + target).val(\$custom.val());
 				} else {
-					picker.hide();
-					$('#' + target).val(val);
+					\$custom.hide();
+					\$('#' + target).val(hex);
 				}
 			});
 
-			$(document).on('input', '.mn-color-picker', function() {
-				var target = $(this).prev('select').data('target') ||
-				             $(this).closest('div').find('input[type=hidden]').attr('id');
-				$('#' + target).val($(this).val());
+			$(document).on('input', '.mn-color-custom-input', function() {
+				var \$grid  = $(this).closest('div').find('.mn-swatch-grid');
+				var target = \$grid.data('target');
+				if (target) \$('#' + target).val($(this).val());
 			});
 		});
 	" );
@@ -499,7 +542,7 @@ function hoger_models_new_save_meta( $post_id, $post ) {
 					$sanitized[ $safe_name ] = $safe_col;
 				}
 			}
-			update_post_meta( $post_id, 'mn_mesh_colors', wp_json_encode( $sanitized ) );
+			update_post_meta( $post_id, 'mn_mesh_colors', wp_json_encode( $sanitized, JSON_UNESCAPED_UNICODE ) );
 		} else {
 			update_post_meta( $post_id, 'mn_mesh_colors', '{}' );
 		}

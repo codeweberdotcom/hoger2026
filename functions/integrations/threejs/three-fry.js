@@ -176,11 +176,9 @@ function initFryScene(canvas) {
       if (!child.isMesh) return;
       const name = child.name || `mesh_${idx++}`;
       if (!meshColors[name]) return;
-      const col = new THREE.Color(meshColors[name]);
-      if (child.material && child.material.color !== undefined) {
-        child.material = child.material.clone();
-        child.material.color = col;
-      }
+      child.material = child.material.clone();
+      child.material.color.set(meshColors[name]);
+      child.material.needsUpdate = true;
     });
   }
 
