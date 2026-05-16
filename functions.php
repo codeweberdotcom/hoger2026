@@ -9,6 +9,7 @@ require_once get_stylesheet_directory() . '/functions/cpt/surfaces.php';
 require_once get_stylesheet_directory() . '/functions/cpt/partners.php';
 require_once get_stylesheet_directory() . '/functions/cpt/cpt-models.php';
 require_once get_stylesheet_directory() . '/functions/cpt/cpt-models-new.php';
+require_once get_stylesheet_directory() . '/functions/settings/models-new-settings.php';
 require_once get_stylesheet_directory() . '/functions/meta/surfaces-meta.php';
 require_once get_stylesheet_directory() . '/functions/meta/partners-meta.php';
 require_once get_stylesheet_directory() . '/functions/meta/models-meta.php';

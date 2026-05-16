@@ -29,6 +29,12 @@ while ( have_posts() ) :
 	$edge_soft   = get_post_meta( $post_id, 'mn_edge_soft', true ) === '1' ? '1' : '0';
 	$auto_rotate = get_post_meta( $post_id, 'mn_auto_rotate', true );
 	$auto_rotate = $auto_rotate === '0' ? '0' : '1';
+
+	// Global viewer settings
+	$show_play_btn  = hoger_mn_get( 'show_play_btn' );
+	$show_edges_btn = hoger_mn_get( 'show_edges_btn' );
+	$enable_zoom    = hoger_mn_get( 'enable_zoom' );
+	$enable_orbit   = hoger_mn_get( 'enable_orbit' );
 	?>
 
 	<section class="wrapper bg-light">
@@ -46,6 +52,10 @@ while ( have_posts() ) :
 							data-edge-color="<?php echo esc_attr( $edge_color ); ?>"
 							data-edge-soft="<?php echo esc_attr( $edge_soft ); ?>"
 							data-auto-rotate="<?php echo esc_attr( $auto_rotate ); ?>"
+							data-show-play="<?php echo esc_attr( $show_play_btn ); ?>"
+							data-show-edges="<?php echo esc_attr( $show_edges_btn ); ?>"
+							data-enable-zoom="<?php echo esc_attr( $enable_zoom ); ?>"
+							data-enable-orbit="<?php echo esc_attr( $enable_orbit ); ?>"
 							style="display:block;width:100%;height:100%;">
 						</canvas>
 					</div>
