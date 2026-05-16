@@ -8,9 +8,11 @@
 require_once get_stylesheet_directory() . '/functions/cpt/surfaces.php';
 require_once get_stylesheet_directory() . '/functions/cpt/partners.php';
 require_once get_stylesheet_directory() . '/functions/cpt/cpt-models.php';
+require_once get_stylesheet_directory() . '/functions/cpt/cpt-models-new.php';
 require_once get_stylesheet_directory() . '/functions/meta/surfaces-meta.php';
 require_once get_stylesheet_directory() . '/functions/meta/partners-meta.php';
 require_once get_stylesheet_directory() . '/functions/meta/models-meta.php';
+require_once get_stylesheet_directory() . '/functions/meta/models-new-meta.php';
 require_once get_stylesheet_directory() . '/functions/blocks/surfaces-block/render.php';
 require_once get_stylesheet_directory() . '/functions/shortcodes/partners-shortcode.php';
 
@@ -48,11 +50,11 @@ function hoger_register_surfaces_block() {
 	] );
 }
 
-// ─── Three.js importmap (head, only on single models) ─────────────────────
+// ─── Three.js importmap (head, on single models and models_new) ───────────
 
 add_action( 'wp_head', 'hoger_threejs_importmap', 1 );
 function hoger_threejs_importmap() {
-	if ( ! is_singular( 'models' ) ) {
+	if ( ! is_singular( 'models' ) && ! is_singular( 'models_new' ) ) {
 		return;
 	}
 	?>
@@ -67,25 +69,33 @@ function hoger_threejs_importmap() {
 	<?php
 }
 
-// ─── Three.js init script (only on single models) ─────────────────────────
+// ─── Three.js init scripts ─────────────────────────────────────────────────
 
 add_action( 'wp_enqueue_scripts', 'hoger_enqueue_threejs' );
 function hoger_enqueue_threejs() {
-	if ( ! is_singular( 'models' ) ) {
-		return;
+	if ( is_singular( 'models' ) ) {
+		wp_enqueue_script(
+			'hoger-threejs',
+			get_stylesheet_directory_uri() . '/functions/integrations/threejs/three.js',
+			[],
+			wp_get_theme()->get( 'Version' ),
+			false
+		);
 	}
-	wp_enqueue_script(
-		'hoger-threejs',
-		get_stylesheet_directory_uri() . '/functions/integrations/threejs/three.js',
-		[],
-		wp_get_theme()->get( 'Version' ),
-		false
-	);
+	if ( is_singular( 'models_new' ) ) {
+		wp_enqueue_script(
+			'hoger-threejs-fry',
+			get_stylesheet_directory_uri() . '/functions/integrations/threejs/three-fry.js',
+			[],
+			wp_get_theme()->get( 'Version' ),
+			false
+		);
+	}
 }
 
 add_filter( 'script_loader_tag', 'hoger_threejs_module_type', 10, 2 );
 function hoger_threejs_module_type( $tag, $handle ) {
-	if ( $handle !== 'hoger-threejs' ) {
+	if ( ! in_array( $handle, [ 'hoger-threejs', 'hoger-threejs-fry' ], true ) ) {
 		return $tag;
 	}
 	$tag = str_replace( "type='text/javascript'", '', $tag );
