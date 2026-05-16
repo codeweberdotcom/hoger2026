@@ -21,7 +21,8 @@ function initFryScene(canvas) {
   const showPlay     = canvas.getAttribute("data-show-play")   !== "0";
   const showEdges   = canvas.getAttribute("data-show-edges")  !== "0";
   const enableZoom  = canvas.getAttribute("data-enable-zoom") === "1";
-  const enableOrbit = canvas.getAttribute("data-enable-orbit") !== "0";
+  const enableOrbit    = canvas.getAttribute("data-enable-orbit")     !== "0";
+  const useFbxColors   = canvas.getAttribute("data-use-fbx-colors")  === "1";
 
   if (!modelUrl) return;
 
@@ -111,15 +112,24 @@ function initFryScene(canvas) {
       loadedModel && loadedModel.traverse((child) => {
         if (!child.isMesh) return;
         if (edgesVisible) {
-          child.material = new THREE.MeshBasicMaterial({ color: bgCol, side: THREE.DoubleSide });
+          if (!useFbxColors) {
+            child.material = new THREE.MeshBasicMaterial({ color: bgCol, side: THREE.DoubleSide });
+          }
           if (child.userData.edgeLines) child.add(child.userData.edgeLines);
         } else {
-          child.material = new THREE.MeshStandardMaterial({
-            color: new THREE.Color(child.userData.origColor || 0xcccccc),
-            side: THREE.DoubleSide,
-            metalness: 0.5,
-            roughness: 0.4,
-          });
+          if (useFbxColors) {
+            child.material = child.userData.origMaterial || new THREE.MeshStandardMaterial({
+              color: new THREE.Color(child.userData.origColor || 0xcccccc),
+              side: THREE.DoubleSide,
+            });
+          } else {
+            child.material = new THREE.MeshStandardMaterial({
+              color: new THREE.Color(child.userData.origColor || 0xcccccc),
+              side: THREE.DoubleSide,
+              metalness: 0.5,
+              roughness: 0.4,
+            });
+          }
           if (child.userData.edgeLines) child.remove(child.userData.edgeLines);
         }
       });
@@ -162,11 +172,14 @@ function initFryScene(canvas) {
 
     object.traverse((child) => {
       if (!child.isMesh) return;
+      child.userData.origMaterial = child.material;
       child.userData.origColor = child.material && child.material.color
         ? child.material.color.getHex()
         : 0xcccccc;
 
-      child.material = new THREE.MeshBasicMaterial({ color: bgCol, side: THREE.DoubleSide });
+      if (!useFbxColors) {
+        child.material = new THREE.MeshBasicMaterial({ color: bgCol, side: THREE.DoubleSide });
+      }
 
       const edgeLines = new THREE.LineSegments(
         new THREE.EdgesGeometry(child.geometry),

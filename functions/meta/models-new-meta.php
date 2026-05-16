@@ -167,12 +167,13 @@ function hoger_models_new_product_info_cb( $post ) {
 // ─── Meta box 3: Viewer Settings (sidebar) ────────────────────────────────
 
 function hoger_models_new_viewer_settings_cb( $post ) {
-	$bg_color    = get_post_meta( $post->ID, 'mn_bg_color', true ) ?: '#f2f2fb';
-	$edge_color  = get_post_meta( $post->ID, 'mn_edge_color', true ) ?: '#0057b8';
-	$bg_soft     = get_post_meta( $post->ID, 'mn_bg_soft', true );
-	$edge_soft   = get_post_meta( $post->ID, 'mn_edge_soft', true );
-	$auto_rotate = get_post_meta( $post->ID, 'mn_auto_rotate', true );
-	$auto_rotate = $auto_rotate === '' ? '1' : $auto_rotate;
+	$bg_color       = get_post_meta( $post->ID, 'mn_bg_color', true ) ?: '#f2f2fb';
+	$edge_color     = get_post_meta( $post->ID, 'mn_edge_color', true ) ?: '#0057b8';
+	$bg_soft        = get_post_meta( $post->ID, 'mn_bg_soft', true );
+	$edge_soft      = get_post_meta( $post->ID, 'mn_edge_soft', true );
+	$use_fbx_colors = get_post_meta( $post->ID, 'mn_use_fbx_colors', true );
+	$auto_rotate    = get_post_meta( $post->ID, 'mn_auto_rotate', true );
+	$auto_rotate    = $auto_rotate === '' ? '1' : $auto_rotate;
 
 	$bg_colors = [
 		// Светлые
@@ -226,6 +227,17 @@ function hoger_models_new_viewer_settings_cb( $post ) {
 	$bg_is_custom   = ! array_key_exists( $bg_color, $bg_colors );
 	$edge_is_custom = ! array_key_exists( $edge_color, $edge_colors );
 	?>
+
+	<div style="margin-bottom:16px;padding:10px;background:#f6f7f9;border-left:3px solid #9c886f;">
+		<label style="display:flex;align-items:center;gap:8px;font-weight:600;cursor:pointer">
+			<input type="checkbox" name="mn_use_fbx_colors" value="1" id="mn_use_fbx_colors"
+				<?php checked( $use_fbx_colors, '1' ); ?>>
+			<?php esc_html_e( 'Use original FBX / GLB colors', 'hoger' ); ?>
+		</label>
+		<p style="margin:4px 0 0 24px;font-size:12px;color:#666">
+			<?php esc_html_e( 'When enabled, the model keeps its original material colors. Background and Edge color settings below are ignored.', 'hoger' ); ?>
+		</p>
+	</div>
 
 	<div style="margin-bottom:12px">
 		<label for="mn_bg_color_select" style="display:block;font-weight:600;margin-bottom:4px">
@@ -416,9 +428,10 @@ function hoger_models_new_save_meta( $post_id, $post ) {
 	}
 
 	// Checkboxes
-	update_post_meta( $post_id, 'mn_auto_rotate', isset( $_POST['mn_auto_rotate'] ) ? '1' : '0' );
-	update_post_meta( $post_id, 'mn_bg_soft',     isset( $_POST['mn_bg_soft'] )     ? '1' : '0' );
-	update_post_meta( $post_id, 'mn_edge_soft',   isset( $_POST['mn_edge_soft'] )   ? '1' : '0' );
+	update_post_meta( $post_id, 'mn_auto_rotate',    isset( $_POST['mn_auto_rotate'] )    ? '1' : '0' );
+	update_post_meta( $post_id, 'mn_bg_soft',        isset( $_POST['mn_bg_soft'] )        ? '1' : '0' );
+	update_post_meta( $post_id, 'mn_edge_soft',      isset( $_POST['mn_edge_soft'] )      ? '1' : '0' );
+	update_post_meta( $post_id, 'mn_use_fbx_colors', isset( $_POST['mn_use_fbx_colors'] ) ? '1' : '0' );
 
 	// Params repeater
 	if ( ! empty( $_POST['mn_params_sent'] ) ) {

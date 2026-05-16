@@ -27,8 +27,9 @@ while ( have_posts() ) :
 	$edge_color  = get_post_meta( $post_id, 'mn_edge_color', true ) ?: '#0057b8';
 	$bg_soft     = get_post_meta( $post_id, 'mn_bg_soft', true ) === '1' ? '1' : '0';
 	$edge_soft   = get_post_meta( $post_id, 'mn_edge_soft', true ) === '1' ? '1' : '0';
-	$auto_rotate = get_post_meta( $post_id, 'mn_auto_rotate', true );
-	$auto_rotate = $auto_rotate === '0' ? '0' : '1';
+	$auto_rotate      = get_post_meta( $post_id, 'mn_auto_rotate', true );
+	$auto_rotate      = $auto_rotate === '0' ? '0' : '1';
+	$use_fbx_colors   = get_post_meta( $post_id, 'mn_use_fbx_colors', true ) === '1' ? '1' : '0';
 
 	// Global viewer settings
 	$show_play_btn       = hoger_mn_get( 'show_play_btn' );
@@ -63,6 +64,7 @@ while ( have_posts() ) :
 							data-show-edges="<?php echo esc_attr( $show_edges_btn ); ?>"
 							data-enable-zoom="<?php echo esc_attr( $enable_zoom ); ?>"
 							data-enable-orbit="<?php echo esc_attr( $enable_orbit ); ?>"
+							data-use-fbx-colors="<?php echo esc_attr( $use_fbx_colors ); ?>"
 							style="display:block;width:100%;height:100%;">
 						</canvas>
 					</div>
