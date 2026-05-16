@@ -94,9 +94,54 @@ function hoger_enqueue_threejs() {
 	}
 }
 
+// ─── Three.js importmap + scripts in admin (models_new edit screen) ──────
+
+add_action( 'admin_head', 'hoger_threejs_admin_importmap' );
+function hoger_threejs_admin_importmap() {
+	$screen = get_current_screen();
+	if ( ! $screen || $screen->post_type !== 'models_new' ) {
+		return;
+	}
+	if ( ! in_array( $screen->base, [ 'post', 'post-new' ], true ) ) {
+		return;
+	}
+	?>
+	<script type="importmap">
+	{
+		"imports": {
+			"three": "https://cdn.jsdelivr.net/npm/three@0.173.0/build/three.module.js",
+			"three/addons/": "https://cdn.jsdelivr.net/npm/three@0.173.0/examples/jsm/"
+		}
+	}
+	</script>
+	<?php
+}
+
+add_action( 'admin_enqueue_scripts', 'hoger_enqueue_threejs_admin' );
+function hoger_enqueue_threejs_admin( $hook ) {
+	if ( ! in_array( $hook, [ 'post.php', 'post-new.php' ], true ) ) {
+		return;
+	}
+	$screen = get_current_screen();
+	if ( ! $screen || $screen->post_type !== 'models_new' ) {
+		return;
+	}
+	wp_enqueue_script(
+		'hoger-threejs-fry-admin',
+		get_stylesheet_directory_uri() . '/functions/integrations/threejs/three-fry-admin.js',
+		[],
+		wp_get_theme()->get( 'Version' ),
+		true
+	);
+	wp_localize_script( 'hoger-threejs-fry-admin', 'wpApiSettings', [
+		'root'  => esc_url_raw( rest_url() ),
+		'nonce' => wp_create_nonce( 'wp_rest' ),
+	] );
+}
+
 add_filter( 'script_loader_tag', 'hoger_threejs_module_type', 10, 2 );
 function hoger_threejs_module_type( $tag, $handle ) {
-	if ( ! in_array( $handle, [ 'hoger-threejs', 'hoger-threejs-fry' ], true ) ) {
+	if ( ! in_array( $handle, [ 'hoger-threejs', 'hoger-threejs-fry', 'hoger-threejs-fry-admin' ], true ) ) {
 		return $tag;
 	}
 	$tag = str_replace( "type='text/javascript'", '', $tag );

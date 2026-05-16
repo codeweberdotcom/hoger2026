@@ -47,6 +47,13 @@ function hoger_models_new_meta_boxes() {
 		'models_new',
 		'side'
 	);
+	add_meta_box(
+		'models_new_mesh_colors',
+		__( 'Mesh Colors', 'hoger' ),
+		'hoger_models_new_mesh_colors_cb',
+		'models_new',
+		'normal'
+	);
 }
 
 // ─── Helper: render media upload row ──────────────────────────────────────
@@ -388,6 +395,52 @@ function hoger_models_new_admin_scripts( $hook ) {
 
 // ─── Save post meta ────────────────────────────────────────────────────────
 
+// ─── Meta box 4: Mesh Colors ──────────────────────────────────────────────
+
+function hoger_models_new_mesh_colors_cb( $post ) {
+	$mesh_colors = get_post_meta( $post->ID, 'mn_mesh_colors', true ) ?: '{}';
+	if ( json_decode( $mesh_colors ) === null ) {
+		$mesh_colors = '{}';
+	}
+
+	$model_id  = (int) get_post_meta( $post->ID, 'mn_model_file', true );
+	$model_url = $model_id ? wp_get_attachment_url( $model_id ) : '';
+	?>
+	<div id="mn-mesh-colors-box" data-model-url="<?php echo esc_url( $model_url ); ?>">
+
+		<p style="color:#666;font-size:13px;margin:0 0 12px">
+			<?php esc_html_e( 'Assign colors to individual meshes. Requires a 3D model file to be selected above.', 'hoger' ); ?>
+		</p>
+
+		<div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;">
+
+			<div style="flex-shrink:0;">
+				<canvas id="mn-mesh-preview-canvas" width="300" height="300"
+					style="display:block;border:1px solid #ddd;background:#f0f2f5;border-radius:4px;"></canvas>
+				<button type="button" id="mn-load-model-btn" class="button"
+					style="margin-top:8px;width:300px;">
+					<?php esc_html_e( 'Load Model &amp; Detect Meshes', 'hoger' ); ?>
+				</button>
+				<span id="mn-load-status" style="display:block;font-size:12px;color:#888;margin-top:4px;min-height:16px;"></span>
+			</div>
+
+			<div id="mn-mesh-list" style="min-width:240px;max-height:320px;overflow-y:auto;padding-right:4px;">
+				<p style="color:#999;font-size:13px;margin:0;">
+					<?php esc_html_e( 'Click "Load Model" to detect meshes.', 'hoger' ); ?>
+				</p>
+			</div>
+
+		</div>
+
+		<input type="hidden" name="mn_mesh_colors" id="mn_mesh_colors"
+			value="<?php echo esc_attr( $mesh_colors ); ?>">
+
+	</div>
+	<?php
+}
+
+// ─── Save ─────────────────────────────────────────────────────────────────
+
 add_action( 'save_post_models_new', 'hoger_models_new_save_meta', 10, 2 );
 function hoger_models_new_save_meta( $post_id, $post ) {
 	if ( ! isset( $_POST['hoger_models_new_nonce'] ) ) {
@@ -432,6 +485,25 @@ function hoger_models_new_save_meta( $post_id, $post ) {
 	update_post_meta( $post_id, 'mn_bg_soft',        isset( $_POST['mn_bg_soft'] )        ? '1' : '0' );
 	update_post_meta( $post_id, 'mn_edge_soft',      isset( $_POST['mn_edge_soft'] )      ? '1' : '0' );
 	update_post_meta( $post_id, 'mn_use_fbx_colors', isset( $_POST['mn_use_fbx_colors'] ) ? '1' : '0' );
+
+	// Mesh colors JSON
+	if ( isset( $_POST['mn_mesh_colors'] ) ) {
+		$raw     = wp_unslash( $_POST['mn_mesh_colors'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		$decoded = json_decode( $raw, true );
+		if ( is_array( $decoded ) ) {
+			$sanitized = [];
+			foreach ( $decoded as $mesh_name => $color ) {
+				$safe_name = sanitize_text_field( $mesh_name );
+				$safe_col  = sanitize_hex_color( $color );
+				if ( $safe_name !== '' && $safe_col ) {
+					$sanitized[ $safe_name ] = $safe_col;
+				}
+			}
+			update_post_meta( $post_id, 'mn_mesh_colors', wp_json_encode( $sanitized ) );
+		} else {
+			update_post_meta( $post_id, 'mn_mesh_colors', '{}' );
+		}
+	}
 
 	// Params repeater
 	if ( ! empty( $_POST['mn_params_sent'] ) ) {

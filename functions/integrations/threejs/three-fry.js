@@ -24,6 +24,9 @@ function initFryScene(canvas) {
   const enableOrbit    = canvas.getAttribute("data-enable-orbit")     !== "0";
   const useFbxColors   = canvas.getAttribute("data-use-fbx-colors")  === "1";
 
+  let meshColors = {};
+  try { meshColors = JSON.parse(canvas.getAttribute("data-mesh-colors") || "{}"); } catch(e) {}
+
   if (!modelUrl) return;
 
   const bgCol   = bgSoft   ? softColor(bgHex)   : new THREE.Color(bgHex);
@@ -165,6 +168,22 @@ function initFryScene(canvas) {
     controls.update();
   }
 
+  // ── Apply per-mesh color overrides ────────────────────────────────────────
+  function applyMeshColors(object) {
+    if (!Object.keys(meshColors).length) return;
+    let idx = 0;
+    object.traverse((child) => {
+      if (!child.isMesh) return;
+      const name = child.name || `mesh_${idx++}`;
+      if (!meshColors[name]) return;
+      const col = new THREE.Color(meshColors[name]);
+      if (child.material && child.material.color !== undefined) {
+        child.material = child.material.clone();
+        child.material.color = col;
+      }
+    });
+  }
+
   // ── Apply fry-style materials ────────────────────────────────────────────
   function applyFryStyle(object, withEdgesBtn = false) {
     loadedModel = object;
@@ -188,6 +207,8 @@ function initFryScene(canvas) {
       child.userData.edgeLines = edgeLines;
       child.add(edgeLines);
     });
+
+    applyMeshColors(object);
 
     if (withEdgesBtn) buildEdgesBtn();
   }
