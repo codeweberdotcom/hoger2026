@@ -122,14 +122,18 @@ function initFryScene(canvas) {
           child.material = new THREE.MeshBasicMaterial({ color: bgCol, side: THREE.DoubleSide });
           if (child.userData.edgeLines) child.add(child.userData.edgeLines);
         } else {
+          const adminColor = meshColors[child.userData.meshName];
           if (useFbxColors) {
-            child.material = child.userData.origMaterial || new THREE.MeshStandardMaterial({
-              color: new THREE.Color(child.userData.origColor || 0xcccccc),
-              side: THREE.DoubleSide,
-            });
+            child.material = child.userData.origMaterial
+              ? child.userData.origMaterial.clone()
+              : new THREE.MeshStandardMaterial({
+                  color: new THREE.Color(child.userData.origColor || 0xcccccc),
+                  side: THREE.DoubleSide,
+                });
+            if (adminColor) child.material.color.set(adminColor);
           } else {
             child.material = new THREE.MeshStandardMaterial({
-              color: new THREE.Color(child.userData.origColor || 0xcccccc),
+              color: new THREE.Color(adminColor || child.userData.origColor || 0xcccccc),
               side: THREE.DoubleSide,
               metalness: 0.5,
               roughness: 0.4,
@@ -170,27 +174,16 @@ function initFryScene(canvas) {
     controls.update();
   }
 
-  // ── Apply per-mesh color overrides ────────────────────────────────────────
-  function applyMeshColors(object) {
-    if (!Object.keys(meshColors).length) return;
-    let idx = 0;
-    object.traverse((child) => {
-      if (!child.isMesh) return;
-      const name = child.name || `mesh_${idx++}`;
-      if (!meshColors[name]) return;
-      child.material = child.material.clone();
-      child.material.color.set(meshColors[name]);
-      child.material.needsUpdate = true;
-    });
-  }
-
   // ── Apply fry-style materials ────────────────────────────────────────────
   function applyFryStyle(object, withEdgesBtn = false) {
     loadedModel = object;
     centerAndFit(object);
 
+    let idx = 0;
     object.traverse((child) => {
       if (!child.isMesh) return;
+      const name = child.name || `mesh_${idx++}`;
+      child.userData.meshName  = name;
       child.userData.origMaterial = child.material;
       child.userData.origColor = child.material && child.material.color
         ? child.material.color.getHex()
@@ -198,15 +191,18 @@ function initFryScene(canvas) {
 
       child.material = new THREE.MeshBasicMaterial({ color: bgCol, side: THREE.DoubleSide });
 
+      const edgeColor = meshColors[name]
+        ? new THREE.Color(meshColors[name])
+        : (useFbxColors ? new THREE.Color(child.userData.origColor) : edgeCol);
+      child.userData.edgeColor = edgeColor;
+
       const edgeLines = new THREE.LineSegments(
         new THREE.EdgesGeometry(child.geometry),
-        new THREE.LineBasicMaterial({ color: edgeCol })
+        new THREE.LineBasicMaterial({ color: edgeColor })
       );
       child.userData.edgeLines = edgeLines;
       child.add(edgeLines);
     });
-
-    applyMeshColors(object);
 
     if (withEdgesBtn) buildEdgesBtn();
   }
