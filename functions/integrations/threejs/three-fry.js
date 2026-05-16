@@ -115,9 +115,7 @@ function initFryScene(canvas) {
       loadedModel && loadedModel.traverse((child) => {
         if (!child.isMesh) return;
         if (edgesVisible) {
-          if (!useFbxColors) {
-            child.material = new THREE.MeshBasicMaterial({ color: bgCol, side: THREE.DoubleSide });
-          }
+          child.material = new THREE.MeshBasicMaterial({ color: bgCol, side: THREE.DoubleSide });
           if (child.userData.edgeLines) child.add(child.userData.edgeLines);
         } else {
           if (useFbxColors) {
@@ -194,9 +192,7 @@ function initFryScene(canvas) {
         ? child.material.color.getHex()
         : 0xcccccc;
 
-      if (!useFbxColors) {
-        child.material = new THREE.MeshBasicMaterial({ color: bgCol, side: THREE.DoubleSide });
-      }
+      child.material = new THREE.MeshBasicMaterial({ color: bgCol, side: THREE.DoubleSide });
 
       const edgeLines = new THREE.LineSegments(
         new THREE.EdgesGeometry(child.geometry),
