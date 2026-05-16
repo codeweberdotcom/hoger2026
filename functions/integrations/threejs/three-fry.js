@@ -16,8 +16,9 @@ function initFryScene(canvas) {
   const edgeHex     = canvas.getAttribute("data-edge-color")  || "#0057b8";
   const bgSoft      = canvas.getAttribute("data-bg-soft")     === "1";
   const edgeSoft    = canvas.getAttribute("data-edge-soft")   === "1";
-  const autoRotate  = canvas.getAttribute("data-auto-rotate") !== "0";
-  const showPlay    = canvas.getAttribute("data-show-play")   !== "0";
+  const autoRotate   = canvas.getAttribute("data-auto-rotate")  !== "0";
+  const rotateSpeed  = parseFloat(canvas.getAttribute("data-rotate-speed") || "0.5");
+  const showPlay     = canvas.getAttribute("data-show-play")   !== "0";
   const showEdges   = canvas.getAttribute("data-show-edges")  !== "0";
   const enableZoom  = canvas.getAttribute("data-enable-zoom") === "1";
   const enableOrbit = canvas.getAttribute("data-enable-orbit") !== "0";
@@ -52,7 +53,7 @@ function initFryScene(canvas) {
   controls.dampingFactor     = 0.25;
   controls.screenSpacePanning = false;
   controls.autoRotate        = autoRotate;
-  controls.autoRotateSpeed   = 0.5;
+  controls.autoRotateSpeed   = rotateSpeed;
   controls.enableZoom        = enableZoom;
   controls.enableRotate      = enableOrbit;
 

@@ -31,10 +31,16 @@ while ( have_posts() ) :
 	$auto_rotate = $auto_rotate === '0' ? '0' : '1';
 
 	// Global viewer settings
-	$show_play_btn  = hoger_mn_get( 'show_play_btn' );
-	$show_edges_btn = hoger_mn_get( 'show_edges_btn' );
-	$enable_zoom    = hoger_mn_get( 'enable_zoom' );
-	$enable_orbit   = hoger_mn_get( 'enable_orbit' );
+	$show_play_btn       = hoger_mn_get( 'show_play_btn' );
+	$show_edges_btn      = hoger_mn_get( 'show_edges_btn' );
+	$enable_zoom         = hoger_mn_get( 'enable_zoom' );
+	$enable_orbit        = hoger_mn_get( 'enable_orbit' );
+	$global_auto_rotate  = hoger_mn_get( 'enable_auto_rotate' );
+	$auto_rotate_speed   = hoger_mn_get( 'auto_rotate_speed' ) ?: '0.5';
+	// Per-post auto_rotate overrides global only if explicitly set to 0
+	if ( $auto_rotate === '0' ) {
+		$global_auto_rotate = '0';
+	}
 	?>
 
 	<section class="wrapper bg-light">
@@ -51,7 +57,8 @@ while ( have_posts() ) :
 							data-bg-soft="<?php echo esc_attr( $bg_soft ); ?>"
 							data-edge-color="<?php echo esc_attr( $edge_color ); ?>"
 							data-edge-soft="<?php echo esc_attr( $edge_soft ); ?>"
-							data-auto-rotate="<?php echo esc_attr( $auto_rotate ); ?>"
+							data-auto-rotate="<?php echo esc_attr( $global_auto_rotate ); ?>"
+							data-rotate-speed="<?php echo esc_attr( $auto_rotate_speed ); ?>"
 							data-show-play="<?php echo esc_attr( $show_play_btn ); ?>"
 							data-show-edges="<?php echo esc_attr( $show_edges_btn ); ?>"
 							data-enable-zoom="<?php echo esc_attr( $enable_zoom ); ?>"
