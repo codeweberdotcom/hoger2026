@@ -68,6 +68,10 @@ function initFryScene(canvas) {
     document.addEventListener("mouseup",  () => { canvas.style.cursor = "grab"; });
   }
 
+  // Pause auto-rotation on hover, resume on leave
+  canvas.addEventListener("mouseenter", () => { controls.autoRotate = false; });
+  canvas.addEventListener("mouseleave", () => { controls.autoRotate = isRotating; });
+
   container.style.position = "relative";
 
   // ── Play / Pause button ──────────────────────────────────────────────────
