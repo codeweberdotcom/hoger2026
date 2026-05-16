@@ -7,8 +7,10 @@
 
 require_once get_stylesheet_directory() . '/functions/cpt/surfaces.php';
 require_once get_stylesheet_directory() . '/functions/cpt/partners.php';
+require_once get_stylesheet_directory() . '/functions/cpt/cpt-models.php';
 require_once get_stylesheet_directory() . '/functions/meta/surfaces-meta.php';
 require_once get_stylesheet_directory() . '/functions/meta/partners-meta.php';
+require_once get_stylesheet_directory() . '/functions/meta/models-meta.php';
 require_once get_stylesheet_directory() . '/functions/blocks/surfaces-block/render.php';
 require_once get_stylesheet_directory() . '/functions/shortcodes/partners-shortcode.php';
 
@@ -44,6 +46,49 @@ function hoger_register_surfaces_block() {
 			'colXxl'     => [ 'type' => 'string', 'default' => '' ],
 		],
 	] );
+}
+
+// ─── Three.js importmap (head, only on single models) ─────────────────────
+
+add_action( 'wp_head', 'hoger_threejs_importmap', 1 );
+function hoger_threejs_importmap() {
+	if ( ! is_singular( 'models' ) ) {
+		return;
+	}
+	?>
+	<script type="importmap">
+	{
+		"imports": {
+			"three": "https://cdn.jsdelivr.net/npm/three@0.173.0/build/three.module.js",
+			"three/addons/": "https://cdn.jsdelivr.net/npm/three@0.173.0/examples/jsm/"
+		}
+	}
+	</script>
+	<?php
+}
+
+// ─── Three.js init script (only on single models) ─────────────────────────
+
+add_action( 'wp_enqueue_scripts', 'hoger_enqueue_threejs' );
+function hoger_enqueue_threejs() {
+	if ( ! is_singular( 'models' ) ) {
+		return;
+	}
+	wp_enqueue_script(
+		'hoger-threejs',
+		get_stylesheet_directory_uri() . '/functions/integrations/threejs/three.js',
+		[],
+		wp_get_theme()->get( 'Version' ),
+		false
+	);
+}
+
+add_filter( 'script_loader_tag', 'hoger_threejs_module_type', 10, 2 );
+function hoger_threejs_module_type( $tag, $handle ) {
+	if ( $handle !== 'hoger-threejs' ) {
+		return $tag;
+	}
+	return str_replace( ' src=', ' type="module" src=', $tag );
 }
 
 add_action( 'wp_enqueue_scripts', 'hoger_enqueue_styles' );
