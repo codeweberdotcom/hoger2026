@@ -16,12 +16,30 @@ while ( have_posts() ) :
 	$fbx_id     = (int) get_post_meta( $post_id, 'model_fbx', true );
 	$fbx_url    = $fbx_id ? wp_get_attachment_url( $fbx_id ) : '';
 	$subtitle   = get_post_meta( $post_id, 'podzagolovok_straniczy', true );
-	$params     = get_post_meta( $post_id, 'perechen_parametrov_pod_zagolovokom', true );
-	$params     = is_array( $params ) ? $params : [];
+
+	// Supports both native array format and ACF repeater format
+	$params_raw = get_post_meta( $post_id, 'perechen_parametrov_pod_zagolovokom', true );
+	if ( is_array( $params_raw ) ) {
+		$params = $params_raw;
+	} elseif ( is_numeric( $params_raw ) && (int) $params_raw > 0 ) {
+		$params = [];
+		for ( $i = 0; $i < (int) $params_raw; $i++ ) {
+			$item = get_post_meta( $post_id, 'perechen_parametrov_pod_zagolovokom_' . $i . '_element_spiska', true );
+			if ( $item !== '' ) {
+				$params[] = [ 'element_spiska' => $item ];
+			}
+		}
+	} else {
+		$params = [];
+	}
+
 	$description = get_post_meta( $post_id, 'opisanie_modeli', true );
 	$katalog_id  = (int) get_post_meta( $post_id, 'tehnicheskij_katalog', true );
 	$katalog_url = $katalog_id ? wp_get_attachment_url( $katalog_id ) : '';
-	$product_id  = (int) get_post_meta( $post_id, 'tovar_s_konfiguratorom', true );
+
+	// ACF relationship field stores as serialized array of IDs
+	$product_raw = get_post_meta( $post_id, 'tovar_s_konfiguratorom', true );
+	$product_id  = is_array( $product_raw ) ? (int) reset( $product_raw ) : (int) $product_raw;
 
 	$vid_id         = (int) get_post_meta( $post_id, 'obshhij_vid', true );
 	$vid_title      = get_post_meta( $post_id, 'zagolovok_obshhego_vida', true );
