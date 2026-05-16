@@ -25,6 +25,8 @@ while ( have_posts() ) :
 
 	$bg_color    = get_post_meta( $post_id, 'mn_bg_color', true ) ?: '#f2f2fb';
 	$edge_color  = get_post_meta( $post_id, 'mn_edge_color', true ) ?: '#0057b8';
+	$bg_soft     = get_post_meta( $post_id, 'mn_bg_soft', true ) === '1' ? '1' : '0';
+	$edge_soft   = get_post_meta( $post_id, 'mn_edge_soft', true ) === '1' ? '1' : '0';
 	$auto_rotate = get_post_meta( $post_id, 'mn_auto_rotate', true );
 	$auto_rotate = $auto_rotate === '0' ? '0' : '1';
 	?>
@@ -40,7 +42,9 @@ while ( have_posts() ) :
 							data-three-fry
 							data-three="<?php echo esc_url( $file_url ); ?>"
 							data-bg-color="<?php echo esc_attr( $bg_color ); ?>"
+							data-bg-soft="<?php echo esc_attr( $bg_soft ); ?>"
 							data-edge-color="<?php echo esc_attr( $edge_color ); ?>"
+							data-edge-soft="<?php echo esc_attr( $edge_soft ); ?>"
 							data-auto-rotate="<?php echo esc_attr( $auto_rotate ); ?>"
 							style="display:block;width:100%;height:100%;">
 						</canvas>

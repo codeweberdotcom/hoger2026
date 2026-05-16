@@ -167,30 +167,66 @@ function hoger_models_new_product_info_cb( $post ) {
 // ─── Meta box 3: Viewer Settings (sidebar) ────────────────────────────────
 
 function hoger_models_new_viewer_settings_cb( $post ) {
-	$bg_color   = get_post_meta( $post->ID, 'mn_bg_color', true ) ?: '#f2f2fb';
-	$edge_color = get_post_meta( $post->ID, 'mn_edge_color', true ) ?: '#0057b8';
+	$bg_color    = get_post_meta( $post->ID, 'mn_bg_color', true ) ?: '#f2f2fb';
+	$edge_color  = get_post_meta( $post->ID, 'mn_edge_color', true ) ?: '#0057b8';
+	$bg_soft     = get_post_meta( $post->ID, 'mn_bg_soft', true );
+	$edge_soft   = get_post_meta( $post->ID, 'mn_edge_soft', true );
 	$auto_rotate = get_post_meta( $post->ID, 'mn_auto_rotate', true );
 	$auto_rotate = $auto_rotate === '' ? '1' : $auto_rotate;
-	?>
-	<?php
+
 	$bg_colors = [
-		'#f2f2fb' => __( 'Light Gray (default)', 'hoger' ),
+		// Светлые
 		'#ffffff' => __( 'White', 'hoger' ),
-		'#1e2228' => __( 'Navy', 'hoger' ),
-		'#292728' => __( 'Dark', 'hoger' ),
-		'#9c886f' => __( 'Taupe (Primary)', 'hoger' ),
+		'#fefefe' => __( 'Light ($gray-100)', 'hoger' ),
+		'#f6f7f9' => __( 'Gray ($gray-200)', 'hoger' ),
+		'#f2f2fb' => __( 'Light Gray (default)', 'hoger' ),
+		'#cacaca' => __( 'Inverse ($gray-300)', 'hoger' ),
+		// Нейтральные
+		'#aab0bc' => __( 'Gray ($gray-400)', 'hoger' ),
+		'#959ca9' => __( 'Gray ($gray-500)', 'hoger' ),
+		'#60697b' => __( 'Gray ($gray-600)', 'hoger' ),
+		// Тёмные
+		'#2f353a' => __( 'Gray ($gray-700)', 'hoger' ),
+		'#21262c' => __( 'Gray ($gray-800)', 'hoger' ),
+		'#1e2228' => __( 'Navy ($gray-900)', 'hoger' ),
+		'#292728' => __( 'Dark (hoger)', 'hoger' ),
+		'#262b32' => __( 'Dark (theme)', 'hoger' ),
+		'#343f52' => __( 'Navy (theme)', 'hoger' ),
+		// Акцентные
+		'#9c886f' => __( 'Taupe — Primary', 'hoger' ),
+		'#3f78e0' => __( 'Blue', 'hoger' ),
+		'#5eb9f0' => __( 'Sky', 'hoger' ),
+		'#605dba' => __( 'Grape', 'hoger' ),
+		'#45c4a0' => __( 'Green', 'hoger' ),
+		'#fab758' => __( 'Yellow', 'hoger' ),
+		'#e2626b' => __( 'Red', 'hoger' ),
 	];
+
 	$edge_colors = [
 		'#0057b8' => __( 'Blue (fryreglet)', 'hoger' ),
-		'#9c886f' => __( 'Taupe (Primary)', 'hoger' ),
+		'#9c886f' => __( 'Taupe — Primary', 'hoger' ),
+		'#3f78e0' => __( 'Blue', 'hoger' ),
+		'#5eb9f0' => __( 'Sky', 'hoger' ),
+		'#605dba' => __( 'Grape', 'hoger' ),
+		'#747ed1' => __( 'Purple', 'hoger' ),
+		'#a07cc5' => __( 'Violet', 'hoger' ),
+		'#d16b86' => __( 'Pink', 'hoger' ),
+		'#e2626b' => __( 'Red', 'hoger' ),
+		'#f78b77' => __( 'Orange', 'hoger' ),
+		'#fab758' => __( 'Yellow', 'hoger' ),
+		'#45c4a0' => __( 'Green', 'hoger' ),
+		'#54a8c7' => __( 'Aqua', 'hoger' ),
 		'#1e2228' => __( 'Navy', 'hoger' ),
-		'#292728' => __( 'Dark', 'hoger' ),
+		'#292728' => __( 'Dark (hoger)', 'hoger' ),
+		'#343f52' => __( 'Navy (theme)', 'hoger' ),
 		'#ffffff' => __( 'White', 'hoger' ),
+		'#9499a3' => __( 'Ash', 'hoger' ),
 	];
 
 	$bg_is_custom   = ! array_key_exists( $bg_color, $bg_colors );
 	$edge_is_custom = ! array_key_exists( $edge_color, $edge_colors );
 	?>
+
 	<div style="margin-bottom:12px">
 		<label for="mn_bg_color_select" style="display:block;font-weight:600;margin-bottom:4px">
 			<?php esc_html_e( 'Background Color', 'hoger' ); ?>
@@ -201,13 +237,17 @@ function hoger_models_new_viewer_settings_cb( $post ) {
 					<?php echo esc_html( $hex . ' — ' . $label ); ?>
 				</option>
 			<?php endforeach; ?>
-			<option value="custom" <?php selected( $bg_is_custom ); ?>><?php esc_html_e( '— Custom color —', 'hoger' ); ?></option>
+			<option value="custom" <?php selected( $bg_is_custom ); ?>><?php esc_html_e( '— Custom —', 'hoger' ); ?></option>
 		</select>
 		<input type="text" id="mn_bg_color_picker" class="mn-color-picker"
 			value="<?php echo esc_attr( $bg_color ); ?>"
 			placeholder="#rrggbb"
 			style="margin-top:6px;width:120px;display:<?php echo $bg_is_custom ? 'block' : 'none'; ?>">
 		<input type="hidden" id="mn_bg_color" name="mn_bg_color" value="<?php echo esc_attr( $bg_color ); ?>">
+		<label style="display:flex;align-items:center;gap:6px;margin-top:6px;font-size:12px">
+			<input type="checkbox" name="mn_bg_soft" value="1" <?php checked( $bg_soft, '1' ); ?>>
+			<?php esc_html_e( 'Soft (lighten 70%)', 'hoger' ); ?>
+		</label>
 	</div>
 
 	<div style="margin-bottom:12px">
@@ -220,18 +260,22 @@ function hoger_models_new_viewer_settings_cb( $post ) {
 					<?php echo esc_html( $hex . ' — ' . $label ); ?>
 				</option>
 			<?php endforeach; ?>
-			<option value="custom" <?php selected( $edge_is_custom ); ?>><?php esc_html_e( '— Custom color —', 'hoger' ); ?></option>
+			<option value="custom" <?php selected( $edge_is_custom ); ?>><?php esc_html_e( '— Custom —', 'hoger' ); ?></option>
 		</select>
 		<input type="text" id="mn_edge_color_picker" class="mn-color-picker"
 			value="<?php echo esc_attr( $edge_color ); ?>"
 			placeholder="#rrggbb"
 			style="margin-top:6px;width:120px;display:<?php echo $edge_is_custom ? 'block' : 'none'; ?>">
 		<input type="hidden" id="mn_edge_color" name="mn_edge_color" value="<?php echo esc_attr( $edge_color ); ?>">
+		<label style="display:flex;align-items:center;gap:6px;margin-top:6px;font-size:12px">
+			<input type="checkbox" name="mn_edge_soft" value="1" <?php checked( $edge_soft, '1' ); ?>>
+			<?php esc_html_e( 'Soft (lighten 70%)', 'hoger' ); ?>
+		</label>
 	</div>
+
 	<div style="margin-bottom:12px">
 		<label style="display:flex;align-items:center;gap:6px;font-weight:600">
-			<input type="checkbox" name="mn_auto_rotate" value="1"
-				<?php checked( $auto_rotate, '1' ); ?>>
+			<input type="checkbox" name="mn_auto_rotate" value="1" <?php checked( $auto_rotate, '1' ); ?>>
 			<?php esc_html_e( 'Auto Rotate', 'hoger' ); ?>
 		</label>
 	</div>
@@ -371,9 +415,10 @@ function hoger_models_new_save_meta( $post_id, $post ) {
 		}
 	}
 
-	// Auto rotate checkbox
-	$auto_rotate = isset( $_POST['mn_auto_rotate'] ) ? '1' : '0';
-	update_post_meta( $post_id, 'mn_auto_rotate', $auto_rotate );
+	// Checkboxes
+	update_post_meta( $post_id, 'mn_auto_rotate', isset( $_POST['mn_auto_rotate'] ) ? '1' : '0' );
+	update_post_meta( $post_id, 'mn_bg_soft',     isset( $_POST['mn_bg_soft'] )     ? '1' : '0' );
+	update_post_meta( $post_id, 'mn_edge_soft',   isset( $_POST['mn_edge_soft'] )   ? '1' : '0' );
 
 	// Params repeater
 	if ( ! empty( $_POST['mn_params_sent'] ) ) {
