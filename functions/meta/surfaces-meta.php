@@ -85,6 +85,78 @@ function hoger_surfaces_meta_box_cb( $post ) {
 		</div>
 	</div>
 
+	<div class="hoger-meta-field" style="margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #ddd">
+		<div style="display:flex;gap:32px;flex-wrap:wrap">
+
+			<div style="min-width:220px">
+				<label style="display:block;font-weight:600;margin-bottom:8px">
+					<?php esc_html_e( 'Reflection Mask', 'hoger' ); ?>
+				</label>
+				<p style="margin:0 0 8px;font-size:12px;color:#777"><?php esc_html_e( 'Grayscale: dark = reflective, bright = matte (roughnessMap)', 'hoger' ); ?></p>
+				<?php
+				$refl_mask_id  = get_post_meta( $post->ID, 'reflection_mask_id', true );
+				$refl_mask_src = $refl_mask_id ? wp_get_attachment_image_url( $refl_mask_id, 'thumbnail' ) : '';
+				?>
+				<div class="hoger-image-picker" data-field="reflection_mask_id">
+					<input type="hidden" name="reflection_mask_id" value="<?php echo esc_attr( $refl_mask_id ); ?>">
+					<div class="hoger-img-preview" style="margin-bottom:6px">
+						<?php if ( $refl_mask_src ) : ?>
+							<img src="<?php echo esc_url( $refl_mask_src ); ?>" style="max-width:80px;display:block">
+						<?php endif; ?>
+					</div>
+					<button type="button" class="button hoger-upload-btn" data-target="reflection_mask_id">
+						<?php esc_html_e( 'Select Image', 'hoger' ); ?>
+					</button>
+					<?php if ( $refl_mask_id ) : ?>
+						<button type="button" class="button hoger-remove-btn" data-target="reflection_mask_id" style="margin-left:4px">
+							<?php esc_html_e( 'Remove', 'hoger' ); ?>
+						</button>
+					<?php endif; ?>
+				</div>
+				<label style="display:block;margin-top:10px;font-size:13px">
+					<?php esc_html_e( 'Reflection Strength', 'hoger' ); ?> (0–2)<br>
+					<input type="number" name="reflection_strength"
+						value="<?php echo esc_attr( get_post_meta( $post->ID, 'reflection_strength', true ) ?: '1' ); ?>"
+						step="0.05" min="0" max="2" style="width:80px;margin-top:4px">
+				</label>
+			</div>
+
+			<div style="min-width:220px">
+				<label style="display:block;font-weight:600;margin-bottom:8px">
+					<?php esc_html_e( 'Bump Map', 'hoger' ); ?>
+				</label>
+				<p style="margin:0 0 8px;font-size:12px;color:#777"><?php esc_html_e( 'Grayscale: white = raised, black = depressed (bumpMap)', 'hoger' ); ?></p>
+				<?php
+				$bump_map_id  = get_post_meta( $post->ID, 'bump_map_id', true );
+				$bump_map_src = $bump_map_id ? wp_get_attachment_image_url( $bump_map_id, 'thumbnail' ) : '';
+				?>
+				<div class="hoger-image-picker" data-field="bump_map_id">
+					<input type="hidden" name="bump_map_id" value="<?php echo esc_attr( $bump_map_id ); ?>">
+					<div class="hoger-img-preview" style="margin-bottom:6px">
+						<?php if ( $bump_map_src ) : ?>
+							<img src="<?php echo esc_url( $bump_map_src ); ?>" style="max-width:80px;display:block">
+						<?php endif; ?>
+					</div>
+					<button type="button" class="button hoger-upload-btn" data-target="bump_map_id">
+						<?php esc_html_e( 'Select Image', 'hoger' ); ?>
+					</button>
+					<?php if ( $bump_map_id ) : ?>
+						<button type="button" class="button hoger-remove-btn" data-target="bump_map_id" style="margin-left:4px">
+							<?php esc_html_e( 'Remove', 'hoger' ); ?>
+						</button>
+					<?php endif; ?>
+				</div>
+				<label style="display:block;margin-top:10px;font-size:13px">
+					<?php esc_html_e( 'Bump Scale', 'hoger' ); ?> (0–5)<br>
+					<input type="number" name="bump_scale"
+						value="<?php echo esc_attr( get_post_meta( $post->ID, 'bump_scale', true ) ?: '1' ); ?>"
+						step="0.05" min="0" max="5" style="width:80px;margin-top:4px">
+				</label>
+			</div>
+
+		</div>
+	</div>
+
 	<div class="hoger-meta-field" style="margin-bottom:20px">
 		<label style="display:block;font-weight:600;margin-bottom:6px">
 			<?php esc_html_e( 'Main Photo', 'hoger' ); ?>
@@ -325,6 +397,24 @@ function hoger_surfaces_save_meta( $post_id, $post ) {
 
 	$rotation = isset( $_POST['rotation'] ) ? (float) $_POST['rotation'] : 0.0;
 	update_post_meta( $post_id, 'rotation', max( -360, min( 360, $rotation ) ) );
+
+	// Reflection mask
+	if ( isset( $_POST['reflection_mask_id'] ) ) {
+		$val = absint( $_POST['reflection_mask_id'] );
+		$val ? update_post_meta( $post_id, 'reflection_mask_id', $val ) : delete_post_meta( $post_id, 'reflection_mask_id' );
+	}
+	if ( isset( $_POST['reflection_strength'] ) ) {
+		update_post_meta( $post_id, 'reflection_strength', (string) round( max( 0, min( 2, (float) $_POST['reflection_strength'] ) ), 3 ) );
+	}
+
+	// Bump map
+	if ( isset( $_POST['bump_map_id'] ) ) {
+		$val = absint( $_POST['bump_map_id'] );
+		$val ? update_post_meta( $post_id, 'bump_map_id', $val ) : delete_post_meta( $post_id, 'bump_map_id' );
+	}
+	if ( isset( $_POST['bump_scale'] ) ) {
+		update_post_meta( $post_id, 'bump_scale', (string) round( max( 0, min( 5, (float) $_POST['bump_scale'] ) ), 3 ) );
+	}
 
 	// Colors repeater
 	$count = isset( $_POST['czveta'] ) ? absint( $_POST['czveta'] ) : 0;

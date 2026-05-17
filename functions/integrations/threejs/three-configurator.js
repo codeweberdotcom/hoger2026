@@ -178,27 +178,63 @@ function initConfigurator(canvas) {
   });
 
   // Expose texture-apply function globally
-  canvas.applyTexture = (url, roughness = 0.9, metalness = 0, useModelUv = true, repeatX = 1, repeatY = 1, rotation = 0) => {
+  canvas.applyTexture = (
+    url,
+    roughness = 0.9, metalness = 0,
+    useModelUv = true, repeatX = 1, repeatY = 1, rotation = 0,
+    reflectionMaskUrl = '', reflectionStrength = 1,
+    bumpMapUrl = '', bumpScale = 1
+  ) => {
     if (!url) return;
+
+    function applyUv(tex) {
+      if (!useModelUv) {
+        tex.wrapS = THREE.RepeatWrapping;
+        tex.wrapT = THREE.RepeatWrapping;
+        tex.repeat.set(repeatX, repeatY);
+        tex.center.set(0.5, 0.5);
+        tex.rotation = rotation * (Math.PI / 180);
+      }
+    }
+
     textureLoader.load(url, (texture) => {
       texture.colorSpace = THREE.SRGBColorSpace;
-      if (!useModelUv) {
-        texture.wrapS = THREE.RepeatWrapping;
-        texture.wrapT = THREE.RepeatWrapping;
-        texture.repeat.set(repeatX, repeatY);
-        texture.center.set(0.5, 0.5);
-        texture.rotation = rotation * (Math.PI / 180);
-      }
+      applyUv(texture);
       meshes.forEach((mesh) => {
         mesh.material.map = texture;
         mesh.material.color.set(0xffffff);
         mesh.material.roughness = roughness;
         mesh.material.metalness = metalness;
         mesh.material.envMap = envTexture;
-        mesh.material.envMapIntensity = envIntensity;
+        mesh.material.envMapIntensity = envIntensity * reflectionStrength;
         mesh.material.needsUpdate = true;
       });
     });
+
+    if (reflectionMaskUrl) {
+      textureLoader.load(reflectionMaskUrl, (tex) => {
+        applyUv(tex);
+        meshes.forEach((mesh) => {
+          mesh.material.roughnessMap = tex;
+          mesh.material.needsUpdate = true;
+        });
+      });
+    } else {
+      meshes.forEach((mesh) => { mesh.material.roughnessMap = null; mesh.material.needsUpdate = true; });
+    }
+
+    if (bumpMapUrl) {
+      textureLoader.load(bumpMapUrl, (tex) => {
+        applyUv(tex);
+        meshes.forEach((mesh) => {
+          mesh.material.bumpMap = tex;
+          mesh.material.bumpScale = bumpScale;
+          mesh.material.needsUpdate = true;
+        });
+      });
+    } else {
+      meshes.forEach((mesh) => { mesh.material.bumpMap = null; mesh.material.bumpScale = 1; mesh.material.needsUpdate = true; });
+    }
   };
 
   let envAngle = 0;
@@ -324,12 +360,16 @@ function initSurfacePicker() {
           const surface = surfaces[activeType];
           canvas.applyTexture(
             color.photo,
-            surface.roughness  ?? 0.9,
-            surface.metalness  ?? 0,
-            surface.useModelUv ?? true,
-            surface.repeatX    ?? 1,
-            surface.repeatY    ?? 1,
-            surface.rotation   ?? 0
+            surface.roughness          ?? 0.9,
+            surface.metalness          ?? 0,
+            surface.useModelUv         ?? true,
+            surface.repeatX            ?? 1,
+            surface.repeatY            ?? 1,
+            surface.rotation           ?? 0,
+            surface.reflectionMask     ?? '',
+            surface.reflectionStrength ?? 1,
+            surface.bumpMap            ?? '',
+            surface.bumpScale          ?? 1
           );
         }
       });
