@@ -193,19 +193,25 @@ function hoger_get_surfaces_json() {
 			$bump_map_id  = (int) get_post_meta( $post->ID, 'bump_map_id', true );
 
 			$data[] = [
-				'title'             => get_the_title( $post ),
-				'main_photo'        => $main_photo,
-				'colors'            => $colors,
-				'roughness'         => $mat['roughness'],
-				'metalness'         => $mat['metalness'],
-				'useModelUv'        => ( $uv_val !== '0' ),
-				'repeatX'           => (float) ( get_post_meta( $post->ID, 'repeat_x', true ) ?: 1 ),
-				'repeatY'           => (float) ( get_post_meta( $post->ID, 'repeat_y', true ) ?: 1 ),
-				'rotation'          => (float) ( get_post_meta( $post->ID, 'rotation', true ) ?: 0 ),
-				'reflectionMask'    => $refl_mask_id ? wp_get_attachment_url( $refl_mask_id ) : '',
-				'reflectionStrength'=> (float) ( get_post_meta( $post->ID, 'reflection_strength', true ) ?: 1 ),
-				'bumpMap'           => $bump_map_id ? wp_get_attachment_url( $bump_map_id ) : '',
-				'bumpScale'         => (float) ( get_post_meta( $post->ID, 'bump_scale', true ) ?: 1 ),
+				'title'                   => get_the_title( $post ),
+				'main_photo'              => $main_photo,
+				'colors'                  => $colors,
+				'roughness'               => $mat['roughness'],
+				'metalness'               => $mat['metalness'],
+				'useModelUv'              => ( $uv_val !== '0' ),
+				'repeatX'                 => (float) ( get_post_meta( $post->ID, 'repeat_x', true ) ?: 1 ),
+				'repeatY'                 => (float) ( get_post_meta( $post->ID, 'repeat_y', true ) ?: 1 ),
+				'rotation'                => (float) ( get_post_meta( $post->ID, 'rotation', true ) ?: 0 ),
+				'reflectionMask'          => $refl_mask_id ? wp_get_attachment_url( $refl_mask_id ) : '',
+				'reflectionStrength'      => (float) ( get_post_meta( $post->ID, 'reflection_strength', true ) ?: 1 ),
+				'reflectionMaskRepeatX'   => (float) ( get_post_meta( $post->ID, 'reflection_mask_repeat_x', true ) ?: 1 ),
+				'reflectionMaskRepeatY'   => (float) ( get_post_meta( $post->ID, 'reflection_mask_repeat_y', true ) ?: 1 ),
+				'reflectionMaskRotation'  => (float) ( get_post_meta( $post->ID, 'reflection_mask_rotation', true ) ?: 0 ),
+				'bumpMap'                 => $bump_map_id ? wp_get_attachment_url( $bump_map_id ) : '',
+				'bumpScale'               => (float) ( get_post_meta( $post->ID, 'bump_scale', true ) ?: 1 ),
+				'bumpMapRepeatX'          => (float) ( get_post_meta( $post->ID, 'bump_map_repeat_x', true ) ?: 1 ),
+				'bumpMapRepeatY'          => (float) ( get_post_meta( $post->ID, 'bump_map_repeat_y', true ) ?: 1 ),
+				'bumpMapRotation'         => (float) ( get_post_meta( $post->ID, 'bump_map_rotation', true ) ?: 0 ),
 			];
 		}
 	}
