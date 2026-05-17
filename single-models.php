@@ -308,23 +308,23 @@ if ( $surfaces_json && $surfaces_json !== '[]' ) :
 		}
 ?>
 <section class="wrapper bg-light" id="hoger-configurator-section">
-	<div class="container py-14">
+	<div class="container">
+		<div class="row gx-lg-8 gx-xl-12 gy-10 align-items-center" id="hoger-configurator">
 
-		<h2 class="display-4 mb-8"><?php esc_html_e( 'Configure Surface', 'hoger' ); ?></h2>
-
-		<div id="hoger-configurator" class="d-flex flex-column flex-lg-row gap-6">
-
-			<div style="flex:0 0 auto;width:100%;max-width:520px;aspect-ratio:1/1;position:relative;">
-				<canvas data-configurator
-					data-three="<?php echo esc_url( $file_url ); ?>"
-					data-exposure="<?php echo esc_attr( hoger_mn_get( 'conf_exposure' ) ); ?>"
-					data-saturation="<?php echo esc_attr( hoger_mn_get( 'conf_saturation' ) ); ?>"
-					data-env-intensity="<?php echo esc_attr( hoger_mn_get( 'conf_env_intensity' ) ); ?>"
-					data-conf-meshes="<?php echo esc_attr( $conf_meshes_raw ); ?>"
-					style="display:block;width:100%;height:100%;"></canvas>
+			<div class="col-md-6 col-lg-6">
+				<div class="mn-canvas-wrap" style="position:relative;width:100%;aspect-ratio:1/1;">
+					<canvas data-configurator
+						data-three="<?php echo esc_url( $file_url ); ?>"
+						data-exposure="<?php echo esc_attr( hoger_mn_get( 'conf_exposure' ) ); ?>"
+						data-saturation="<?php echo esc_attr( hoger_mn_get( 'conf_saturation' ) ); ?>"
+						data-env-intensity="<?php echo esc_attr( hoger_mn_get( 'conf_env_intensity' ) ); ?>"
+						data-conf-meshes="<?php echo esc_attr( $conf_meshes_raw ); ?>"
+						style="display:block;width:100%;height:100%;"></canvas>
+				</div>
 			</div>
 
-			<div class="hoger-surface-picker flex-grow-1">
+			<div class="col-lg-6 pb-10 py-md-14 hoger-surface-picker">
+				<h2 class="display-4 mb-6"><?php esc_html_e( 'Configure Surface', 'hoger' ); ?></h2>
 				<p class="fw-bold mb-3"><?php esc_html_e( 'Surface type:', 'hoger' ); ?></p>
 				<div class="hoger-surface-types d-flex flex-wrap gap-2 mb-5"></div>
 				<p class="fw-bold mb-3"><?php esc_html_e( 'Color:', 'hoger' ); ?></p>
