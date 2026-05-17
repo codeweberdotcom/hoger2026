@@ -17,6 +17,30 @@ while ( have_posts() ) :
 	$fbx_url    = $fbx_id ? wp_get_attachment_url( $fbx_id ) : '';
 	$subtitle   = get_post_meta( $post_id, 'podzagolovok_straniczy', true );
 
+	// Viewer settings
+	$bg_color        = get_post_meta( $post_id, 'mn_bg_color', true ) ?: '#f2f2fb';
+	$edge_color      = get_post_meta( $post_id, 'mn_edge_color', true ) ?: '#0057b8';
+	$bg_soft         = get_post_meta( $post_id, 'mn_bg_soft', true ) === '1' ? '1' : '0';
+	$edge_soft       = get_post_meta( $post_id, 'mn_edge_soft', true ) === '1' ? '1' : '0';
+	$use_fbx_colors  = get_post_meta( $post_id, 'mn_use_fbx_colors', true ) === '1' ? '1' : '0';
+	$auto_rotate     = get_post_meta( $post_id, 'mn_auto_rotate', true );
+	$auto_rotate     = $auto_rotate === '0' ? '0' : '1';
+	$mesh_colors_raw = get_post_meta( $post_id, 'mn_mesh_colors', true ) ?: '{}';
+	if ( json_decode( $mesh_colors_raw ) === null ) {
+		$mesh_colors_raw = '{}';
+	}
+
+	// Global viewer settings
+	$show_play_btn      = hoger_mn_get( 'show_play_btn' );
+	$show_edges_btn     = hoger_mn_get( 'show_edges_btn' );
+	$enable_zoom        = hoger_mn_get( 'enable_zoom' );
+	$enable_orbit       = hoger_mn_get( 'enable_orbit' );
+	$global_auto_rotate = hoger_mn_get( 'enable_auto_rotate' );
+	$auto_rotate_speed  = hoger_mn_get( 'auto_rotate_speed' ) ?: '0.5';
+	if ( $auto_rotate === '0' ) {
+		$global_auto_rotate = '0';
+	}
+
 	// Supports both native array format and ACF repeater format
 	$params_raw = get_post_meta( $post_id, 'perechen_parametrov_pod_zagolovokom', true );
 	if ( is_array( $params_raw ) && ! empty( $params_raw ) ) {
@@ -59,10 +83,26 @@ while ( have_posts() ) :
 			<div class="row gx-lg-8 gx-xl-12 gy-10 align-items-center">
 
 				<?php if ( $fbx_url ) : ?>
-				<div class="col-md-6 col-lg-6 col-xl-6 position-relative">
-					<canvas class="webgl"
-						id="<?php echo esc_attr( $post_id ); ?>"
-						data-three="<?php echo esc_url( $fbx_url ); ?>"></canvas>
+				<div class="col-md-6 col-lg-6 position-relative">
+					<div class="mn-canvas-wrap" style="position:relative;width:100%;aspect-ratio:1/1;">
+						<canvas
+							data-three-fry
+							data-three="<?php echo esc_url( $fbx_url ); ?>"
+							data-bg-color="<?php echo esc_attr( $bg_color ); ?>"
+							data-bg-soft="<?php echo esc_attr( $bg_soft ); ?>"
+							data-edge-color="<?php echo esc_attr( $edge_color ); ?>"
+							data-edge-soft="<?php echo esc_attr( $edge_soft ); ?>"
+							data-auto-rotate="<?php echo esc_attr( $global_auto_rotate ); ?>"
+							data-rotate-speed="<?php echo esc_attr( $auto_rotate_speed ); ?>"
+							data-show-play="<?php echo esc_attr( $show_play_btn ); ?>"
+							data-show-edges="<?php echo esc_attr( $show_edges_btn ); ?>"
+							data-enable-zoom="<?php echo esc_attr( $enable_zoom ); ?>"
+							data-enable-orbit="<?php echo esc_attr( $enable_orbit ); ?>"
+							data-use-fbx-colors="<?php echo esc_attr( $use_fbx_colors ); ?>"
+							data-mesh-colors="<?php echo esc_attr( $mesh_colors_raw ); ?>"
+							style="display:block;width:100%;height:100%;">
+						</canvas>
+					</div>
 				</div>
 				<?php endif; ?>
 
