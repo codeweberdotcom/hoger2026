@@ -5,14 +5,6 @@
 add_action( 'admin_menu', 'hoger_models_new_settings_menu' );
 function hoger_models_new_settings_menu() {
 	add_submenu_page(
-		'edit.php?post_type=models_new',
-		__( '3D Viewer Settings', 'hoger' ),
-		__( 'Viewer Settings', 'hoger' ),
-		'manage_options',
-		'models-new-viewer-settings',
-		'hoger_models_new_settings_page'
-	);
-	add_submenu_page(
 		'edit.php?post_type=models',
 		__( '3D Viewer Settings', 'hoger' ),
 		__( 'Viewer Settings', 'hoger' ),

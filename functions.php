@@ -8,12 +8,10 @@
 require_once get_stylesheet_directory() . '/functions/cpt/surfaces.php';
 require_once get_stylesheet_directory() . '/functions/cpt/partners.php';
 require_once get_stylesheet_directory() . '/functions/cpt/cpt-models.php';
-require_once get_stylesheet_directory() . '/functions/cpt/cpt-models-new.php';
 require_once get_stylesheet_directory() . '/functions/settings/models-new-settings.php';
 require_once get_stylesheet_directory() . '/functions/meta/surfaces-meta.php';
 require_once get_stylesheet_directory() . '/functions/meta/partners-meta.php';
 require_once get_stylesheet_directory() . '/functions/meta/models-meta.php';
-require_once get_stylesheet_directory() . '/functions/meta/models-new-meta.php';
 require_once get_stylesheet_directory() . '/functions/blocks/surfaces-block/render.php';
 require_once get_stylesheet_directory() . '/functions/shortcodes/partners-shortcode.php';
 
@@ -51,11 +49,11 @@ function hoger_register_surfaces_block() {
 	] );
 }
 
-// ─── Three.js importmap (head, on single models and models_new) ───────────
+// ─── Three.js importmap (head, on single models) ──────────────────────────
 
 add_action( 'wp_head', 'hoger_threejs_importmap', 1 );
 function hoger_threejs_importmap() {
-	if ( ! is_singular( 'models' ) && ! is_singular( 'models_new' ) ) {
+	if ( ! is_singular( 'models' ) ) {
 		return;
 	}
 	?>
@@ -74,7 +72,7 @@ function hoger_threejs_importmap() {
 
 add_action( 'wp_enqueue_scripts', 'hoger_enqueue_threejs' );
 function hoger_enqueue_threejs() {
-	if ( is_singular( 'models' ) || is_singular( 'models_new' ) ) {
+	if ( is_singular( 'models' ) ) {
 		wp_enqueue_script(
 			'hoger-threejs-fry',
 			get_stylesheet_directory_uri() . '/functions/integrations/threejs/three-fry.js',
@@ -92,12 +90,12 @@ function hoger_enqueue_threejs() {
 	}
 }
 
-// ─── Three.js importmap + scripts in admin (models_new edit screen) ──────
+// ─── Three.js importmap + scripts in admin (models edit screen) ───────────
 
 add_action( 'admin_head', 'hoger_threejs_admin_importmap' );
 function hoger_threejs_admin_importmap() {
 	$screen = get_current_screen();
-	if ( ! $screen || ! in_array( $screen->post_type, [ 'models', 'models_new' ], true ) ) {
+	if ( ! $screen || $screen->post_type !== 'models' ) {
 		return;
 	}
 	if ( ! in_array( $screen->base, [ 'post', 'post-new' ], true ) ) {
@@ -121,7 +119,7 @@ function hoger_enqueue_threejs_admin( $hook ) {
 		return;
 	}
 	$screen = get_current_screen();
-	if ( ! $screen || ! in_array( $screen->post_type, [ 'models', 'models_new' ], true ) ) {
+	if ( ! $screen || $screen->post_type !== 'models' ) {
 		return;
 	}
 	wp_enqueue_script(
