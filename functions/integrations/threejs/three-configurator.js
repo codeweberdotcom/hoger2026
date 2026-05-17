@@ -195,7 +195,7 @@ function initConfigurator(canvas) {
     debugTexSection.style.display = "block";
   }
 
-  function loadModel(url, applyInitialCam = false, useConfMeshes = true) {
+  function loadModel(url, applyInitialCam = false, useConfMeshes = true, keepCamera = false) {
     if (_currentModelObj) {
       scene.remove(_currentModelObj);
       _currentModelObj = null;
