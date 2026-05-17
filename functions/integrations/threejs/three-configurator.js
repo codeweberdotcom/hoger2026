@@ -11,8 +11,10 @@ function initConfigurator(canvas) {
   const exposure     = parseFloat(canvas.getAttribute("data-exposure")     || "1.0");
   const saturation   = parseFloat(canvas.getAttribute("data-saturation")   || "1.0");
   const envIntensity = parseFloat(canvas.getAttribute("data-env-intensity") || "1.0");
-  const envHdr       = canvas.getAttribute("data-env-hdr") || "";
-  const envJpg       = canvas.getAttribute("data-env-jpg") || "";
+  const envHdr         = canvas.getAttribute("data-env-hdr") || "";
+  const envJpg         = canvas.getAttribute("data-env-jpg") || "";
+  const envRotate      = canvas.getAttribute("data-env-rotate") === "1";
+  const envRotateSpeed = parseFloat(canvas.getAttribute("data-env-rotate-speed") || "0.001");
   let confMeshes = [];
   try {
     const parsed = JSON.parse(canvas.getAttribute("data-conf-meshes") || "[]");
@@ -148,6 +150,7 @@ function initConfigurator(canvas) {
   function animate() {
     requestAnimationFrame(animate);
     controls.update();
+    if (envRotate) scene.environmentRotation.y += envRotateSpeed;
     renderer.render(scene, camera);
   }
   animate();

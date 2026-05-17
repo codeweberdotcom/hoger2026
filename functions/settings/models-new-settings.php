@@ -89,6 +89,14 @@ function hoger_models_new_settings_init() {
 		'key'  => 'conf_env_jpg',
 		'desc' => __( 'Lighter alternative (200–500 KB). Any studio panorama in equirectangular format.', 'hoger' ),
 	] );
+	add_settings_field( 'hoger_mn_conf_env_rotate', __( 'Rotate environment map', 'hoger' ), 'hoger_mn_checkbox_field', 'models-new-viewer-settings', 'hoger_mn_envmap', [ 'key' => 'conf_env_rotate' ] );
+	add_settings_field( 'hoger_mn_conf_env_rotate_speed', __( 'Rotation speed', 'hoger' ), 'hoger_mn_number_field', 'models-new-viewer-settings', 'hoger_mn_envmap', [
+		'key'  => 'conf_env_rotate_speed',
+		'min'  => 0.0005,
+		'max'  => 0.05,
+		'step' => 0.0005,
+		'desc' => __( 'Default: 0.001. Radians per frame. Higher = faster.', 'hoger' ),
+	] );
 }
 
 // ─── Defaults ──────────────────────────────────────────────────────────────
@@ -104,8 +112,10 @@ function hoger_mn_defaults() {
 		'conf_exposure'      => '1.0',
 		'conf_saturation'    => '1.0',
 		'conf_env_intensity' => '1.0',
-		'conf_env_hdr'       => '',
-		'conf_env_jpg'       => '',
+		'conf_env_hdr'          => '',
+		'conf_env_jpg'          => '',
+		'conf_env_rotate'       => '0',
+		'conf_env_rotate_speed' => '0.001',
 	];
 }
 
@@ -118,7 +128,7 @@ function hoger_mn_get( $key ) {
 // ─── Sanitize ──────────────────────────────────────────────────────────────
 
 function hoger_mn_sanitize_settings( $input ) {
-	$checkboxes = [ 'show_play_btn', 'show_edges_btn', 'enable_auto_rotate', 'enable_zoom', 'enable_orbit' ];
+	$checkboxes = [ 'show_play_btn', 'show_edges_btn', 'enable_auto_rotate', 'enable_zoom', 'enable_orbit', 'conf_env_rotate' ];
 	$out = [];
 
 	foreach ( $checkboxes as $key ) {
@@ -143,6 +153,10 @@ function hoger_mn_sanitize_settings( $input ) {
 	// URL fields: env map
 	$out['conf_env_hdr'] = isset( $input['conf_env_hdr'] ) ? esc_url_raw( wp_unslash( $input['conf_env_hdr'] ) ) : '';
 	$out['conf_env_jpg'] = isset( $input['conf_env_jpg'] ) ? esc_url_raw( wp_unslash( $input['conf_env_jpg'] ) ) : '';
+
+	// Env rotation speed
+	$rot_speed = isset( $input['conf_env_rotate_speed'] ) ? (float) $input['conf_env_rotate_speed'] : 0.001;
+	$out['conf_env_rotate_speed'] = (string) round( max( 0.0005, min( 0.05, $rot_speed ) ), 4 );
 
 	return $out;
 }
