@@ -125,7 +125,10 @@ if ( $surfaces_json && $surfaces_json !== '[]' && $file_url ) :
 
 			<div style="flex:0 0 auto;width:100%;max-width:520px;aspect-ratio:1/1;position:relative;">
 				<canvas data-configurator
-					data-three="<?php echo esc_url( $file_url ); ?>"
+					data-three="<?php echo esc_url( $file_url ?? '' ); ?>"
+					data-exposure="<?php echo esc_attr( hoger_mn_get( 'conf_exposure' ) ); ?>"
+					data-saturation="<?php echo esc_attr( hoger_mn_get( 'conf_saturation' ) ); ?>"
+					data-env-intensity="<?php echo esc_attr( hoger_mn_get( 'conf_env_intensity' ) ); ?>"
 					style="display:block;width:100%;height:100%;"></canvas>
 			</div>
 

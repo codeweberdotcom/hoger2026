@@ -6,7 +6,10 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 const textureLoader = new THREE.TextureLoader();
 
 function initConfigurator(canvas) {
-  const modelUrl = canvas.getAttribute("data-three");
+  const modelUrl     = canvas.getAttribute("data-three");
+  const exposure     = parseFloat(canvas.getAttribute("data-exposure")     || "1.0");
+  const saturation   = parseFloat(canvas.getAttribute("data-saturation")   || "1.0");
+  const envIntensity = parseFloat(canvas.getAttribute("data-env-intensity") || "1.0");
   if (!modelUrl) return;
 
   const container = canvas.parentElement;
@@ -29,6 +32,9 @@ function initConfigurator(canvas) {
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(w, h);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+  renderer.toneMappingExposure = exposure;
+  canvas.style.filter = saturation !== 1 ? `saturate(${saturation})` : "";
 
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment()).texture;
@@ -71,6 +77,7 @@ function initConfigurator(canvas) {
       if (!child.isMesh) return;
       child.material = child.material.clone();
       child.material.side = THREE.DoubleSide;
+      child.material.envMapIntensity = envIntensity;
       meshes.push(child);
     });
   });
@@ -87,6 +94,7 @@ function initConfigurator(canvas) {
         mesh.material.color.set(0xffffff);
         mesh.material.roughness = roughness;
         mesh.material.metalness = metalness;
+        mesh.material.envMapIntensity = envIntensity;
         mesh.material.needsUpdate = true;
       });
     });

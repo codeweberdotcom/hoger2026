@@ -58,6 +58,31 @@ function hoger_models_new_settings_init() {
 
 	add_settings_field( 'hoger_mn_enable_zoom',  __( 'Enable zoom (mouse wheel / pinch)', 'hoger' ), 'hoger_mn_checkbox_field', 'models-new-viewer-settings', 'hoger_mn_interaction', [ 'key' => 'enable_zoom' ] );
 	add_settings_field( 'hoger_mn_enable_orbit', __( 'Enable orbit (mouse drag)', 'hoger' ),         'hoger_mn_checkbox_field', 'models-new-viewer-settings', 'hoger_mn_interaction', [ 'key' => 'enable_orbit' ] );
+
+	// Section: Configurator appearance
+	add_settings_section( 'hoger_mn_configurator', __( 'Configurator Appearance', 'hoger' ), null, 'models-new-viewer-settings' );
+
+	add_settings_field( 'hoger_mn_conf_exposure', __( 'Exposure (brightness)', 'hoger' ), 'hoger_mn_number_field', 'models-new-viewer-settings', 'hoger_mn_configurator', [
+		'key'  => 'conf_exposure',
+		'min'  => 0.1,
+		'max'  => 3.0,
+		'step' => 0.1,
+		'desc' => __( 'Default: 1.0. Lower = darker, higher = brighter.', 'hoger' ),
+	] );
+	add_settings_field( 'hoger_mn_conf_saturation', __( 'Saturation', 'hoger' ), 'hoger_mn_number_field', 'models-new-viewer-settings', 'hoger_mn_configurator', [
+		'key'  => 'conf_saturation',
+		'min'  => 0,
+		'max'  => 3.0,
+		'step' => 0.1,
+		'desc' => __( 'Default: 1.0. Applied via CSS filter on the canvas.', 'hoger' ),
+	] );
+	add_settings_field( 'hoger_mn_conf_env_intensity', __( 'Reflection strength (envMapIntensity)', 'hoger' ), 'hoger_mn_number_field', 'models-new-viewer-settings', 'hoger_mn_configurator', [
+		'key'  => 'conf_env_intensity',
+		'min'  => 0,
+		'max'  => 3.0,
+		'step' => 0.1,
+		'desc' => __( 'Default: 1.0. Controls gloss/chrome reflection intensity.', 'hoger' ),
+	] );
 }
 
 // ─── Defaults ──────────────────────────────────────────────────────────────
@@ -70,6 +95,9 @@ function hoger_mn_defaults() {
 		'auto_rotate_speed'  => '0.5',
 		'enable_zoom'        => '0',
 		'enable_orbit'       => '1',
+		'conf_exposure'      => '1.0',
+		'conf_saturation'    => '1.0',
+		'conf_env_intensity' => '1.0',
 	];
 }
 
@@ -93,6 +121,16 @@ function hoger_mn_sanitize_settings( $input ) {
 	$speed = isset( $input['auto_rotate_speed'] ) ? (float) $input['auto_rotate_speed'] : 0.5;
 	$speed = max( 0.1, min( 10.0, $speed ) );
 	$out['auto_rotate_speed'] = (string) round( $speed, 1 );
+
+	// Numeric: configurator appearance
+	$exposure = isset( $input['conf_exposure'] ) ? (float) $input['conf_exposure'] : 1.0;
+	$out['conf_exposure'] = (string) round( max( 0.1, min( 3.0, $exposure ) ), 1 );
+
+	$saturation = isset( $input['conf_saturation'] ) ? (float) $input['conf_saturation'] : 1.0;
+	$out['conf_saturation'] = (string) round( max( 0.0, min( 3.0, $saturation ) ), 1 );
+
+	$env = isset( $input['conf_env_intensity'] ) ? (float) $input['conf_env_intensity'] : 1.0;
+	$out['conf_env_intensity'] = (string) round( max( 0.0, min( 3.0, $env ) ), 1 );
 
 	return $out;
 }
