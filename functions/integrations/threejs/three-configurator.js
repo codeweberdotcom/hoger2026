@@ -33,14 +33,10 @@ function initConfigurator(canvas) {
   controls.enableDamping = true;
   controls.dampingFactor = 0.25;
   controls.enableZoom = true;
-  controls.autoRotate = true;
-  controls.autoRotateSpeed = 0.5;
 
   canvas.style.cursor = "grab";
   canvas.addEventListener("mousedown", () => { canvas.style.cursor = "grabbing"; });
   document.addEventListener("mouseup", () => { canvas.style.cursor = "grab"; });
-  canvas.addEventListener("mouseenter", () => { controls.autoRotate = false; });
-  canvas.addEventListener("mouseleave", () => { controls.autoRotate = true; });
 
   let meshes = [];
 
