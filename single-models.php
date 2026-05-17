@@ -361,7 +361,7 @@ if ( $surfaces_json && $surfaces_json !== '[]' ) :
 					<?php endif; ?>
 					<?php if ( $sphere_url ) : ?>
 					<button class="mn-shape-btn" data-shape="sphere" data-url="<?php echo esc_attr( $sphere_url ); ?>" title="<?php esc_attr_e( 'Sphere', 'hoger' ); ?>" style="width:36px;height:36px;border-radius:6px;border:2px solid transparent;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;">
-						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a15.3 15.3 0 0 1 4 9 15.3 15.3 0 0 1-4 9 15.3 15.3 0 0 1-4-9 15.3 15.3 0 0 1 4-9z"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
 					</button>
 					<?php endif; ?>
 				</div>
