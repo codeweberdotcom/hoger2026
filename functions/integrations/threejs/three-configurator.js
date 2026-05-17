@@ -147,10 +147,17 @@ function initConfigurator(canvas) {
     });
   };
 
+  let envAngle = 0;
+
   function animate() {
     requestAnimationFrame(animate);
     controls.update();
-    if (envRotate) scene.environmentRotation.y += envRotateSpeed;
+    if (envRotate && meshes.length) {
+      envAngle += envRotateSpeed;
+      meshes.forEach((mesh) => {
+        mesh.material.envMapRotation.y = envAngle;
+      });
+    }
     renderer.render(scene, camera);
   }
   animate();
