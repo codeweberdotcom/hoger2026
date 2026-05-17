@@ -649,7 +649,7 @@ function hoger_models_admin_scripts( $hook ) {
 
 			// Camera paste config
 			\$('#mn-cam-parse').on('click', function() {
-				var lines = \$('#mn-cam-paste').val().trim().split(/\r?\n/).map(function(l) { return l.trim(); }).filter(Boolean);
+				var lines = \$('#mn-cam-paste').val().trim().split(/\\r?\\n/).map(function(l) { return l.trim(); }).filter(Boolean);
 				if (lines.length < 6) { alert('Need 6 values (Camera X, Y, Z, Target X, Y, Z)'); return; }
 				var keys = ['mn_cam_x','mn_cam_y','mn_cam_z','mn_cam_target_x','mn_cam_target_y','mn_cam_target_z'];
 				keys.forEach(function(id, i) { \$('#' + id).val(lines[i]); });
