@@ -195,7 +195,7 @@ function initConfigurator(canvas) {
     debugTexSection.style.display = "block";
   }
 
-  function loadModel(url, applyInitialCam = false) {
+  function loadModel(url, applyInitialCam = false, useConfMeshes = true) {
     if (_currentModelObj) {
       scene.remove(_currentModelObj);
       _currentModelObj = null;
@@ -227,7 +227,7 @@ function initConfigurator(canvas) {
         const origColor = child.material?.color
           ? child.material.color.clone()
           : new THREE.Color(0xcccccc);
-        const isTarget = !confMeshes.length || confMeshes.includes(child.name);
+        const isTarget = !useConfMeshes || !confMeshes.length || confMeshes.includes(child.name);
         child.material = new THREE.MeshStandardMaterial({
           color: origColor,
           side: THREE.DoubleSide,
@@ -262,9 +262,9 @@ function initConfigurator(canvas) {
         btn.style.borderColor = "#9c886f";
         btn.classList.add("mn-shape-btn--active");
         if (shape === "model") {
-          loadModel(modelUrl, true);
+          loadModel(modelUrl, true, true);
         } else if (url) {
-          loadModel(url, false);
+          loadModel(url, false, false);
         }
       });
     });
