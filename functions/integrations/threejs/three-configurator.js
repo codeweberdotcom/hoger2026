@@ -254,7 +254,9 @@ function initConfigurator(canvas) {
       meshes.forEach((mesh) => {
         mesh.material.map = texture;
         mesh.material.color.set(0xffffff);
-        mesh.material.roughness = roughness;
+        // When roughnessMap is present, set roughness=1 so the map controls the full 0–1 range.
+        // Without it, gloss/chrome (roughness=0.05) would give near-zero variation.
+        mesh.material.roughness = reflectionMaskUrl ? 1.0 : roughness;
         mesh.material.metalness = metalness;
         mesh.material.envMap = envTexture;
         mesh.material.envMapIntensity = envIntensity * reflectionStrength;
