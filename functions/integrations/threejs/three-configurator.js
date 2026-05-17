@@ -19,9 +19,9 @@ function initConfigurator(canvas) {
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0xf6f7f9);
 
-  const ambientLight = new THREE.AmbientLight(0xffffff, 4);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1);
   scene.add(ambientLight);
-  const dirLight = new THREE.DirectionalLight(0xffffff, 3);
+  const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
   dirLight.position.set(10, 20, 15);
   scene.add(dirLight);
 
@@ -39,7 +39,8 @@ function initConfigurator(canvas) {
   console.log("[hoger-conf] exposure:", exposure, "| saturation:", saturation, "| envIntensity:", envIntensity);
 
   const pmrem = new THREE.PMREMGenerator(renderer);
-  scene.environment = pmrem.fromScene(new RoomEnvironment()).texture;
+  const envTexture = pmrem.fromScene(new RoomEnvironment()).texture;
+  scene.environment = envTexture;
   pmrem.dispose();
 
   const controls = new OrbitControls(camera, renderer.domElement);
@@ -79,6 +80,7 @@ function initConfigurator(canvas) {
       if (!child.isMesh) return;
       child.material = child.material.clone();
       child.material.side = THREE.DoubleSide;
+      child.material.envMap = envTexture;
       child.material.envMapIntensity = envIntensity;
       meshes.push(child);
     });
@@ -96,6 +98,7 @@ function initConfigurator(canvas) {
         mesh.material.color.set(0xffffff);
         mesh.material.roughness = roughness;
         mesh.material.metalness = metalness;
+        mesh.material.envMap = envTexture;
         mesh.material.envMapIntensity = envIntensity;
         mesh.material.needsUpdate = true;
       });
