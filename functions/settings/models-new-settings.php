@@ -100,7 +100,9 @@ function hoger_models_new_settings_init() {
 
 	// Section: Camera
 	add_settings_section( 'hoger_mn_camera', __( 'Camera Position', 'hoger' ), function() {
-		echo '<p class="description">' . esc_html__( 'Leave all fields empty to use auto-fit. Enable Debug Mode on the frontend, position the camera as needed, then copy the values here.', 'hoger' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Leave all fields empty to use auto-fit. Enable Debug Mode on the frontend, position the camera, click Copy, then paste the result below.', 'hoger' ) . '</p>';
+		echo '<textarea id="hoger-cam-paste" rows="7" style="width:260px;font-family:monospace;font-size:12px;margin-bottom:8px" placeholder="' . esc_attr__( 'Paste config here…', 'hoger' ) . '"></textarea>';
+		echo '<br><button type="button" class="button" id="hoger-cam-parse">' . esc_html__( 'Apply to fields', 'hoger' ) . '</button>';
 	}, 'models-new-viewer-settings' );
 
 	foreach ( [
@@ -265,6 +267,23 @@ function hoger_mn_enqueue_settings_media( $hook ) {
 	wp_enqueue_media();
 	wp_add_inline_script( 'jquery', '
 		jQuery(function($) {
+			var camKeys = [
+				"hoger_mn_conf_cam_x",
+				"hoger_mn_conf_cam_y",
+				"hoger_mn_conf_cam_z",
+				"hoger_mn_conf_cam_target_x",
+				"hoger_mn_conf_cam_target_y",
+				"hoger_mn_conf_cam_target_z"
+			];
+			$("#hoger-cam-parse").on("click", function() {
+				var lines = $("#hoger-cam-paste").val().trim().split(/\r?\n/).map(function(l){ return l.trim(); }).filter(Boolean);
+				if (lines.length < 6) { alert("Need 6 values (one per line)."); return; }
+				camKeys.forEach(function(id, i) {
+					$("input[name=\'hoger_mn_viewer[" + id.replace("hoger_mn_", "") + "]\']").val(lines[i]);
+				});
+				$("#hoger-cam-paste").val("");
+			});
+
 			$(document).on("click", ".hoger-mn-upload-btn", function() {
 				var targetId = $(this).data("target");
 				var frame = wp.media({
