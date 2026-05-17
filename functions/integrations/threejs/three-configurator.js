@@ -207,7 +207,22 @@ function initConfigurator(canvas) {
 
     new GLTFLoader().load(url, (gltf) => {
       const model = gltf.scene;
+
+      let savedCamPos = null;
+      let savedTarget = null;
+      if (keepCamera) {
+        savedCamPos = camera.position.clone();
+        savedTarget = controls.target.clone();
+      }
+
       centerAndFit(model);
+
+      if (keepCamera && savedCamPos) {
+        camera.position.copy(savedCamPos);
+        controls.target.copy(savedTarget);
+        controls.update();
+      }
+
       _currentModelObj = model;
 
       if (applyInitialCam && hasSavedCam) {
@@ -262,9 +277,9 @@ function initConfigurator(canvas) {
         btn.style.borderColor = "#9c886f";
         btn.classList.add("mn-shape-btn--active");
         if (shape === "model") {
-          loadModel(modelUrl, true, true);
+          loadModel(modelUrl, true, true, true);
         } else if (url) {
-          loadModel(url, false, false);
+          loadModel(url, false, false, true);
         }
       });
     });
