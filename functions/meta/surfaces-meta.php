@@ -29,6 +29,34 @@ function hoger_surfaces_meta_box_cb( $post ) {
 	// Main photo
 	$img_src = $main_photo ? wp_get_attachment_image_url( $main_photo, 'medium' ) : '';
 	?>
+	<div class="hoger-meta-field" style="margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #ddd">
+		<label style="display:block;font-weight:600;margin-bottom:10px">
+			<?php esc_html_e( 'UV Mapping', 'hoger' ); ?>
+		</label>
+		<label style="display:flex;align-items:center;gap:6px;margin-bottom:10px;cursor:pointer">
+			<input type="checkbox" id="hoger-use-model-uv" name="use_model_uv" value="1"
+				<?php checked( $uv_checked ); ?>>
+			<?php esc_html_e( 'Use model UV (ignore repeat & rotation)', 'hoger' ); ?>
+		</label>
+		<div id="hoger-uv-fields" style="display:flex;gap:16px;flex-wrap:wrap;<?php echo $uv_checked ? 'display:none' : ''; ?>">
+			<label style="font-size:13px">
+				<?php esc_html_e( 'Repeat X', 'hoger' ); ?><br>
+				<input type="number" name="repeat_x" value="<?php echo esc_attr( $repeat_x ); ?>"
+					step="0.1" min="0.1" style="width:80px">
+			</label>
+			<label style="font-size:13px">
+				<?php esc_html_e( 'Repeat Y', 'hoger' ); ?><br>
+				<input type="number" name="repeat_y" value="<?php echo esc_attr( $repeat_y ); ?>"
+					step="0.1" min="0.1" style="width:80px">
+			</label>
+			<label style="font-size:13px">
+				<?php esc_html_e( 'Rotation °', 'hoger' ); ?><br>
+				<input type="number" name="rotation" value="<?php echo esc_attr( $rotation ); ?>"
+					step="1" min="-360" max="360" style="width:80px">
+			</label>
+		</div>
+	</div>
+
 	<div class="hoger-meta-field" style="margin-bottom:20px">
 		<label style="display:block;font-weight:600;margin-bottom:6px">
 			<?php esc_html_e( 'Main Photo', 'hoger' ); ?>
@@ -138,34 +166,6 @@ function hoger_surfaces_meta_box_cb( $post ) {
 		<button type="button" class="button button-secondary" id="hoger-add-color">
 			<?php esc_html_e( '+ Add Color', 'hoger' ); ?>
 		</button>
-	</div>
-
-	<div class="hoger-meta-field" style="margin-top:24px;padding-top:16px;border-top:1px solid #ddd">
-		<label style="display:block;font-weight:600;margin-bottom:10px">
-			<?php esc_html_e( 'UV Mapping', 'hoger' ); ?>
-		</label>
-		<label style="display:flex;align-items:center;gap:6px;margin-bottom:10px;cursor:pointer" id="hoger-uv-label">
-			<input type="checkbox" id="hoger-use-model-uv" name="use_model_uv" value="1"
-				<?php checked( $uv_checked ); ?>>
-			<?php esc_html_e( 'Use model UV (ignore repeat & rotation)', 'hoger' ); ?>
-		</label>
-		<div id="hoger-uv-fields" style="display:flex;gap:16px;flex-wrap:wrap;<?php echo $uv_checked ? 'display:none' : ''; ?>">
-			<label style="font-size:13px">
-				<?php esc_html_e( 'Repeat X', 'hoger' ); ?><br>
-				<input type="number" name="repeat_x" value="<?php echo esc_attr( $repeat_x ); ?>"
-					step="0.1" min="0.1" style="width:80px">
-			</label>
-			<label style="font-size:13px">
-				<?php esc_html_e( 'Repeat Y', 'hoger' ); ?><br>
-				<input type="number" name="repeat_y" value="<?php echo esc_attr( $repeat_y ); ?>"
-					step="0.1" min="0.1" style="width:80px">
-			</label>
-			<label style="font-size:13px">
-				<?php esc_html_e( 'Rotation °', 'hoger' ); ?><br>
-				<input type="number" name="rotation" value="<?php echo esc_attr( $rotation ); ?>"
-					step="1" min="-360" max="360" style="width:80px">
-			</label>
-		</div>
 	</div>
 
 	<script>
