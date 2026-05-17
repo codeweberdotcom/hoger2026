@@ -118,6 +118,7 @@ function initConfigurator(canvas) {
   // Debug overlay
   let debugEl = null;
   let debugTextEl = null;
+  let debugTexSection = null;
   if (camDebug) {
     debugEl = document.createElement("div");
     debugEl.style.cssText = "position:absolute;top:10px;left:10px;z-index:100;background:rgba(0,0,0,.75);color:#fff;font:12px/1.5 monospace;padding:10px 12px;border-radius:6px;min-width:200px;";
@@ -129,18 +130,67 @@ function initConfigurator(canvas) {
     debugEl.appendChild(debugTextEl);
 
     const copyBtn = document.createElement("button");
-    copyBtn.textContent = "Copy";
+    copyBtn.textContent = "Copy cam";
     copyBtn.style.cssText = "margin-top:8px;padding:3px 10px;font-size:11px;cursor:pointer;display:block;";
     copyBtn.addEventListener("click", () => {
       const p = camera.position, t = controls.target;
       const txt = [p.x.toFixed(4), p.y.toFixed(4), p.z.toFixed(4), t.x.toFixed(4), t.y.toFixed(4), t.z.toFixed(4)].join("\n");
       navigator.clipboard.writeText(txt).then(() => {
         copyBtn.textContent = "Copied!";
-        setTimeout(() => { copyBtn.textContent = "Copy"; }, 1500);
+        setTimeout(() => { copyBtn.textContent = "Copy cam"; }, 1500);
       });
     });
     debugEl.appendChild(copyBtn);
+
+    debugTexSection = document.createElement("div");
+    debugTexSection.style.cssText = "margin-top:10px;border-top:1px solid rgba(255,255,255,.3);padding-top:8px;display:none;";
+    debugEl.appendChild(debugTexSection);
+
     wrap.appendChild(debugEl);
+  }
+
+  // Stored textures for debug visualization
+  let _dbgColorMap = null;
+  let _dbgRoughnessMap = null;
+  let _dbgBumpMap = null;
+
+  function _updateDebugTexButtons() {
+    if (!debugTexSection) return;
+    debugTexSection.innerHTML = "";
+    if (!_dbgColorMap) return;
+
+    const lbl = document.createElement("div");
+    lbl.textContent = "Texture debug:";
+    lbl.style.cssText = "font-size:10px;opacity:.65;margin-bottom:5px;";
+    debugTexSection.appendChild(lbl);
+
+    const btnCss = "display:block;width:100%;margin-bottom:3px;padding:3px 8px;font-size:11px;cursor:pointer;text-align:left;background:#222;color:#fff;border:1px solid #555;border-radius:3px;";
+
+    function makeBtn(label, onClick) {
+      const b = document.createElement("button");
+      b.textContent = label;
+      b.style.cssText = btnCss;
+      b.addEventListener("click", onClick);
+      debugTexSection.appendChild(b);
+    }
+
+    makeBtn("▶ color map (normal)", () => {
+      meshes.forEach((m) => { m.material.map = _dbgColorMap; m.material.color.set(0xffffff); m.material.needsUpdate = true; });
+    });
+
+    if (_dbgRoughnessMap) {
+      makeBtn("▶ show roughnessMap", () => {
+        meshes.forEach((m) => { m.material.map = _dbgRoughnessMap; m.material.color.set(0xffffff); m.material.needsUpdate = true; });
+      });
+    }
+
+    if (_dbgBumpMap) {
+      makeBtn("▶ show bumpMap", () => {
+        meshes.forEach((m) => { m.material.map = _dbgBumpMap; m.material.color.set(0xffffff); m.material.needsUpdate = true; });
+      });
+    }
+
+    debugTexSection.style.display = "block";
   }
 
   new GLTFLoader().load(modelUrl, (gltf) => {
@@ -201,6 +251,7 @@ function initConfigurator(canvas) {
     textureLoader.load(url, (texture) => {
       texture.colorSpace = THREE.SRGBColorSpace;
       applyUv(texture);
+      _dbgColorMap = texture;
       meshes.forEach((mesh) => {
         mesh.material.map = texture;
         mesh.material.color.set(0xffffff);
@@ -210,36 +261,41 @@ function initConfigurator(canvas) {
         mesh.material.envMapIntensity = envIntensity * reflectionStrength;
         mesh.material.needsUpdate = true;
       });
+      _updateDebugTexButtons();
     });
 
     if (reflectionMaskUrl) {
       textureLoader.load(reflectionMaskUrl, (tex) => {
-        console.log('[hoger-conf] roughnessMap loaded:', reflectionMaskUrl);
         applyUv(tex);
+        _dbgRoughnessMap = tex;
         meshes.forEach((mesh) => {
           mesh.material.roughnessMap = tex;
           mesh.material.needsUpdate = true;
         });
+        _updateDebugTexButtons();
       }, undefined, (err) => {
         console.error('[hoger-conf] roughnessMap FAILED to load:', reflectionMaskUrl, err);
       });
     } else {
+      _dbgRoughnessMap = null;
       meshes.forEach((mesh) => { mesh.material.roughnessMap = null; mesh.material.needsUpdate = true; });
     }
 
     if (bumpMapUrl) {
       textureLoader.load(bumpMapUrl, (tex) => {
-        console.log('[hoger-conf] bumpMap loaded:', bumpMapUrl);
         applyUv(tex);
+        _dbgBumpMap = tex;
         meshes.forEach((mesh) => {
           mesh.material.bumpMap = tex;
           mesh.material.bumpScale = bumpScale;
           mesh.material.needsUpdate = true;
         });
+        _updateDebugTexButtons();
       }, undefined, (err) => {
         console.error('[hoger-conf] bumpMap FAILED to load:', bumpMapUrl, err);
       });
     } else {
+      _dbgBumpMap = null;
       meshes.forEach((mesh) => { mesh.material.bumpMap = null; mesh.material.bumpScale = 1; mesh.material.needsUpdate = true; });
     }
   };
