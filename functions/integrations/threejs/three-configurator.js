@@ -208,18 +208,16 @@ function initConfigurator(canvas) {
     new GLTFLoader().load(url, (gltf) => {
       const model = gltf.scene;
 
-      let savedCamPos = null;
-      let savedTarget = null;
+      let savedDir = null;
       if (keepCamera) {
-        savedCamPos = camera.position.clone();
-        savedTarget = controls.target.clone();
+        savedDir = camera.position.clone().sub(controls.target).normalize();
       }
 
       centerAndFit(model);
 
-      if (keepCamera && savedCamPos) {
-        camera.position.copy(savedCamPos);
-        controls.target.copy(savedTarget);
+      if (keepCamera && savedDir) {
+        const newDist = camera.position.clone().sub(controls.target).length();
+        camera.position.copy(controls.target).addScaledVector(savedDir, newDist);
         controls.update();
       }
 
@@ -277,7 +275,7 @@ function initConfigurator(canvas) {
         btn.style.borderColor = "#9c886f";
         btn.classList.add("mn-shape-btn--active");
         if (shape === "model") {
-          loadModel(modelUrl, true, true, true);
+          loadModel(modelUrl, true, true, false);
         } else if (url) {
           loadModel(url, false, false, true);
         }
