@@ -264,6 +264,7 @@ add_filter( 'upload_mimes', 'hoger_allow_3d_mimes' );
 function hoger_allow_3d_mimes( $mimes ) {
 	$mimes['glb']  = 'model/gltf-binary';
 	$mimes['gltf'] = 'model/gltf+json';
+	$mimes['hdr']  = 'image/vnd.radiance';
 	return $mimes;
 }
 
@@ -276,6 +277,9 @@ function hoger_allow_3d_filetype( $data, $file, $filename, $mimes ) {
 	} elseif ( $ext === 'gltf' ) {
 		$data['ext']  = 'gltf';
 		$data['type'] = 'model/gltf+json';
+	} elseif ( $ext === 'hdr' ) {
+		$data['ext']  = 'hdr';
+		$data['type'] = 'image/vnd.radiance';
 	}
 	return $data;
 }
