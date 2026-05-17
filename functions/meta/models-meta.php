@@ -34,6 +34,13 @@ function hoger_models_meta_boxes() {
 		'normal'
 	);
 	add_meta_box(
+		'models_conf_meshes',
+		__( 'Configurator Meshes', 'hoger' ),
+		'hoger_models_conf_meshes_cb',
+		'models',
+		'normal'
+	);
+	add_meta_box(
 		'models_drawings',
 		__( 'Technical Drawings', 'hoger' ),
 		'hoger_models_drawings_cb',
@@ -395,7 +402,36 @@ function hoger_models_mesh_colors_cb( $post ) {
 	<?php
 }
 
-// ─── Meta box 5: Technical Drawings ───────────────────────────────────────
+// ─── Meta box 5: Configurator Meshes ──────────────────────────────────────
+
+function hoger_models_conf_meshes_cb( $post ) {
+	$model_id   = (int) get_post_meta( $post->ID, 'model_fbx', true );
+	$model_url  = $model_id ? wp_get_attachment_url( $model_id ) : '';
+	$saved_raw  = get_post_meta( $post->ID, 'mn_conf_meshes', true ) ?: '[]';
+	if ( json_decode( $saved_raw ) === null ) {
+		$saved_raw = '[]';
+	}
+	?>
+	<div id="mn-conf-meshes-box" data-model-url="<?php echo esc_url( $model_url ); ?>">
+		<p style="color:#666;font-size:13px;margin:0 0 10px">
+			<?php esc_html_e( 'Choose which meshes the surface configurator texture is applied to. If none are checked, the texture will apply to all meshes.', 'hoger' ); ?>
+		</p>
+		<div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">
+			<button type="button" id="mn-conf-load-btn" class="button">
+				<?php esc_html_e( 'Load Model &amp; Detect Meshes', 'hoger' ); ?>
+			</button>
+			<span id="mn-conf-status" style="font-size:12px;color:#888;"></span>
+		</div>
+		<div id="mn-conf-mesh-list" style="max-height:240px;overflow-y:auto;padding:8px;background:#f9f9f9;border:1px solid #ddd;border-radius:3px;min-height:40px;">
+			<p style="color:#999;font-size:13px;margin:0"><?php esc_html_e( 'Click "Load Model" to detect meshes.', 'hoger' ); ?></p>
+		</div>
+		<input type="hidden" id="mn_conf_meshes" name="mn_conf_meshes"
+			value="<?php echo esc_attr( $saved_raw ); ?>">
+	</div>
+	<?php
+}
+
+// ─── Meta box 6: Technical Drawings ───────────────────────────────────────
 
 function hoger_models_drawings_cb( $post ) {
 	$field_style = 'margin-bottom:16px';
@@ -620,6 +656,18 @@ function hoger_models_save_meta( $post_id, $post ) {
 	update_post_meta( $post_id, 'mn_bg_soft',        isset( $_POST['mn_bg_soft'] )        ? '1' : '0' );
 	update_post_meta( $post_id, 'mn_edge_soft',      isset( $_POST['mn_edge_soft'] )      ? '1' : '0' );
 	update_post_meta( $post_id, 'mn_use_fbx_colors', isset( $_POST['mn_use_fbx_colors'] ) ? '1' : '0' );
+
+	// Configurator meshes JSON array
+	if ( isset( $_POST['mn_conf_meshes'] ) ) {
+		$raw     = wp_unslash( $_POST['mn_conf_meshes'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		$decoded = json_decode( $raw, true );
+		if ( is_array( $decoded ) ) {
+			$sanitized = array_values( array_filter( array_map( 'sanitize_text_field', $decoded ) ) );
+			update_post_meta( $post_id, 'mn_conf_meshes', wp_json_encode( $sanitized, JSON_UNESCAPED_UNICODE ) );
+		} else {
+			update_post_meta( $post_id, 'mn_conf_meshes', '[]' );
+		}
+	}
 
 	// Mesh colors JSON
 	if ( isset( $_POST['mn_mesh_colors'] ) ) {

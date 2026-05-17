@@ -129,6 +129,13 @@ function hoger_enqueue_threejs_admin( $hook ) {
 		wp_get_theme()->get( 'Version' ),
 		true
 	);
+	wp_enqueue_script(
+		'hoger-threejs-conf-admin',
+		get_stylesheet_directory_uri() . '/functions/integrations/threejs/three-conf-admin.js',
+		[],
+		wp_get_theme()->get( 'Version' ),
+		true
+	);
 	wp_localize_script( 'hoger-threejs-fry-admin', 'wpApiSettings', [
 		'root'  => esc_url_raw( rest_url() ),
 		'nonce' => wp_create_nonce( 'wp_rest' ),
@@ -137,7 +144,7 @@ function hoger_enqueue_threejs_admin( $hook ) {
 
 add_filter( 'script_loader_tag', 'hoger_threejs_module_type', 10, 2 );
 function hoger_threejs_module_type( $tag, $handle ) {
-	if ( ! in_array( $handle, [ 'hoger-threejs', 'hoger-threejs-fry', 'hoger-threejs-fry-admin', 'hoger-threejs-configurator' ], true ) ) {
+	if ( ! in_array( $handle, [ 'hoger-threejs', 'hoger-threejs-fry', 'hoger-threejs-fry-admin', 'hoger-threejs-conf-admin', 'hoger-threejs-configurator' ], true ) ) {
 		return $tag;
 	}
 	$tag = str_replace( "type='text/javascript'", '', $tag );

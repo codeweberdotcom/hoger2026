@@ -302,6 +302,10 @@ if ( $surfaces_json && $surfaces_json !== '[]' ) :
 	$file_id  = (int) get_post_meta( get_the_ID(), 'model_fbx', true );
 	$file_url = $file_id ? wp_get_attachment_url( $file_id ) : '';
 	if ( $file_url ) :
+		$conf_meshes_raw = get_post_meta( get_the_ID(), 'mn_conf_meshes', true ) ?: '[]';
+		if ( json_decode( $conf_meshes_raw ) === null ) {
+			$conf_meshes_raw = '[]';
+		}
 ?>
 <section class="wrapper bg-light" id="hoger-configurator-section">
 	<div class="container py-14">
@@ -316,6 +320,7 @@ if ( $surfaces_json && $surfaces_json !== '[]' ) :
 					data-exposure="<?php echo esc_attr( hoger_mn_get( 'conf_exposure' ) ); ?>"
 					data-saturation="<?php echo esc_attr( hoger_mn_get( 'conf_saturation' ) ); ?>"
 					data-env-intensity="<?php echo esc_attr( hoger_mn_get( 'conf_env_intensity' ) ); ?>"
+					data-conf-meshes="<?php echo esc_attr( $conf_meshes_raw ); ?>"
 					style="display:block;width:100%;height:100%;"></canvas>
 			</div>
 

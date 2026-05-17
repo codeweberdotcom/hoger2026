@@ -10,6 +10,11 @@ function initConfigurator(canvas) {
   const exposure     = parseFloat(canvas.getAttribute("data-exposure")     || "1.0");
   const saturation   = parseFloat(canvas.getAttribute("data-saturation")   || "1.0");
   const envIntensity = parseFloat(canvas.getAttribute("data-env-intensity") || "1.0");
+  let confMeshes = [];
+  try {
+    const parsed = JSON.parse(canvas.getAttribute("data-conf-meshes") || "[]");
+    confMeshes = Array.isArray(parsed) ? parsed : [];
+  } catch (e) {}
   if (!modelUrl) return;
 
   const container = canvas.parentElement;
@@ -78,10 +83,18 @@ function initConfigurator(canvas) {
 
     model.traverse((child) => {
       if (!child.isMesh) return;
-      child.material = child.material.clone();
-      child.material.side = THREE.DoubleSide;
-      child.material.envMap = envTexture;
-      child.material.envMapIntensity = envIntensity;
+      if (confMeshes.length && !confMeshes.includes(child.name)) return;
+      const origColor = child.material?.color
+        ? child.material.color.clone()
+        : new THREE.Color(0xcccccc);
+      child.material = new THREE.MeshStandardMaterial({
+        color: origColor,
+        side: THREE.DoubleSide,
+        envMap: envTexture,
+        envMapIntensity: envIntensity,
+        roughness: 0.5,
+        metalness: 0.1,
+      });
       meshes.push(child);
     });
   });
