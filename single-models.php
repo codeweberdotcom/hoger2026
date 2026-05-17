@@ -322,6 +322,13 @@ if ( $surfaces_json && $surfaces_json !== '[]' ) :
 						data-env-jpg="<?php echo esc_attr( hoger_mn_get( 'conf_env_jpg' ) ); ?>"
 						data-env-rotate="<?php echo esc_attr( hoger_mn_get( 'conf_env_rotate' ) ); ?>"
 						data-env-rotate-speed="<?php echo esc_attr( hoger_mn_get( 'conf_env_rotate_speed' ) ); ?>"
+						data-cam-x="<?php echo esc_attr( hoger_mn_get( 'conf_cam_x' ) ); ?>"
+						data-cam-y="<?php echo esc_attr( hoger_mn_get( 'conf_cam_y' ) ); ?>"
+						data-cam-z="<?php echo esc_attr( hoger_mn_get( 'conf_cam_z' ) ); ?>"
+						data-cam-target-x="<?php echo esc_attr( hoger_mn_get( 'conf_cam_target_x' ) ); ?>"
+						data-cam-target-y="<?php echo esc_attr( hoger_mn_get( 'conf_cam_target_y' ) ); ?>"
+						data-cam-target-z="<?php echo esc_attr( hoger_mn_get( 'conf_cam_target_z' ) ); ?>"
+						data-cam-debug="<?php echo esc_attr( hoger_mn_get( 'conf_cam_debug' ) ); ?>"
 						data-conf-meshes="<?php echo esc_attr( $conf_meshes_raw ); ?>"
 						style="display:block;width:100%;height:100%;"></canvas>
 				</div>

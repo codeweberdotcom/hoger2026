@@ -97,6 +97,24 @@ function hoger_models_new_settings_init() {
 		'step' => 0.0005,
 		'desc' => __( 'Default: 0.001. Radians per frame. Higher = faster.', 'hoger' ),
 	] );
+
+	// Section: Camera
+	add_settings_section( 'hoger_mn_camera', __( 'Camera Position', 'hoger' ), function() {
+		echo '<p class="description">' . esc_html__( 'Leave all fields empty to use auto-fit. Enable Debug Mode on the frontend, position the camera as needed, then copy the values here.', 'hoger' ) . '</p>';
+	}, 'models-new-viewer-settings' );
+
+	foreach ( [
+		'conf_cam_x'        => __( 'Camera X', 'hoger' ),
+		'conf_cam_y'        => __( 'Camera Y', 'hoger' ),
+		'conf_cam_z'        => __( 'Camera Z', 'hoger' ),
+		'conf_cam_target_x' => __( 'Target X', 'hoger' ),
+		'conf_cam_target_y' => __( 'Target Y', 'hoger' ),
+		'conf_cam_target_z' => __( 'Target Z', 'hoger' ),
+	] as $key => $label ) {
+		add_settings_field( 'hoger_mn_' . $key, $label, 'hoger_mn_cam_field', 'models-new-viewer-settings', 'hoger_mn_camera', [ 'key' => $key ] );
+	}
+
+	add_settings_field( 'hoger_mn_conf_cam_debug', __( 'Debug mode', 'hoger' ), 'hoger_mn_checkbox_field', 'models-new-viewer-settings', 'hoger_mn_camera', [ 'key' => 'conf_cam_debug' ] );
 }
 
 // ─── Defaults ──────────────────────────────────────────────────────────────
@@ -116,6 +134,13 @@ function hoger_mn_defaults() {
 		'conf_env_jpg'          => '',
 		'conf_env_rotate'       => '0',
 		'conf_env_rotate_speed' => '0.001',
+		'conf_cam_x'            => '',
+		'conf_cam_y'            => '',
+		'conf_cam_z'            => '',
+		'conf_cam_target_x'     => '',
+		'conf_cam_target_y'     => '',
+		'conf_cam_target_z'     => '',
+		'conf_cam_debug'        => '0',
 	];
 }
 
@@ -128,7 +153,7 @@ function hoger_mn_get( $key ) {
 // ─── Sanitize ──────────────────────────────────────────────────────────────
 
 function hoger_mn_sanitize_settings( $input ) {
-	$checkboxes = [ 'show_play_btn', 'show_edges_btn', 'enable_auto_rotate', 'enable_zoom', 'enable_orbit', 'conf_env_rotate' ];
+	$checkboxes = [ 'show_play_btn', 'show_edges_btn', 'enable_auto_rotate', 'enable_zoom', 'enable_orbit', 'conf_env_rotate', 'conf_cam_debug' ];
 	$out = [];
 
 	foreach ( $checkboxes as $key ) {
@@ -158,6 +183,11 @@ function hoger_mn_sanitize_settings( $input ) {
 	$rot_speed = isset( $input['conf_env_rotate_speed'] ) ? (float) $input['conf_env_rotate_speed'] : 0.001;
 	$out['conf_env_rotate_speed'] = (string) round( max( 0.0005, min( 0.05, $rot_speed ) ), 4 );
 
+	// Camera position fields
+	foreach ( [ 'conf_cam_x', 'conf_cam_y', 'conf_cam_z', 'conf_cam_target_x', 'conf_cam_target_y', 'conf_cam_target_z' ] as $key ) {
+		$out[ $key ] = isset( $input[ $key ] ) && $input[ $key ] !== '' ? (string) round( (float) $input[ $key ], 4 ) : '';
+	}
+
 	return $out;
 }
 
@@ -170,6 +200,17 @@ function hoger_mn_checkbox_field( $args ) {
 		'<input type="checkbox" name="hoger_mn_viewer[%s]" value="1" %s>',
 		esc_attr( $key ),
 		checked( $val, '1', false )
+	);
+}
+
+function hoger_mn_cam_field( $args ) {
+	$key = $args['key'];
+	$val = hoger_mn_get( $key );
+	printf(
+		'<input type="number" name="hoger_mn_viewer[%s]" value="%s" step="0.0001" style="width:120px" placeholder="%s">',
+		esc_attr( $key ),
+		esc_attr( $val ),
+		esc_attr__( 'auto', 'hoger' )
 	);
 }
 

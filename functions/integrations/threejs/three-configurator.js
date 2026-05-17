@@ -15,6 +15,15 @@ function initConfigurator(canvas) {
   const envJpg         = canvas.getAttribute("data-env-jpg") || "";
   const envRotate      = canvas.getAttribute("data-env-rotate") === "1";
   const envRotateSpeed = parseFloat(canvas.getAttribute("data-env-rotate-speed") || "0.001");
+
+  const camX        = canvas.getAttribute("data-cam-x");
+  const camY        = canvas.getAttribute("data-cam-y");
+  const camZ        = canvas.getAttribute("data-cam-z");
+  const camTargetX  = canvas.getAttribute("data-cam-target-x");
+  const camTargetY  = canvas.getAttribute("data-cam-target-y");
+  const camTargetZ  = canvas.getAttribute("data-cam-target-z");
+  const camDebug    = canvas.getAttribute("data-cam-debug") === "1";
+  const hasSavedCam = camX !== "" && camY !== "" && camZ !== "";
   let confMeshes = [];
   try {
     const parsed = JSON.parse(canvas.getAttribute("data-conf-meshes") || "[]");
@@ -106,9 +115,48 @@ function initConfigurator(canvas) {
     controls.update();
   }
 
+  // Debug overlay
+  let debugEl = null;
+  let debugTextEl = null;
+  if (camDebug) {
+    debugEl = document.createElement("div");
+    debugEl.style.cssText = "position:absolute;top:10px;left:10px;z-index:100;background:rgba(0,0,0,.75);color:#fff;font:12px/1.5 monospace;padding:10px 12px;border-radius:6px;min-width:200px;";
+    const wrap = canvas.parentElement;
+    if (getComputedStyle(wrap).position === "static") wrap.style.position = "relative";
+
+    debugTextEl = document.createElement("div");
+    debugTextEl.style.pointerEvents = "none";
+    debugEl.appendChild(debugTextEl);
+
+    const copyBtn = document.createElement("button");
+    copyBtn.textContent = "Copy";
+    copyBtn.style.cssText = "margin-top:8px;padding:3px 10px;font-size:11px;cursor:pointer;display:block;";
+    copyBtn.addEventListener("click", () => {
+      const p = camera.position, t = controls.target;
+      const txt = [p.x.toFixed(4), p.y.toFixed(4), p.z.toFixed(4), t.x.toFixed(4), t.y.toFixed(4), t.z.toFixed(4)].join("\n");
+      navigator.clipboard.writeText(txt).then(() => {
+        copyBtn.textContent = "Copied!";
+        setTimeout(() => { copyBtn.textContent = "Copy"; }, 1500);
+      });
+    });
+    debugEl.appendChild(copyBtn);
+    wrap.appendChild(debugEl);
+  }
+
   new GLTFLoader().load(modelUrl, (gltf) => {
     const model = gltf.scene;
     centerAndFit(model);
+
+    if (hasSavedCam) {
+      camera.position.set(parseFloat(camX), parseFloat(camY), parseFloat(camZ));
+      controls.target.set(
+        parseFloat(camTargetX || "0"),
+        parseFloat(camTargetY || "0"),
+        parseFloat(camTargetZ || "0")
+      );
+      controls.update();
+    }
+
     scene.add(model);
 
     model.traverse((child) => {
@@ -163,6 +211,18 @@ function initConfigurator(canvas) {
       meshes.forEach((mesh) => {
         mesh.material.envMapRotation.y = envAngle;
       });
+    }
+    if (debugTextEl) {
+      const p = camera.position, t = controls.target;
+      debugTextEl.innerHTML =
+        "<b>Camera</b><br>" +
+        "X:&nbsp;" + p.x.toFixed(4) + "<br>" +
+        "Y:&nbsp;" + p.y.toFixed(4) + "<br>" +
+        "Z:&nbsp;" + p.z.toFixed(4) + "<br>" +
+        "<b>Target</b><br>" +
+        "X:&nbsp;" + t.x.toFixed(4) + "<br>" +
+        "Y:&nbsp;" + t.y.toFixed(4) + "<br>" +
+        "Z:&nbsp;" + t.z.toFixed(4);
     }
     renderer.render(scene, camera);
   }
