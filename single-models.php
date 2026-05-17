@@ -296,4 +296,37 @@ while ( have_posts() ) :
 
 <?php endwhile; ?>
 
+<?php
+$surfaces_json = hoger_get_surfaces_json();
+if ( $surfaces_json && $surfaces_json !== '[]' ) :
+	$file_id  = (int) get_post_meta( get_the_ID(), 'model_fbx', true );
+	$file_url = $file_id ? wp_get_attachment_url( $file_id ) : '';
+	if ( $file_url ) :
+?>
+<section class="wrapper bg-light" id="hoger-configurator-section">
+	<div class="container py-14">
+
+		<h2 class="display-4 mb-8"><?php esc_html_e( 'Configure Surface', 'hoger' ); ?></h2>
+
+		<div id="hoger-configurator" class="d-flex flex-column flex-lg-row gap-6">
+
+			<div style="flex:0 0 auto;width:100%;max-width:520px;aspect-ratio:1/1;position:relative;">
+				<canvas data-configurator
+					data-three="<?php echo esc_url( $file_url ); ?>"
+					style="display:block;width:100%;height:100%;"></canvas>
+			</div>
+
+			<div class="hoger-surface-picker flex-grow-1">
+				<p class="fw-bold mb-3"><?php esc_html_e( 'Surface type:', 'hoger' ); ?></p>
+				<div class="hoger-surface-types d-flex flex-wrap gap-2 mb-5"></div>
+				<p class="fw-bold mb-3"><?php esc_html_e( 'Color:', 'hoger' ); ?></p>
+				<div class="hoger-surface-colors d-flex flex-wrap gap-2"></div>
+			</div>
+
+		</div>
+	</div>
+</section>
+<script>window.hogerSurfaces = <?php echo $surfaces_json; // phpcs:ignore WordPress.Security.EscapeOutput ?>;</script>
+<?php endif; endif; ?>
+
 <?php get_footer(); ?>

@@ -82,6 +82,13 @@ function hoger_enqueue_threejs() {
 			wp_get_theme()->get( 'Version' ),
 			false
 		);
+		wp_enqueue_script(
+			'hoger-threejs-configurator',
+			get_stylesheet_directory_uri() . '/functions/integrations/threejs/three-configurator.js',
+			[],
+			wp_get_theme()->get( 'Version' ),
+			true
+		);
 	}
 }
 
@@ -132,12 +139,55 @@ function hoger_enqueue_threejs_admin( $hook ) {
 
 add_filter( 'script_loader_tag', 'hoger_threejs_module_type', 10, 2 );
 function hoger_threejs_module_type( $tag, $handle ) {
-	if ( ! in_array( $handle, [ 'hoger-threejs', 'hoger-threejs-fry', 'hoger-threejs-fry-admin' ], true ) ) {
+	if ( ! in_array( $handle, [ 'hoger-threejs', 'hoger-threejs-fry', 'hoger-threejs-fry-admin', 'hoger-threejs-configurator' ], true ) ) {
 		return $tag;
 	}
 	$tag = str_replace( "type='text/javascript'", '', $tag );
 	$tag = str_replace( 'type="text/javascript"', '', $tag );
 	return str_replace( '<script ', '<script type="module" ', $tag );
+}
+
+// ─── Surfaces configurator data helper ────────────────────────────────────
+
+function hoger_get_surfaces_json() {
+	$posts = get_posts( [
+		'post_type'      => 'surfaces',
+		'post_status'    => 'publish',
+		'posts_per_page' => -1,
+		'orderby'        => 'menu_order title',
+		'order'          => 'ASC',
+	] );
+
+	$data = [];
+	foreach ( $posts as $post ) {
+		$main_id    = (int) get_post_meta( $post->ID, 'osnovnoe_foto', true );
+		$main_photo = $main_id ? wp_get_attachment_image_url( $main_id, 'thumbnail' ) : '';
+		$count      = (int) get_post_meta( $post->ID, 'czveta', true );
+
+		$colors = [];
+		for ( $i = 0; $i < $count; $i++ ) {
+			$name     = get_post_meta( $post->ID, "czveta_{$i}_nazvanie_czveta", true );
+			$photo_id = (int) get_post_meta( $post->ID, "czveta_{$i}_foto_czveta", true );
+			$photo    = $photo_id ? wp_get_attachment_url( $photo_id ) : '';
+			if ( $photo ) {
+				$colors[] = [
+					'name'  => $name ?: __( 'Color', 'hoger' ) . ' ' . ( $i + 1 ),
+					'photo' => $photo,
+					'thumb' => $photo_id ? ( wp_get_attachment_image_url( $photo_id, 'thumbnail' ) ?: $photo ) : $photo,
+				];
+			}
+		}
+
+		if ( ! empty( $colors ) ) {
+			$data[] = [
+				'title'      => get_the_title( $post ),
+				'main_photo' => $main_photo,
+				'colors'     => $colors,
+			];
+		}
+	}
+
+	return wp_json_encode( $data, JSON_UNESCAPED_UNICODE );
 }
 
 add_action( 'wp_enqueue_scripts', 'hoger_enqueue_styles' );
@@ -147,4 +197,48 @@ function hoger_enqueue_styles() {
         array( 'codeweber-style' ),
         wp_get_theme()->get('Version')
     );
+
+	if ( is_singular( 'models' ) || is_singular( 'models_new' ) ) {
+		wp_add_inline_style( 'hoger-style', '
+			.hoger-surface-type-btn,
+			.hoger-surface-color-btn {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 4px;
+				padding: 6px;
+				border: 2px solid transparent;
+				border-radius: 8px;
+				background: #fff;
+				cursor: pointer;
+				transition: border-color .15s, box-shadow .15s;
+				font-size: 11px;
+				color: #444;
+				width: 80px;
+				text-align: center;
+				line-height: 1.3;
+			}
+			.hoger-surface-type-btn img,
+			.hoger-surface-color-btn img {
+				width: 64px;
+				height: 64px;
+				object-fit: cover;
+				border-radius: 5px;
+				display: block;
+			}
+			.hoger-surface-type-btn:hover,
+			.hoger-surface-color-btn:hover {
+				border-color: #9c886f;
+			}
+			.hoger-surface-type-btn.is-active,
+			.hoger-surface-color-btn.is-active {
+				border-color: #9c886f;
+				box-shadow: 0 0 0 2px #9c886f44;
+			}
+			.hoger-conf-empty {
+				color: #999;
+				font-size: 13px;
+			}
+		' );
+	}
 }
