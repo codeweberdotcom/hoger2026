@@ -340,6 +340,8 @@ if ( $surfaces_json && $surfaces_json !== '[]' ) :
 						data-cam-target-z="<?php echo esc_attr( $cam_target_z ); ?>"
 						data-cam-debug="<?php echo esc_attr( $cam_debug ); ?>"
 						data-conf-meshes="<?php echo esc_attr( $conf_meshes_raw ); ?>"
+						data-default-surface="<?php echo esc_attr( get_post_meta( get_the_ID(), 'mn_default_surface_idx', true ) ); ?>"
+						data-default-color="<?php echo esc_attr( get_post_meta( get_the_ID(), 'mn_default_color_idx', true ) ); ?>"
 						style="display:block;width:100%;height:100%;"></canvas>
 				</div>
 			</div>

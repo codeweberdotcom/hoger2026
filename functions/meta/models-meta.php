@@ -408,6 +408,72 @@ function hoger_models_viewer_settings_cb( $post ) {
 			<?php esc_html_e( 'Debug mode', 'hoger' ); ?>
 		</label>
 	</div>
+
+	<hr style="margin:16px 0">
+
+	<div style="margin-bottom:10px">
+		<label style="display:block;font-weight:600;margin-bottom:6px">
+			<?php esc_html_e( 'Default Surface Selection', 'hoger' ); ?>
+		</label>
+		<p style="font-size:11px;color:#888;margin:0 0 8px">
+			<?php esc_html_e( 'Surface and color applied automatically on page load.', 'hoger' ); ?>
+		</p>
+		<?php
+		$surfaces_raw        = function_exists( 'hoger_get_surfaces_json' ) ? hoger_get_surfaces_json() : '[]';
+		$surfaces_list       = json_decode( $surfaces_raw, true ) ?: [];
+		$raw_surf            = get_post_meta( $post->ID, 'mn_default_surface_idx', true );
+		$default_surface_idx = ( $raw_surf === '' ) ? -1 : (int) $raw_surf;
+		$default_color_idx   = (int) get_post_meta( $post->ID, 'mn_default_color_idx', true );
+		?>
+		<div style="margin-bottom:8px">
+			<label style="font-size:12px;display:block;margin-bottom:3px">
+				<?php esc_html_e( 'Surface', 'hoger' ); ?>
+			</label>
+			<select name="mn_default_surface_idx" id="mn-default-surface" style="width:100%">
+				<option value="-1"><?php esc_html_e( '— None —', 'hoger' ); ?></option>
+				<?php foreach ( $surfaces_list as $idx => $surface ) : ?>
+					<option value="<?php echo esc_attr( $idx ); ?>" <?php selected( $default_surface_idx, $idx ); ?>>
+						<?php echo esc_html( $surface['title'] ); ?>
+					</option>
+				<?php endforeach; ?>
+			</select>
+		</div>
+		<div>
+			<label style="font-size:12px;display:block;margin-bottom:3px">
+				<?php esc_html_e( 'Color', 'hoger' ); ?>
+			</label>
+			<select name="mn_default_color_idx" id="mn-default-color" style="width:100%"></select>
+		</div>
+		<script>
+		(function() {
+			var surfaces = <?php echo $surfaces_raw; // phpcs:ignore WordPress.Security.EscapeOutput ?>;
+			var defaultColorIdx = <?php echo (int) $default_color_idx; ?>;
+
+			function updateColors(surfaceIdx, selectedIdx) {
+				var sel = document.getElementById('mn-default-color');
+				if (!sel) return;
+				sel.innerHTML = '';
+				if (surfaceIdx < 0 || !surfaces[surfaceIdx]) return;
+				var colors = surfaces[surfaceIdx].colors || [];
+				colors.forEach(function(c, i) {
+					var opt = document.createElement('option');
+					opt.value = i;
+					opt.textContent = c.name;
+					if (i === selectedIdx) opt.selected = true;
+					sel.appendChild(opt);
+				});
+			}
+
+			var surfSel = document.getElementById('mn-default-surface');
+			if (surfSel) {
+				surfSel.addEventListener('change', function() {
+					updateColors(parseInt(this.value, 10), 0);
+				});
+				updateColors(parseInt(surfSel.value, 10), defaultColorIdx);
+			}
+		})();
+		</script>
+	</div>
 	<?php
 }
 
@@ -781,4 +847,16 @@ function hoger_models_save_meta( $post_id, $post ) {
 		}
 	}
 	update_post_meta( $post_id, 'mn_cam_debug', isset( $_POST['mn_cam_debug'] ) ? '1' : '0' );
+
+	// Default surface/color selection
+	if ( isset( $_POST['mn_default_surface_idx'] ) ) {
+		$surf_idx = (int) $_POST['mn_default_surface_idx'];
+		if ( $surf_idx < 0 ) {
+			delete_post_meta( $post_id, 'mn_default_surface_idx' );
+			delete_post_meta( $post_id, 'mn_default_color_idx' );
+		} else {
+			update_post_meta( $post_id, 'mn_default_surface_idx', $surf_idx );
+			update_post_meta( $post_id, 'mn_default_color_idx', isset( $_POST['mn_default_color_idx'] ) ? absint( $_POST['mn_default_color_idx'] ) : 0 );
+		}
+	}
 }

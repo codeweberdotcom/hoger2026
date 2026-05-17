@@ -225,6 +225,8 @@ function initConfigurator(canvas) {
       });
       if (isTarget) meshes.push(child);
     });
+
+    canvas.dispatchEvent(new CustomEvent('model:loaded'));
   });
 
   // Expose texture-apply function globally
@@ -451,6 +453,46 @@ function initSurfacePicker() {
 
   renderTypes();
   renderColors();
+
+  // Auto-apply default surface/color after model meshes are ready
+  const defaultSurfaceAttr = canvas.getAttribute("data-default-surface");
+  const defaultColorAttr   = canvas.getAttribute("data-default-color");
+  const defaultSurfaceIdx  = defaultSurfaceAttr !== null && defaultSurfaceAttr !== "" ? parseInt(defaultSurfaceAttr, 10) : -1;
+  const defaultColorIdx    = defaultColorAttr   !== null && defaultColorAttr   !== "" ? parseInt(defaultColorAttr, 10)   : 0;
+
+  if (defaultSurfaceIdx >= 0 && defaultSurfaceIdx < surfaces.length) {
+    canvas.addEventListener("model:loaded", () => {
+      activeType  = defaultSurfaceIdx;
+      activeColor = defaultColorIdx;
+      renderTypes();
+      renderColors();
+
+      const surface = surfaces[defaultSurfaceIdx];
+      const color   = surface?.colors?.[defaultColorIdx];
+      if (color?.photo && canvas.applyTexture) {
+        canvas.applyTexture(
+          color.photo,
+          surface.roughness              ?? 0.9,
+          surface.metalness              ?? 0,
+          surface.useModelUv             ?? true,
+          surface.repeatX                ?? 1,
+          surface.repeatY                ?? 1,
+          surface.rotation               ?? 0,
+          surface.reflectionMask         ?? "",
+          surface.reflectionStrength     ?? 1,
+          surface.roughnessMapDepth      ?? 1,
+          surface.reflectionMaskRepeatX  ?? 1,
+          surface.reflectionMaskRepeatY  ?? 1,
+          surface.reflectionMaskRotation ?? 0,
+          surface.bumpMap                ?? "",
+          surface.bumpScale              ?? 1,
+          surface.bumpMapRepeatX         ?? 1,
+          surface.bumpMapRepeatY         ?? 1,
+          surface.bumpMapRotation        ?? 0
+        );
+      }
+    }, { once: true });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", initSurfacePicker);
