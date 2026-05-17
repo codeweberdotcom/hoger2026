@@ -131,13 +131,13 @@ function hoger_surfaces_meta_box_cb( $post ) {
 						<?php esc_html_e( 'Repeat X', 'hoger' ); ?><br>
 						<input type="number" name="reflection_mask_repeat_x"
 							value="<?php echo esc_attr( $rm_repeat_x ); ?>"
-							step="0.1" min="0.01" style="width:70px;margin-top:4px">
+							step="0.1" min="0.1" style="width:70px;margin-top:4px">
 					</label>
 					<label style="font-size:13px">
 						<?php esc_html_e( 'Repeat Y', 'hoger' ); ?><br>
 						<input type="number" name="reflection_mask_repeat_y"
 							value="<?php echo esc_attr( $rm_repeat_y ); ?>"
-							step="0.1" min="0.01" style="width:70px;margin-top:4px">
+							step="0.1" min="0.1" style="width:70px;margin-top:4px">
 					</label>
 					<label style="font-size:13px">
 						<?php esc_html_e( 'Rotation °', 'hoger' ); ?><br>
@@ -183,13 +183,13 @@ function hoger_surfaces_meta_box_cb( $post ) {
 						<?php esc_html_e( 'Repeat X', 'hoger' ); ?><br>
 						<input type="number" name="bump_map_repeat_x"
 							value="<?php echo esc_attr( $bm_repeat_x ); ?>"
-							step="0.1" min="0.01" style="width:70px;margin-top:4px">
+							step="0.1" min="0.1" style="width:70px;margin-top:4px">
 					</label>
 					<label style="font-size:13px">
 						<?php esc_html_e( 'Repeat Y', 'hoger' ); ?><br>
 						<input type="number" name="bump_map_repeat_y"
 							value="<?php echo esc_attr( $bm_repeat_y ); ?>"
-							step="0.1" min="0.01" style="width:70px;margin-top:4px">
+							step="0.1" min="0.1" style="width:70px;margin-top:4px">
 					</label>
 					<label style="font-size:13px">
 						<?php esc_html_e( 'Rotation °', 'hoger' ); ?><br>
