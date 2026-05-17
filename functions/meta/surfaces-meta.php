@@ -107,11 +107,10 @@ function hoger_surfaces_meta_box_cb( $post ) {
 					<button type="button" class="button hoger-upload-btn" data-target="reflection_mask_id">
 						<?php esc_html_e( 'Select Image', 'hoger' ); ?>
 					</button>
-					<?php if ( $refl_mask_id ) : ?>
-						<button type="button" class="button hoger-remove-btn" data-target="reflection_mask_id" style="margin-left:4px">
-							<?php esc_html_e( 'Remove', 'hoger' ); ?>
-						</button>
-					<?php endif; ?>
+					<button type="button" class="button hoger-remove-btn" data-target="reflection_mask_id"
+						style="margin-left:4px<?php echo $refl_mask_id ? '' : ';display:none'; ?>">
+						<?php esc_html_e( 'Remove', 'hoger' ); ?>
+					</button>
 				</div>
 				<label style="display:block;margin-top:10px;font-size:13px">
 					<?php esc_html_e( 'Reflection Strength', 'hoger' ); ?> (0–2)<br>
@@ -140,11 +139,10 @@ function hoger_surfaces_meta_box_cb( $post ) {
 					<button type="button" class="button hoger-upload-btn" data-target="bump_map_id">
 						<?php esc_html_e( 'Select Image', 'hoger' ); ?>
 					</button>
-					<?php if ( $bump_map_id ) : ?>
-						<button type="button" class="button hoger-remove-btn" data-target="bump_map_id" style="margin-left:4px">
-							<?php esc_html_e( 'Remove', 'hoger' ); ?>
-						</button>
-					<?php endif; ?>
+					<button type="button" class="button hoger-remove-btn" data-target="bump_map_id"
+						style="margin-left:4px<?php echo $bump_map_id ? '' : ';display:none'; ?>">
+						<?php esc_html_e( 'Remove', 'hoger' ); ?>
+					</button>
 				</div>
 				<label style="display:block;margin-top:10px;font-size:13px">
 					<?php esc_html_e( 'Bump Scale', 'hoger' ); ?> (0–5)<br>
@@ -303,22 +301,29 @@ function hoger_surfaces_meta_box_cb( $post ) {
 			updateCount();
 		});
 
-		// Media uploader — main photo
-		$(document).on('click', '.hoger-upload-btn[data-target="osnovnoe_foto"]', function() {
-			var frame = wp.media({ title: '<?php esc_html_e( 'Select Image', 'hoger' ); ?>', multiple: false });
+		// Media uploader — generic (all .hoger-upload-btn)
+		$(document).on('click', '.hoger-upload-btn', function() {
+			var btn    = $(this);
+			var target = btn.data('target');
+			var picker = $('.hoger-image-picker[data-field="' + target + '"]');
+			var frame  = wp.media({ title: '<?php esc_html_e( 'Select Image', 'hoger' ); ?>', multiple: false });
 			frame.on('select', function() {
-				var att = frame.state().get('selection').first().toJSON();
-				$('input[name="osnovnoe_foto"]').val(att.id);
-				var preview = att.sizes && att.sizes.medium ? att.sizes.medium.url : att.url;
-				$('.hoger-image-picker[data-field="osnovnoe_foto"] .hoger-img-preview').html('<img src="' + preview + '" style="max-width:200px;display:block">');
+				var att     = frame.state().get('selection').first().toJSON();
+				var preview = att.sizes && att.sizes.medium ? att.sizes.medium.url : (att.sizes && att.sizes.thumbnail ? att.sizes.thumbnail.url : att.url);
+				picker.find('input[type="hidden"]').val(att.id);
+				picker.find('.hoger-img-preview').html('<img src="' + preview + '" style="max-width:80px;display:block">');
+				picker.find('.hoger-remove-btn').show();
 			});
 			frame.open();
 		});
 
-		// Remove main photo
-		$(document).on('click', '.hoger-remove-btn[data-target="osnovnoe_foto"]', function() {
-			$('input[name="osnovnoe_foto"]').val('');
-			$('.hoger-image-picker[data-field="osnovnoe_foto"] .hoger-img-preview').html('');
+		// Remove — generic
+		$(document).on('click', '.hoger-remove-btn', function() {
+			var target = $(this).data('target');
+			var picker = $('.hoger-image-picker[data-field="' + target + '"]');
+			picker.find('input[type="hidden"]').val('');
+			picker.find('.hoger-img-preview').html('');
+			$(this).hide();
 		});
 
 		// Media uploader — color photo
