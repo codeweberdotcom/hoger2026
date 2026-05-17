@@ -32,7 +32,7 @@ function initConfigurator(canvas) {
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(w, h);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMapping = THREE.LinearToneMapping;
   renderer.toneMappingExposure = exposure;
   canvas.style.filter = saturation !== 1 ? `saturate(${saturation})` : "";
 

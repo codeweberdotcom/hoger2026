@@ -207,7 +207,7 @@ function hoger_enqueue_styles() {
         wp_get_theme()->get('Version')
     );
 
-	if ( is_singular( 'models' ) || is_singular( 'models_new' ) ) {
+	if ( is_singular( 'models' ) ) {
 		wp_add_inline_style( 'hoger-style', '
 			.hoger-surface-type-btn,
 			.hoger-surface-color-btn {
@@ -250,4 +250,26 @@ function hoger_enqueue_styles() {
 			}
 		' );
 	}
+}
+
+// ─── Allow GLB / GLTF uploads ─────────────────────────────────────────────
+
+add_filter( 'upload_mimes', 'hoger_allow_3d_mimes' );
+function hoger_allow_3d_mimes( $mimes ) {
+	$mimes['glb']  = 'model/gltf-binary';
+	$mimes['gltf'] = 'model/gltf+json';
+	return $mimes;
+}
+
+add_filter( 'wp_check_filetype_and_ext', 'hoger_allow_3d_filetype', 10, 4 );
+function hoger_allow_3d_filetype( $data, $file, $filename, $mimes ) {
+	$ext = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
+	if ( $ext === 'glb' ) {
+		$data['ext']  = 'glb';
+		$data['type'] = 'model/gltf-binary';
+	} elseif ( $ext === 'gltf' ) {
+		$data['ext']  = 'gltf';
+		$data['type'] = 'model/gltf+json';
+	}
+	return $data;
 }
