@@ -204,6 +204,7 @@ function hoger_get_surfaces_json() {
 				'rotation'                => (float) ( get_post_meta( $post->ID, 'rotation', true ) ?: 0 ),
 				'reflectionMask'          => $refl_mask_id ? wp_get_attachment_url( $refl_mask_id ) : '',
 				'reflectionStrength'      => (float) ( get_post_meta( $post->ID, 'reflection_strength', true ) ?: 1 ),
+				'roughnessMapDepth'       => (float) ( get_post_meta( $post->ID, 'roughness_map_depth', true ) ?: 1 ),
 				'reflectionMaskRepeatX'   => (float) ( get_post_meta( $post->ID, 'reflection_mask_repeat_x', true ) ?: 1 ),
 				'reflectionMaskRepeatY'   => (float) ( get_post_meta( $post->ID, 'reflection_mask_repeat_y', true ) ?: 1 ),
 				'reflectionMaskRotation'  => (float) ( get_post_meta( $post->ID, 'reflection_mask_rotation', true ) ?: 0 ),

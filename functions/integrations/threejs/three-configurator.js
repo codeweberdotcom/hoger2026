@@ -232,7 +232,7 @@ function initConfigurator(canvas) {
     url,
     roughness = 0.9, metalness = 0,
     useModelUv = true, repeatX = 1, repeatY = 1, rotation = 0,
-    reflectionMaskUrl = '', reflectionStrength = 1,
+    reflectionMaskUrl = '', reflectionStrength = 1, roughnessMapDepth = 1,
     rmRepeatX = 1, rmRepeatY = 1, rmRotation = 0,
     bumpMapUrl = '', bumpScale = 1,
     bmRepeatX = 1, bmRepeatY = 1, bmRotation = 0
@@ -254,9 +254,9 @@ function initConfigurator(canvas) {
       meshes.forEach((mesh) => {
         mesh.material.map = texture;
         mesh.material.color.set(0xffffff);
-        // When roughnessMap is present, set roughness=1 so the map controls the full 0–1 range.
+        // roughnessMapDepth controls the effective range of roughnessMap (0=no effect, 1=full range).
         // Without it, gloss/chrome (roughness=0.05) would give near-zero variation.
-        mesh.material.roughness = reflectionMaskUrl ? 1.0 : roughness;
+        mesh.material.roughness = reflectionMaskUrl ? roughnessMapDepth : roughness;
         mesh.material.metalness = metalness;
         mesh.material.envMap = envTexture;
         mesh.material.envMapIntensity = envIntensity * reflectionStrength;
@@ -432,6 +432,7 @@ function initSurfacePicker() {
             surface.rotation                ?? 0,
             surface.reflectionMask          ?? '',
             surface.reflectionStrength      ?? 1,
+            surface.roughnessMapDepth       ?? 1,
             surface.reflectionMaskRepeatX   ?? 1,
             surface.reflectionMaskRepeatY   ?? 1,
             surface.reflectionMaskRotation  ?? 0,

@@ -128,6 +128,12 @@ function hoger_surfaces_meta_box_cb( $post ) {
 							step="0.05" min="0" max="2" style="width:70px;margin-top:4px">
 					</label>
 					<label style="font-size:13px">
+						<?php esc_html_e( 'Roughness Depth', 'hoger' ); ?> (0–1)<br>
+						<input type="number" name="roughness_map_depth"
+							value="<?php echo esc_attr( get_post_meta( $post->ID, 'roughness_map_depth', true ) ?: '1' ); ?>"
+							step="0.05" min="0" max="1" style="width:70px;margin-top:4px">
+					</label>
+					<label style="font-size:13px">
 						<?php esc_html_e( 'Repeat X', 'hoger' ); ?><br>
 						<input type="number" name="reflection_mask_repeat_x"
 							value="<?php echo esc_attr( $rm_repeat_x ); ?>"
@@ -458,6 +464,9 @@ function hoger_surfaces_save_meta( $post_id, $post ) {
 	}
 	if ( isset( $_POST['reflection_strength'] ) ) {
 		update_post_meta( $post_id, 'reflection_strength', (string) round( max( 0, min( 2, (float) $_POST['reflection_strength'] ) ), 3 ) );
+	}
+	if ( isset( $_POST['roughness_map_depth'] ) ) {
+		update_post_meta( $post_id, 'roughness_map_depth', (string) round( max( 0, min( 1, (float) $_POST['roughness_map_depth'] ) ), 3 ) );
 	}
 	if ( isset( $_POST['reflection_mask_repeat_x'] ) ) {
 		update_post_meta( $post_id, 'reflection_mask_repeat_x', (string) round( max( 0.01, (float) $_POST['reflection_mask_repeat_x'] ), 3 ) );
