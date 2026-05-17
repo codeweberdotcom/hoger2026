@@ -164,16 +164,27 @@ function hoger_get_surfaces_json() {
 		$main_photo = $main_id ? wp_get_attachment_image_url( $main_id, 'thumbnail' ) : '';
 		$count      = (int) get_post_meta( $post->ID, 'czveta', true );
 
+		$finish_map = [
+			'matte'  => [ 'roughness' => 0.9,  'metalness' => 0.0  ],
+			'satin'  => [ 'roughness' => 0.4,  'metalness' => 0.05 ],
+			'gloss'  => [ 'roughness' => 0.05, 'metalness' => 0.05 ],
+			'chrome' => [ 'roughness' => 0.05, 'metalness' => 1.0  ],
+		];
+
 		$colors = [];
 		for ( $i = 0; $i < $count; $i++ ) {
 			$name     = get_post_meta( $post->ID, "czveta_{$i}_nazvanie_czveta", true );
 			$photo_id = (int) get_post_meta( $post->ID, "czveta_{$i}_foto_czveta", true );
 			$photo    = $photo_id ? wp_get_attachment_url( $photo_id ) : '';
+			$finish   = get_post_meta( $post->ID, "czveta_{$i}_finish", true ) ?: 'matte';
+			$mat      = $finish_map[ $finish ] ?? $finish_map['matte'];
 			if ( $photo ) {
 				$colors[] = [
-					'name'  => $name ?: __( 'Color', 'hoger' ) . ' ' . ( $i + 1 ),
-					'photo' => $photo,
-					'thumb' => $photo_id ? ( wp_get_attachment_image_url( $photo_id, 'thumbnail' ) ?: $photo ) : $photo,
+					'name'      => $name ?: __( 'Color', 'hoger' ) . ' ' . ( $i + 1 ),
+					'photo'     => $photo,
+					'thumb'     => $photo_id ? ( wp_get_attachment_image_url( $photo_id, 'thumbnail' ) ?: $photo ) : $photo,
+					'roughness' => $mat['roughness'],
+					'metalness' => $mat['metalness'],
 				];
 			}
 		}

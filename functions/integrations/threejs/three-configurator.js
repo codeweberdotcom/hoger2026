@@ -71,7 +71,7 @@ function initConfigurator(canvas) {
   });
 
   // Expose texture-apply function globally
-  canvas.applyTexture = (url) => {
+  canvas.applyTexture = (url, roughness = 0.9, metalness = 0) => {
     if (!url) return;
     textureLoader.load(url, (texture) => {
       texture.colorSpace = THREE.SRGBColorSpace;
@@ -80,6 +80,8 @@ function initConfigurator(canvas) {
       meshes.forEach((mesh) => {
         mesh.material.map = texture;
         mesh.material.color.set(0xffffff);
+        mesh.material.roughness = roughness;
+        mesh.material.metalness = metalness;
         mesh.material.needsUpdate = true;
       });
     });
@@ -185,7 +187,7 @@ function initSurfacePicker() {
         activeColor = idx;
         renderColors();
         if (color.photo && canvas.applyTexture) {
-          canvas.applyTexture(color.photo);
+          canvas.applyTexture(color.photo, color.roughness ?? 0.9, color.metalness ?? 0);
         }
       });
 
