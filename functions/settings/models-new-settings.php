@@ -117,6 +117,20 @@ function hoger_models_new_settings_init() {
 	}
 
 	add_settings_field( 'hoger_mn_conf_cam_debug', __( 'Debug mode', 'hoger' ), 'hoger_mn_checkbox_field', 'models-new-viewer-settings', 'hoger_mn_camera', [ 'key' => 'conf_cam_debug' ] );
+
+	// Section: Shape preview models
+	add_settings_section( 'hoger_mn_shapes', __( 'Shape Preview Models', 'hoger' ), function() {
+		echo '<p class="description">' . esc_html__( 'Upload GLB models for the Cube and Sphere switcher buttons shown in the configurator viewport. Leave empty to hide the button.', 'hoger' ) . '</p>';
+	}, 'models-new-viewer-settings' );
+
+	add_settings_field( 'hoger_mn_conf_cube_url', __( 'Cube model (.glb)', 'hoger' ), 'hoger_mn_text_field', 'models-new-viewer-settings', 'hoger_mn_shapes', [
+		'key'  => 'conf_cube_url',
+		'desc' => __( 'GLB file of a simple cube used to preview surface textures.', 'hoger' ),
+	] );
+	add_settings_field( 'hoger_mn_conf_sphere_url', __( 'Sphere model (.glb)', 'hoger' ), 'hoger_mn_text_field', 'models-new-viewer-settings', 'hoger_mn_shapes', [
+		'key'  => 'conf_sphere_url',
+		'desc' => __( 'GLB file of a smooth sphere used to preview surface textures.', 'hoger' ),
+	] );
 }
 
 // ─── Defaults ──────────────────────────────────────────────────────────────
@@ -143,6 +157,8 @@ function hoger_mn_defaults() {
 		'conf_cam_target_y'     => '',
 		'conf_cam_target_z'     => '',
 		'conf_cam_debug'        => '0',
+		'conf_cube_url'         => '',
+		'conf_sphere_url'       => '',
 	];
 }
 
@@ -189,6 +205,10 @@ function hoger_mn_sanitize_settings( $input ) {
 	foreach ( [ 'conf_cam_x', 'conf_cam_y', 'conf_cam_z', 'conf_cam_target_x', 'conf_cam_target_y', 'conf_cam_target_z' ] as $key ) {
 		$out[ $key ] = isset( $input[ $key ] ) && $input[ $key ] !== '' ? (string) round( (float) $input[ $key ], 4 ) : '';
 	}
+
+	// Shape preview model URLs
+	$out['conf_cube_url']   = isset( $input['conf_cube_url'] )   ? esc_url_raw( wp_unslash( $input['conf_cube_url'] ) )   : '';
+	$out['conf_sphere_url'] = isset( $input['conf_sphere_url'] ) ? esc_url_raw( wp_unslash( $input['conf_sphere_url'] ) ) : '';
 
 	return $out;
 }

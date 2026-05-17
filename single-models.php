@@ -342,7 +342,30 @@ if ( $surfaces_json && $surfaces_json !== '[]' ) :
 						data-conf-meshes="<?php echo esc_attr( $conf_meshes_raw ); ?>"
 						data-default-surface="<?php echo esc_attr( get_post_meta( get_the_ID(), 'mn_default_surface_idx', true ) ); ?>"
 						data-default-color="<?php echo esc_attr( get_post_meta( get_the_ID(), 'mn_default_color_idx', true ) ); ?>"
+						data-cube-url="<?php echo esc_attr( hoger_mn_get( 'conf_cube_url' ) ); ?>"
+						data-sphere-url="<?php echo esc_attr( hoger_mn_get( 'conf_sphere_url' ) ); ?>"
 						style="display:block;width:100%;height:100%;"></canvas>
+				<?php
+				$cube_url   = hoger_mn_get( 'conf_cube_url' );
+				$sphere_url = hoger_mn_get( 'conf_sphere_url' );
+				if ( $cube_url || $sphere_url ) :
+				?>
+				<div class="mn-shape-switcher" style="position:absolute;bottom:12px;right:12px;z-index:50;display:flex;gap:6px;">
+					<button class="mn-shape-btn mn-shape-btn--active" data-shape="model" title="<?php esc_attr_e( 'Original model', 'hoger' ); ?>" style="width:36px;height:36px;border-radius:6px;border:2px solid #9c886f;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+					</button>
+					<?php if ( $cube_url ) : ?>
+					<button class="mn-shape-btn" data-shape="cube" data-url="<?php echo esc_attr( $cube_url ); ?>" title="<?php esc_attr_e( 'Cube', 'hoger' ); ?>" style="width:36px;height:36px;border-radius:6px;border:2px solid transparent;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+					</button>
+					<?php endif; ?>
+					<?php if ( $sphere_url ) : ?>
+					<button class="mn-shape-btn" data-shape="sphere" data-url="<?php echo esc_attr( $sphere_url ); ?>" title="<?php esc_attr_e( 'Sphere', 'hoger' ); ?>" style="width:36px;height:36px;border-radius:6px;border:2px solid transparent;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
+					</button>
+					<?php endif; ?>
+				</div>
+				<?php endif; ?>
 				</div>
 			</div>
 

@@ -97,6 +97,8 @@ function initConfigurator(canvas) {
   document.addEventListener("mouseup", () => { canvas.style.cursor = "grab"; });
 
   let meshes = [];
+  let _currentModelObj = null;
+  let _lastTextureArgs = null;
 
   function centerAndFit(object) {
     object.updateMatrixWorld(true);
@@ -193,41 +195,80 @@ function initConfigurator(canvas) {
     debugTexSection.style.display = "block";
   }
 
-  new GLTFLoader().load(modelUrl, (gltf) => {
-    const model = gltf.scene;
-    centerAndFit(model);
-
-    if (hasSavedCam) {
-      camera.position.set(parseFloat(camX), parseFloat(camY), parseFloat(camZ));
-      controls.target.set(
-        parseFloat(camTargetX || "0"),
-        parseFloat(camTargetY || "0"),
-        parseFloat(camTargetZ || "0")
-      );
-      controls.update();
+  function loadModel(url, applyInitialCam = false) {
+    if (_currentModelObj) {
+      scene.remove(_currentModelObj);
+      _currentModelObj = null;
     }
+    meshes = [];
+    _dbgColorMap = null;
+    _dbgRoughnessMap = null;
+    _dbgBumpMap = null;
 
-    scene.add(model);
+    new GLTFLoader().load(url, (gltf) => {
+      const model = gltf.scene;
+      centerAndFit(model);
+      _currentModelObj = model;
 
-    model.traverse((child) => {
-      if (!child.isMesh) return;
-      const origColor = child.material?.color
-        ? child.material.color.clone()
-        : new THREE.Color(0xcccccc);
-      const isTarget = !confMeshes.length || confMeshes.includes(child.name);
-      child.material = new THREE.MeshStandardMaterial({
-        color: origColor,
-        side: THREE.DoubleSide,
-        envMap: isTarget ? envTexture : null,
-        envMapIntensity: isTarget ? envIntensity : 0,
-        roughness: isTarget ? 0.5 : 0.9,
-        metalness: isTarget ? 0.1 : 0,
+      if (applyInitialCam && hasSavedCam) {
+        camera.position.set(parseFloat(camX), parseFloat(camY), parseFloat(camZ));
+        controls.target.set(
+          parseFloat(camTargetX || "0"),
+          parseFloat(camTargetY || "0"),
+          parseFloat(camTargetZ || "0")
+        );
+        controls.update();
+      }
+
+      scene.add(model);
+
+      model.traverse((child) => {
+        if (!child.isMesh) return;
+        const origColor = child.material?.color
+          ? child.material.color.clone()
+          : new THREE.Color(0xcccccc);
+        const isTarget = !confMeshes.length || confMeshes.includes(child.name);
+        child.material = new THREE.MeshStandardMaterial({
+          color: origColor,
+          side: THREE.DoubleSide,
+          envMap: isTarget ? envTexture : null,
+          envMapIntensity: isTarget ? envIntensity : 0,
+          roughness: isTarget ? 0.5 : 0.9,
+          metalness: isTarget ? 0.1 : 0,
+        });
+        if (isTarget) meshes.push(child);
       });
-      if (isTarget) meshes.push(child);
-    });
 
-    canvas.dispatchEvent(new CustomEvent('model:loaded'));
-  });
+      if (_lastTextureArgs && canvas.applyTexture) {
+        canvas.applyTexture(..._lastTextureArgs);
+      }
+
+      canvas.dispatchEvent(new CustomEvent("model:loaded"));
+    });
+  }
+
+  loadModel(modelUrl, true);
+
+  // Shape switcher buttons
+  const cubeUrl   = canvas.getAttribute("data-cube-url")   || "";
+  const sphereUrl = canvas.getAttribute("data-sphere-url") || "";
+  if (cubeUrl || sphereUrl) {
+    const shapeBtns = container.querySelectorAll(".mn-shape-btn");
+    shapeBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const shape = btn.getAttribute("data-shape");
+        const url   = btn.getAttribute("data-url") || "";
+        shapeBtns.forEach((b) => { b.style.borderColor = "transparent"; b.classList.remove("mn-shape-btn--active"); });
+        btn.style.borderColor = "#9c886f";
+        btn.classList.add("mn-shape-btn--active");
+        if (shape === "model") {
+          loadModel(modelUrl, true);
+        } else if (url) {
+          loadModel(url, false);
+        }
+      });
+    });
+  }
 
   // Expose texture-apply function globally
   canvas.applyTexture = (
@@ -240,6 +281,9 @@ function initConfigurator(canvas) {
     bmRepeatX = 1, bmRepeatY = 1, bmRotation = 0
   ) => {
     if (!url) return;
+    _lastTextureArgs = [url, roughness, metalness, useModelUv, repeatX, repeatY, rotation,
+      reflectionMaskUrl, reflectionStrength, roughnessMapDepth, rmRepeatX, rmRepeatY, rmRotation,
+      bumpMapUrl, bumpScale, bmRepeatX, bmRepeatY, bmRotation];
 
     function applyUvParams(tex, rx, ry, rot) {
       tex.wrapS = THREE.RepeatWrapping;
