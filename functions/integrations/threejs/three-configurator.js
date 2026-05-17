@@ -226,12 +226,12 @@ function initSurfacePicker() {
           const surface = surfaces[activeType];
           canvas.applyTexture(
             color.photo,
-            color.roughness      ?? 0.9,
-            color.metalness      ?? 0,
-            surface.useModelUv   ?? true,
-            surface.repeatX      ?? 1,
-            surface.repeatY      ?? 1,
-            surface.rotation     ?? 0
+            surface.roughness  ?? 0.9,
+            surface.metalness  ?? 0,
+            surface.useModelUv ?? true,
+            surface.repeatX    ?? 1,
+            surface.repeatY    ?? 1,
+            surface.rotation   ?? 0
           );
         }
       });

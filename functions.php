@@ -169,20 +169,19 @@ function hoger_get_surfaces_json() {
 			'chrome' => [ 'roughness' => 0.05, 'metalness' => 1.0  ],
 		];
 
+		$finish = get_post_meta( $post->ID, 'finish', true ) ?: 'matte';
+		$mat    = $finish_map[ $finish ] ?? $finish_map['matte'];
+
 		$colors = [];
 		for ( $i = 0; $i < $count; $i++ ) {
 			$name     = get_post_meta( $post->ID, "czveta_{$i}_nazvanie_czveta", true );
 			$photo_id = (int) get_post_meta( $post->ID, "czveta_{$i}_foto_czveta", true );
 			$photo    = $photo_id ? wp_get_attachment_url( $photo_id ) : '';
-			$finish   = get_post_meta( $post->ID, "czveta_{$i}_finish", true ) ?: 'matte';
-			$mat      = $finish_map[ $finish ] ?? $finish_map['matte'];
 			if ( $photo ) {
 				$colors[] = [
-					'name'      => $name ?: __( 'Color', 'hoger' ) . ' ' . ( $i + 1 ),
-					'photo'     => $photo,
-					'thumb'     => $photo_id ? ( wp_get_attachment_image_url( $photo_id, 'thumbnail' ) ?: $photo ) : $photo,
-					'roughness' => $mat['roughness'],
-					'metalness' => $mat['metalness'],
+					'name'  => $name ?: __( 'Color', 'hoger' ) . ' ' . ( $i + 1 ),
+					'photo' => $photo,
+					'thumb' => $photo_id ? ( wp_get_attachment_image_url( $photo_id, 'thumbnail' ) ?: $photo ) : $photo,
 				];
 			}
 		}
@@ -193,6 +192,8 @@ function hoger_get_surfaces_json() {
 				'title'      => get_the_title( $post ),
 				'main_photo' => $main_photo,
 				'colors'     => $colors,
+				'roughness'  => $mat['roughness'],
+				'metalness'  => $mat['metalness'],
 				'useModelUv' => ( $uv_val !== '0' ),
 				'repeatX'    => (float) ( get_post_meta( $post->ID, 'repeat_x', true ) ?: 1 ),
 				'repeatY'    => (float) ( get_post_meta( $post->ID, 'repeat_y', true ) ?: 1 ),

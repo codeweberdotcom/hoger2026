@@ -19,6 +19,15 @@ function hoger_surfaces_meta_box_cb( $post ) {
 	$description  = get_post_meta( $post->ID, 'opisanie_tipa_poverhnosti', true );
 	$colors_count = (int) get_post_meta( $post->ID, 'czveta', true );
 
+	// Global finish
+	$finish         = get_post_meta( $post->ID, 'finish', true ) ?: 'matte';
+	$finish_options = [
+		'matte'  => __( 'Matte', 'hoger' ),
+		'satin'  => __( 'Satin', 'hoger' ),
+		'gloss'  => __( 'Gloss', 'hoger' ),
+		'chrome' => __( 'Chrome', 'hoger' ),
+	];
+
 	// Global UV mapping
 	$use_model_uv = get_post_meta( $post->ID, 'use_model_uv', true );
 	$uv_checked   = ( $use_model_uv !== '0' );
@@ -30,30 +39,49 @@ function hoger_surfaces_meta_box_cb( $post ) {
 	$img_src = $main_photo ? wp_get_attachment_image_url( $main_photo, 'medium' ) : '';
 	?>
 	<div class="hoger-meta-field" style="margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #ddd">
-		<label style="display:block;font-weight:600;margin-bottom:10px">
-			<?php esc_html_e( 'UV Mapping', 'hoger' ); ?>
-		</label>
-		<label style="display:flex;align-items:center;gap:6px;margin-bottom:10px;cursor:pointer">
-			<input type="checkbox" id="hoger-use-model-uv" name="use_model_uv" value="1"
-				<?php checked( $uv_checked ); ?>>
-			<?php esc_html_e( 'Use model UV (ignore repeat & rotation)', 'hoger' ); ?>
-		</label>
-		<div id="hoger-uv-fields" style="display:flex;gap:16px;flex-wrap:wrap;<?php echo $uv_checked ? 'display:none' : ''; ?>">
-			<label style="font-size:13px">
-				<?php esc_html_e( 'Repeat X', 'hoger' ); ?><br>
-				<input type="number" name="repeat_x" value="<?php echo esc_attr( $repeat_x ); ?>"
-					step="0.1" min="0.1" style="width:80px">
-			</label>
-			<label style="font-size:13px">
-				<?php esc_html_e( 'Repeat Y', 'hoger' ); ?><br>
-				<input type="number" name="repeat_y" value="<?php echo esc_attr( $repeat_y ); ?>"
-					step="0.1" min="0.1" style="width:80px">
-			</label>
-			<label style="font-size:13px">
-				<?php esc_html_e( 'Rotation °', 'hoger' ); ?><br>
-				<input type="number" name="rotation" value="<?php echo esc_attr( $rotation ); ?>"
-					step="1" min="-360" max="360" style="width:80px">
-			</label>
+		<div style="display:flex;gap:32px;flex-wrap:wrap">
+
+			<div>
+				<label style="display:block;font-weight:600;margin-bottom:10px">
+					<?php esc_html_e( 'Finish', 'hoger' ); ?>
+				</label>
+				<select name="finish" style="width:160px">
+					<?php foreach ( $finish_options as $val => $label ) : ?>
+						<option value="<?php echo esc_attr( $val ); ?>"<?php selected( $finish, $val ); ?>>
+							<?php echo esc_html( $label ); ?>
+						</option>
+					<?php endforeach; ?>
+				</select>
+			</div>
+
+			<div>
+				<label style="display:block;font-weight:600;margin-bottom:10px">
+					<?php esc_html_e( 'UV Mapping', 'hoger' ); ?>
+				</label>
+				<label style="display:flex;align-items:center;gap:6px;margin-bottom:10px;cursor:pointer">
+					<input type="checkbox" id="hoger-use-model-uv" name="use_model_uv" value="1"
+						<?php checked( $uv_checked ); ?>>
+					<?php esc_html_e( 'Use model UV (ignore repeat & rotation)', 'hoger' ); ?>
+				</label>
+				<div id="hoger-uv-fields" style="display:flex;gap:16px;flex-wrap:wrap;<?php echo $uv_checked ? 'display:none' : ''; ?>">
+					<label style="font-size:13px">
+						<?php esc_html_e( 'Repeat X', 'hoger' ); ?><br>
+						<input type="number" name="repeat_x" value="<?php echo esc_attr( $repeat_x ); ?>"
+							step="0.1" min="0.1" style="width:80px">
+					</label>
+					<label style="font-size:13px">
+						<?php esc_html_e( 'Repeat Y', 'hoger' ); ?><br>
+						<input type="number" name="repeat_y" value="<?php echo esc_attr( $repeat_y ); ?>"
+							step="0.1" min="0.1" style="width:80px">
+					</label>
+					<label style="font-size:13px">
+						<?php esc_html_e( 'Rotation °', 'hoger' ); ?><br>
+						<input type="number" name="rotation" value="<?php echo esc_attr( $rotation ); ?>"
+							step="1" min="-360" max="360" style="width:80px">
+					</label>
+				</div>
+			</div>
+
 		</div>
 	</div>
 
@@ -95,31 +123,21 @@ function hoger_surfaces_meta_box_cb( $post ) {
 		<table id="hoger-colors-table" style="width:100%;border-collapse:collapse;margin-bottom:10px">
 			<thead>
 				<tr>
-					<th style="text-align:left;padding:6px 8px;border-bottom:1px solid #ddd;width:35%">
+					<th style="text-align:left;padding:6px 8px;border-bottom:1px solid #ddd;width:45%">
 						<?php esc_html_e( 'Color Name', 'hoger' ); ?>
 					</th>
-					<th style="text-align:left;padding:6px 8px;border-bottom:1px solid #ddd;width:30%">
+					<th style="text-align:left;padding:6px 8px;border-bottom:1px solid #ddd;width:45%">
 						<?php esc_html_e( 'Color Photo', 'hoger' ); ?>
-					</th>
-					<th style="text-align:left;padding:6px 8px;border-bottom:1px solid #ddd;width:25%">
-						<?php esc_html_e( 'Finish', 'hoger' ); ?>
 					</th>
 					<th style="width:10%"></th>
 				</tr>
 			</thead>
 			<tbody id="hoger-colors-body">
 				<?php
-				$finish_options = [
-					'matte'  => __( 'Matte', 'hoger' ),
-					'satin'  => __( 'Satin', 'hoger' ),
-					'gloss'  => __( 'Gloss', 'hoger' ),
-					'chrome' => __( 'Chrome', 'hoger' ),
-				];
 				for ( $i = 0; $i < $colors_count; $i++ ) :
 					$name      = get_post_meta( $post->ID, "czveta_{$i}_nazvanie_czveta", true );
 					$photo_id  = get_post_meta( $post->ID, "czveta_{$i}_foto_czveta", true );
 					$photo_src = $photo_id ? wp_get_attachment_image_url( $photo_id, 'thumbnail' ) : '';
-					$finish    = get_post_meta( $post->ID, "czveta_{$i}_finish", true ) ?: 'matte';
 					?>
 					<tr class="hoger-color-row" data-index="<?php echo esc_attr( $i ); ?>">
 						<td style="padding:6px 8px;vertical-align:top">
@@ -148,15 +166,6 @@ function hoger_surfaces_meta_box_cb( $post ) {
 							<?php endif; ?>
 						</td>
 						<td style="padding:6px 8px;vertical-align:top">
-							<select name="czveta_<?php echo esc_attr( $i ); ?>_finish" style="width:100%">
-								<?php foreach ( $finish_options as $val => $label ) : ?>
-									<option value="<?php echo esc_attr( $val ); ?>"<?php selected( $finish, $val ); ?>>
-										<?php echo esc_html( $label ); ?>
-									</option>
-								<?php endforeach; ?>
-							</select>
-						</td>
-						<td style="padding:6px 8px;vertical-align:top">
 							<button type="button" class="button hoger-delete-row-btn">✕</button>
 						</td>
 					</tr>
@@ -176,7 +185,6 @@ function hoger_surfaces_meta_box_cb( $post ) {
 		$('#hoger-use-model-uv').on('change', function() {
 			$('#hoger-uv-fields').toggle(!this.checked);
 		});
-		// Init visibility
 		if ($('#hoger-use-model-uv').is(':checked')) {
 			$('#hoger-uv-fields').hide();
 		} else {
@@ -190,7 +198,6 @@ function hoger_surfaces_meta_box_cb( $post ) {
 				$(this).attr('data-index', i);
 				$(this).find('input[name*="_nazvanie_czveta"]').attr('name', 'czveta_' + i + '_nazvanie_czveta');
 				$(this).find('input[name*="_foto_czveta"]').attr('name', 'czveta_' + i + '_foto_czveta');
-				$(this).find('select[name*="_finish"]').attr('name', 'czveta_' + i + '_finish');
 				$(this).find('.hoger-upload-color-btn').attr('data-index', i);
 				$(this).find('.hoger-remove-color-btn').attr('data-index', i);
 			});
@@ -208,14 +215,6 @@ function hoger_surfaces_meta_box_cb( $post ) {
 				'<td style="padding:6px 8px;vertical-align:top">' +
 					'<input type="hidden" name="czveta_' + i + '_foto_czveta" value="">' +
 					'<button type="button" class="button hoger-upload-color-btn" data-index="' + i + '"><?php esc_html_e( 'Select', 'hoger' ); ?></button>' +
-				'</td>' +
-				'<td style="padding:6px 8px;vertical-align:top">' +
-					'<select name="czveta_' + i + '_finish" style="width:100%">' +
-						'<option value="matte"><?php esc_html_e( 'Matte', 'hoger' ); ?></option>' +
-						'<option value="satin"><?php esc_html_e( 'Satin', 'hoger' ); ?></option>' +
-						'<option value="gloss"><?php esc_html_e( 'Gloss', 'hoger' ); ?></option>' +
-						'<option value="chrome"><?php esc_html_e( 'Chrome', 'hoger' ); ?></option>' +
-					'</select>' +
 				'</td>' +
 				'<td style="padding:6px 8px;vertical-align:top">' +
 					'<button type="button" class="button hoger-delete-row-btn">✕</button>' +
@@ -309,6 +308,11 @@ function hoger_surfaces_save_meta( $post_id, $post ) {
 		);
 	}
 
+	// Global finish
+	$allowed_finish = [ 'matte', 'satin', 'gloss', 'chrome' ];
+	$finish_val     = isset( $_POST['finish'] ) ? sanitize_key( wp_unslash( $_POST['finish'] ) ) : 'matte';
+	update_post_meta( $post_id, 'finish', in_array( $finish_val, $allowed_finish, true ) ? $finish_val : 'matte' );
+
 	// Global UV mapping
 	$uv_val = isset( $_POST['use_model_uv'] ) ? '1' : '0';
 	update_post_meta( $post_id, 'use_model_uv', $uv_val );
@@ -331,14 +335,11 @@ function hoger_surfaces_save_meta( $post_id, $post ) {
 	for ( $i = $count; $i < $old_count + 10; $i++ ) {
 		delete_post_meta( $post_id, "czveta_{$i}_nazvanie_czveta" );
 		delete_post_meta( $post_id, "czveta_{$i}_foto_czveta" );
-		delete_post_meta( $post_id, "czveta_{$i}_finish" );
 	}
 
 	for ( $i = 0; $i < $count; $i++ ) {
-		$name_key   = "czveta_{$i}_nazvanie_czveta";
-		$photo_key  = "czveta_{$i}_foto_czveta";
-		$finish_key = "czveta_{$i}_finish";
-		$allowed    = [ 'matte', 'satin', 'gloss', 'chrome' ];
+		$name_key  = "czveta_{$i}_nazvanie_czveta";
+		$photo_key = "czveta_{$i}_foto_czveta";
 
 		if ( isset( $_POST[ $name_key ] ) ) {
 			update_post_meta( $post_id, $name_key, sanitize_text_field( wp_unslash( $_POST[ $name_key ] ) ) );
@@ -350,10 +351,6 @@ function hoger_surfaces_save_meta( $post_id, $post ) {
 			} else {
 				delete_post_meta( $post_id, $photo_key );
 			}
-		}
-		if ( isset( $_POST[ $finish_key ] ) ) {
-			$finish_val = sanitize_key( wp_unslash( $_POST[ $finish_key ] ) );
-			update_post_meta( $post_id, $finish_key, in_array( $finish_val, $allowed, true ) ? $finish_val : 'matte' );
 		}
 	}
 }
