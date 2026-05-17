@@ -318,6 +318,8 @@ if ( $surfaces_json && $surfaces_json !== '[]' ) :
 						data-exposure="<?php echo esc_attr( hoger_mn_get( 'conf_exposure' ) ); ?>"
 						data-saturation="<?php echo esc_attr( hoger_mn_get( 'conf_saturation' ) ); ?>"
 						data-env-intensity="<?php echo esc_attr( hoger_mn_get( 'conf_env_intensity' ) ); ?>"
+						data-env-hdr="<?php echo esc_attr( hoger_mn_get( 'conf_env_hdr' ) ); ?>"
+						data-env-jpg="<?php echo esc_attr( hoger_mn_get( 'conf_env_jpg' ) ); ?>"
 						data-conf-meshes="<?php echo esc_attr( $conf_meshes_raw ); ?>"
 						style="display:block;width:100%;height:100%;"></canvas>
 				</div>

@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 
 const textureLoader = new THREE.TextureLoader();
 
@@ -10,6 +11,8 @@ function initConfigurator(canvas) {
   const exposure     = parseFloat(canvas.getAttribute("data-exposure")     || "1.0");
   const saturation   = parseFloat(canvas.getAttribute("data-saturation")   || "1.0");
   const envIntensity = parseFloat(canvas.getAttribute("data-env-intensity") || "1.0");
+  const envHdr       = canvas.getAttribute("data-env-hdr") || "";
+  const envJpg       = canvas.getAttribute("data-env-jpg") || "";
   let confMeshes = [];
   try {
     const parsed = JSON.parse(canvas.getAttribute("data-conf-meshes") || "[]");
@@ -44,9 +47,28 @@ function initConfigurator(canvas) {
   console.log("[hoger-conf] exposure:", exposure, "| saturation:", saturation, "| envIntensity:", envIntensity);
 
   const pmrem = new THREE.PMREMGenerator(renderer);
-  const envTexture = pmrem.fromScene(new RoomEnvironment()).texture;
-  scene.environment = envTexture;
-  pmrem.dispose();
+  pmrem.compileEquirectangularShader();
+  let envTexture = pmrem.fromScene(new RoomEnvironment()).texture; // fallback
+
+  function applyEnv(tex) {
+    envTexture = pmrem.fromEquirectangular(tex).texture;
+    scene.environment = envTexture;
+    tex.dispose();
+    pmrem.dispose();
+  }
+
+  if (envHdr) {
+    new RGBELoader().load(envHdr, applyEnv);
+  } else if (envJpg) {
+    const loader = new THREE.TextureLoader();
+    loader.load(envJpg, (tex) => {
+      tex.mapping = THREE.EquirectangularReflectionMapping;
+      applyEnv(tex);
+    });
+  } else {
+    scene.environment = envTexture;
+    pmrem.dispose();
+  }
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;

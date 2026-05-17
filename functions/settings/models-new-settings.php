@@ -75,6 +75,20 @@ function hoger_models_new_settings_init() {
 		'step' => 0.1,
 		'desc' => __( 'Default: 1.0. Controls gloss/chrome reflection intensity.', 'hoger' ),
 	] );
+
+	// Section: Environment map
+	add_settings_section( 'hoger_mn_envmap', __( 'Environment Map (Reflections)', 'hoger' ), function() {
+		echo '<p class="description">' . esc_html__( 'Upload a studio panorama to improve reflections. HDR takes priority over JPEG/PNG if both are set. Leave empty to use the built-in procedural environment.', 'hoger' ) . '</p>';
+	}, 'models-new-viewer-settings' );
+
+	add_settings_field( 'hoger_mn_conf_env_hdr', __( 'HDR environment URL (.hdr)', 'hoger' ), 'hoger_mn_text_field', 'models-new-viewer-settings', 'hoger_mn_envmap', [
+		'key'  => 'conf_env_hdr',
+		'desc' => __( 'Best quality. 2–8 MB. Free studio HDRs: polyhaven.com', 'hoger' ),
+	] );
+	add_settings_field( 'hoger_mn_conf_env_jpg', __( 'Equirectangular image URL (.jpg / .png)', 'hoger' ), 'hoger_mn_text_field', 'models-new-viewer-settings', 'hoger_mn_envmap', [
+		'key'  => 'conf_env_jpg',
+		'desc' => __( 'Lighter alternative (200–500 KB). Any studio panorama in equirectangular format.', 'hoger' ),
+	] );
 }
 
 // ─── Defaults ──────────────────────────────────────────────────────────────
@@ -90,6 +104,8 @@ function hoger_mn_defaults() {
 		'conf_exposure'      => '1.0',
 		'conf_saturation'    => '1.0',
 		'conf_env_intensity' => '1.0',
+		'conf_env_hdr'       => '',
+		'conf_env_jpg'       => '',
 	];
 }
 
@@ -124,6 +140,10 @@ function hoger_mn_sanitize_settings( $input ) {
 	$env = isset( $input['conf_env_intensity'] ) ? (float) $input['conf_env_intensity'] : 1.0;
 	$out['conf_env_intensity'] = (string) round( max( 0.0, min( 3.0, $env ) ), 1 );
 
+	// URL fields: env map
+	$out['conf_env_hdr'] = isset( $input['conf_env_hdr'] ) ? esc_url_raw( wp_unslash( $input['conf_env_hdr'] ) ) : '';
+	$out['conf_env_jpg'] = isset( $input['conf_env_jpg'] ) ? esc_url_raw( wp_unslash( $input['conf_env_jpg'] ) ) : '';
+
 	return $out;
 }
 
@@ -136,6 +156,18 @@ function hoger_mn_checkbox_field( $args ) {
 		'<input type="checkbox" name="hoger_mn_viewer[%s]" value="1" %s>',
 		esc_attr( $key ),
 		checked( $val, '1', false )
+	);
+}
+
+function hoger_mn_text_field( $args ) {
+	$key  = $args['key'];
+	$val  = hoger_mn_get( $key );
+	$desc = $args['desc'] ?? '';
+	printf(
+		'<input type="url" name="hoger_mn_viewer[%s]" value="%s" style="width:500px;max-width:100%%"> %s',
+		esc_attr( $key ),
+		esc_attr( $val ),
+		$desc ? '<p class="description">' . esc_html( $desc ) . '</p>' : ''
 	);
 }
 
