@@ -35,6 +35,14 @@ function hoger_surfaces_meta_box_cb( $post ) {
 	$repeat_y     = get_post_meta( $post->ID, 'repeat_y', true ) ?: '1';
 	$rotation     = get_post_meta( $post->ID, 'rotation', true ) ?: '0';
 
+	// Per-map UV
+	$rm_repeat_x  = get_post_meta( $post->ID, 'reflection_mask_repeat_x', true ) ?: '1';
+	$rm_repeat_y  = get_post_meta( $post->ID, 'reflection_mask_repeat_y', true ) ?: '1';
+	$rm_rotation  = get_post_meta( $post->ID, 'reflection_mask_rotation', true ) ?: '0';
+	$bm_repeat_x  = get_post_meta( $post->ID, 'bump_map_repeat_x', true ) ?: '1';
+	$bm_repeat_y  = get_post_meta( $post->ID, 'bump_map_repeat_y', true ) ?: '1';
+	$bm_rotation  = get_post_meta( $post->ID, 'bump_map_rotation', true ) ?: '0';
+
 	// Main photo
 	$img_src = $main_photo ? wp_get_attachment_image_url( $main_photo, 'medium' ) : '';
 	?>
@@ -112,12 +120,32 @@ function hoger_surfaces_meta_box_cb( $post ) {
 						<?php esc_html_e( 'Remove', 'hoger' ); ?>
 					</button>
 				</div>
-				<label style="display:block;margin-top:10px;font-size:13px">
-					<?php esc_html_e( 'Reflection Strength', 'hoger' ); ?> (0–2)<br>
-					<input type="number" name="reflection_strength"
-						value="<?php echo esc_attr( get_post_meta( $post->ID, 'reflection_strength', true ) ?: '1' ); ?>"
-						step="0.05" min="0" max="2" style="width:80px;margin-top:4px">
-				</label>
+				<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px">
+					<label style="font-size:13px">
+						<?php esc_html_e( 'Strength', 'hoger' ); ?> (0–2)<br>
+						<input type="number" name="reflection_strength"
+							value="<?php echo esc_attr( get_post_meta( $post->ID, 'reflection_strength', true ) ?: '1' ); ?>"
+							step="0.05" min="0" max="2" style="width:70px;margin-top:4px">
+					</label>
+					<label style="font-size:13px">
+						<?php esc_html_e( 'Repeat X', 'hoger' ); ?><br>
+						<input type="number" name="reflection_mask_repeat_x"
+							value="<?php echo esc_attr( $rm_repeat_x ); ?>"
+							step="0.1" min="0.01" style="width:70px;margin-top:4px">
+					</label>
+					<label style="font-size:13px">
+						<?php esc_html_e( 'Repeat Y', 'hoger' ); ?><br>
+						<input type="number" name="reflection_mask_repeat_y"
+							value="<?php echo esc_attr( $rm_repeat_y ); ?>"
+							step="0.1" min="0.01" style="width:70px;margin-top:4px">
+					</label>
+					<label style="font-size:13px">
+						<?php esc_html_e( 'Rotation °', 'hoger' ); ?><br>
+						<input type="number" name="reflection_mask_rotation"
+							value="<?php echo esc_attr( $rm_rotation ); ?>"
+							step="1" min="-360" max="360" style="width:70px;margin-top:4px">
+					</label>
+				</div>
 			</div>
 
 			<div style="min-width:220px">
@@ -144,12 +172,32 @@ function hoger_surfaces_meta_box_cb( $post ) {
 						<?php esc_html_e( 'Remove', 'hoger' ); ?>
 					</button>
 				</div>
-				<label style="display:block;margin-top:10px;font-size:13px">
-					<?php esc_html_e( 'Bump Scale', 'hoger' ); ?> (0–5)<br>
-					<input type="number" name="bump_scale"
-						value="<?php echo esc_attr( get_post_meta( $post->ID, 'bump_scale', true ) ?: '1' ); ?>"
-						step="0.05" min="0" max="5" style="width:80px;margin-top:4px">
-				</label>
+				<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px">
+					<label style="font-size:13px">
+						<?php esc_html_e( 'Scale', 'hoger' ); ?> (0–5)<br>
+						<input type="number" name="bump_scale"
+							value="<?php echo esc_attr( get_post_meta( $post->ID, 'bump_scale', true ) ?: '1' ); ?>"
+							step="0.05" min="0" max="5" style="width:70px;margin-top:4px">
+					</label>
+					<label style="font-size:13px">
+						<?php esc_html_e( 'Repeat X', 'hoger' ); ?><br>
+						<input type="number" name="bump_map_repeat_x"
+							value="<?php echo esc_attr( $bm_repeat_x ); ?>"
+							step="0.1" min="0.01" style="width:70px;margin-top:4px">
+					</label>
+					<label style="font-size:13px">
+						<?php esc_html_e( 'Repeat Y', 'hoger' ); ?><br>
+						<input type="number" name="bump_map_repeat_y"
+							value="<?php echo esc_attr( $bm_repeat_y ); ?>"
+							step="0.1" min="0.01" style="width:70px;margin-top:4px">
+					</label>
+					<label style="font-size:13px">
+						<?php esc_html_e( 'Rotation °', 'hoger' ); ?><br>
+						<input type="number" name="bump_map_rotation"
+							value="<?php echo esc_attr( $bm_rotation ); ?>"
+							step="1" min="-360" max="360" style="width:70px;margin-top:4px">
+					</label>
+				</div>
 			</div>
 
 		</div>
@@ -411,6 +459,15 @@ function hoger_surfaces_save_meta( $post_id, $post ) {
 	if ( isset( $_POST['reflection_strength'] ) ) {
 		update_post_meta( $post_id, 'reflection_strength', (string) round( max( 0, min( 2, (float) $_POST['reflection_strength'] ) ), 3 ) );
 	}
+	if ( isset( $_POST['reflection_mask_repeat_x'] ) ) {
+		update_post_meta( $post_id, 'reflection_mask_repeat_x', (string) round( max( 0.01, (float) $_POST['reflection_mask_repeat_x'] ), 3 ) );
+	}
+	if ( isset( $_POST['reflection_mask_repeat_y'] ) ) {
+		update_post_meta( $post_id, 'reflection_mask_repeat_y', (string) round( max( 0.01, (float) $_POST['reflection_mask_repeat_y'] ), 3 ) );
+	}
+	if ( isset( $_POST['reflection_mask_rotation'] ) ) {
+		update_post_meta( $post_id, 'reflection_mask_rotation', (string) round( max( -360, min( 360, (float) $_POST['reflection_mask_rotation'] ) ), 1 ) );
+	}
 
 	// Bump map
 	if ( isset( $_POST['bump_map_id'] ) ) {
@@ -419,6 +476,15 @@ function hoger_surfaces_save_meta( $post_id, $post ) {
 	}
 	if ( isset( $_POST['bump_scale'] ) ) {
 		update_post_meta( $post_id, 'bump_scale', (string) round( max( 0, min( 5, (float) $_POST['bump_scale'] ) ), 3 ) );
+	}
+	if ( isset( $_POST['bump_map_repeat_x'] ) ) {
+		update_post_meta( $post_id, 'bump_map_repeat_x', (string) round( max( 0.01, (float) $_POST['bump_map_repeat_x'] ), 3 ) );
+	}
+	if ( isset( $_POST['bump_map_repeat_y'] ) ) {
+		update_post_meta( $post_id, 'bump_map_repeat_y', (string) round( max( 0.01, (float) $_POST['bump_map_repeat_y'] ), 3 ) );
+	}
+	if ( isset( $_POST['bump_map_rotation'] ) ) {
+		update_post_meta( $post_id, 'bump_map_rotation', (string) round( max( -360, min( 360, (float) $_POST['bump_map_rotation'] ) ), 1 ) );
 	}
 
 	// Colors repeater

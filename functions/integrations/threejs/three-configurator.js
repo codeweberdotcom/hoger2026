@@ -233,24 +233,23 @@ function initConfigurator(canvas) {
     roughness = 0.9, metalness = 0,
     useModelUv = true, repeatX = 1, repeatY = 1, rotation = 0,
     reflectionMaskUrl = '', reflectionStrength = 1,
-    bumpMapUrl = '', bumpScale = 1
+    rmRepeatX = 1, rmRepeatY = 1, rmRotation = 0,
+    bumpMapUrl = '', bumpScale = 1,
+    bmRepeatX = 1, bmRepeatY = 1, bmRotation = 0
   ) => {
     if (!url) return;
-    console.log('[hoger-conf] applyTexture | reflectionMask:', reflectionMaskUrl || '(none)', '| bumpMap:', bumpMapUrl || '(none)', '| strength:', reflectionStrength, '| bumpScale:', bumpScale);
 
-    function applyUv(tex) {
-      if (!useModelUv) {
-        tex.wrapS = THREE.RepeatWrapping;
-        tex.wrapT = THREE.RepeatWrapping;
-        tex.repeat.set(repeatX, repeatY);
-        tex.center.set(0.5, 0.5);
-        tex.rotation = rotation * (Math.PI / 180);
-      }
+    function applyUvParams(tex, rx, ry, rot) {
+      tex.wrapS = THREE.RepeatWrapping;
+      tex.wrapT = THREE.RepeatWrapping;
+      tex.repeat.set(rx, ry);
+      tex.center.set(0.5, 0.5);
+      tex.rotation = rot * (Math.PI / 180);
     }
 
     textureLoader.load(url, (texture) => {
       texture.colorSpace = THREE.SRGBColorSpace;
-      applyUv(texture);
+      if (!useModelUv) applyUvParams(texture, repeatX, repeatY, rotation);
       _dbgColorMap = texture;
       meshes.forEach((mesh) => {
         mesh.material.map = texture;
@@ -266,7 +265,7 @@ function initConfigurator(canvas) {
 
     if (reflectionMaskUrl) {
       textureLoader.load(reflectionMaskUrl, (tex) => {
-        applyUv(tex);
+        applyUvParams(tex, rmRepeatX, rmRepeatY, rmRotation);
         _dbgRoughnessMap = tex;
         meshes.forEach((mesh) => {
           mesh.material.roughnessMap = tex;
@@ -283,7 +282,7 @@ function initConfigurator(canvas) {
 
     if (bumpMapUrl) {
       textureLoader.load(bumpMapUrl, (tex) => {
-        applyUv(tex);
+        applyUvParams(tex, bmRepeatX, bmRepeatY, bmRotation);
         _dbgBumpMap = tex;
         meshes.forEach((mesh) => {
           mesh.material.bumpMap = tex;
@@ -423,16 +422,22 @@ function initSurfacePicker() {
           const surface = surfaces[activeType];
           canvas.applyTexture(
             color.photo,
-            surface.roughness          ?? 0.9,
-            surface.metalness          ?? 0,
-            surface.useModelUv         ?? true,
-            surface.repeatX            ?? 1,
-            surface.repeatY            ?? 1,
-            surface.rotation           ?? 0,
-            surface.reflectionMask     ?? '',
-            surface.reflectionStrength ?? 1,
-            surface.bumpMap            ?? '',
-            surface.bumpScale          ?? 1
+            surface.roughness               ?? 0.9,
+            surface.metalness               ?? 0,
+            surface.useModelUv              ?? true,
+            surface.repeatX                 ?? 1,
+            surface.repeatY                 ?? 1,
+            surface.rotation                ?? 0,
+            surface.reflectionMask          ?? '',
+            surface.reflectionStrength      ?? 1,
+            surface.reflectionMaskRepeatX   ?? 1,
+            surface.reflectionMaskRepeatY   ?? 1,
+            surface.reflectionMaskRotation  ?? 0,
+            surface.bumpMap                 ?? '',
+            surface.bumpScale               ?? 1,
+            surface.bumpMapRepeatX          ?? 1,
+            surface.bumpMapRepeatY          ?? 1,
+            surface.bumpMapRotation         ?? 0
           );
         }
       });
