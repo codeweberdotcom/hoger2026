@@ -306,6 +306,16 @@ if ( $surfaces_json && $surfaces_json !== '[]' ) :
 		if ( json_decode( $conf_meshes_raw ) === null ) {
 			$conf_meshes_raw = '[]';
 		}
+
+		// Camera: per-model override, fallback to global
+		$conf_post_id = get_the_ID();
+		$cam_x        = get_post_meta( $conf_post_id, 'mn_cam_x', true )        ?: hoger_mn_get( 'conf_cam_x' );
+		$cam_y        = get_post_meta( $conf_post_id, 'mn_cam_y', true )        ?: hoger_mn_get( 'conf_cam_y' );
+		$cam_z        = get_post_meta( $conf_post_id, 'mn_cam_z', true )        ?: hoger_mn_get( 'conf_cam_z' );
+		$cam_target_x = get_post_meta( $conf_post_id, 'mn_cam_target_x', true ) ?: hoger_mn_get( 'conf_cam_target_x' );
+		$cam_target_y = get_post_meta( $conf_post_id, 'mn_cam_target_y', true ) ?: hoger_mn_get( 'conf_cam_target_y' );
+		$cam_target_z = get_post_meta( $conf_post_id, 'mn_cam_target_z', true ) ?: hoger_mn_get( 'conf_cam_target_z' );
+		$cam_debug    = get_post_meta( $conf_post_id, 'mn_cam_debug', true ) === '1' ? '1' : hoger_mn_get( 'conf_cam_debug' );
 ?>
 <section class="wrapper bg-light" id="hoger-configurator-section">
 	<div class="container">
@@ -322,13 +332,13 @@ if ( $surfaces_json && $surfaces_json !== '[]' ) :
 						data-env-jpg="<?php echo esc_attr( hoger_mn_get( 'conf_env_jpg' ) ); ?>"
 						data-env-rotate="<?php echo esc_attr( hoger_mn_get( 'conf_env_rotate' ) ); ?>"
 						data-env-rotate-speed="<?php echo esc_attr( hoger_mn_get( 'conf_env_rotate_speed' ) ); ?>"
-						data-cam-x="<?php echo esc_attr( hoger_mn_get( 'conf_cam_x' ) ); ?>"
-						data-cam-y="<?php echo esc_attr( hoger_mn_get( 'conf_cam_y' ) ); ?>"
-						data-cam-z="<?php echo esc_attr( hoger_mn_get( 'conf_cam_z' ) ); ?>"
-						data-cam-target-x="<?php echo esc_attr( hoger_mn_get( 'conf_cam_target_x' ) ); ?>"
-						data-cam-target-y="<?php echo esc_attr( hoger_mn_get( 'conf_cam_target_y' ) ); ?>"
-						data-cam-target-z="<?php echo esc_attr( hoger_mn_get( 'conf_cam_target_z' ) ); ?>"
-						data-cam-debug="<?php echo esc_attr( hoger_mn_get( 'conf_cam_debug' ) ); ?>"
+						data-cam-x="<?php echo esc_attr( $cam_x ); ?>"
+						data-cam-y="<?php echo esc_attr( $cam_y ); ?>"
+						data-cam-z="<?php echo esc_attr( $cam_z ); ?>"
+						data-cam-target-x="<?php echo esc_attr( $cam_target_x ); ?>"
+						data-cam-target-y="<?php echo esc_attr( $cam_target_y ); ?>"
+						data-cam-target-z="<?php echo esc_attr( $cam_target_z ); ?>"
+						data-cam-debug="<?php echo esc_attr( $cam_debug ); ?>"
 						data-conf-meshes="<?php echo esc_attr( $conf_meshes_raw ); ?>"
 						style="display:block;width:100%;height:100%;"></canvas>
 				</div>

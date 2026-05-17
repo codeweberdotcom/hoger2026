@@ -348,6 +348,66 @@ function hoger_models_viewer_settings_cb( $post ) {
 			<?php esc_html_e( 'Auto Rotate', 'hoger' ); ?>
 		</label>
 	</div>
+
+	<hr style="margin:16px 0">
+
+	<?php
+	$cam_x        = get_post_meta( $post->ID, 'mn_cam_x', true );
+	$cam_y        = get_post_meta( $post->ID, 'mn_cam_y', true );
+	$cam_z        = get_post_meta( $post->ID, 'mn_cam_z', true );
+	$cam_target_x = get_post_meta( $post->ID, 'mn_cam_target_x', true );
+	$cam_target_y = get_post_meta( $post->ID, 'mn_cam_target_y', true );
+	$cam_target_z = get_post_meta( $post->ID, 'mn_cam_target_z', true );
+	$cam_debug    = get_post_meta( $post->ID, 'mn_cam_debug', true );
+	?>
+
+	<div style="margin-bottom:10px">
+		<label style="display:block;font-weight:600;margin-bottom:6px">
+			<?php esc_html_e( 'Camera Position', 'hoger' ); ?>
+		</label>
+		<p style="font-size:11px;color:#888;margin:0 0 8px">
+			<?php esc_html_e( 'Leave empty to use global settings. Enable Debug, copy from frontend, paste below.', 'hoger' ); ?>
+		</p>
+		<textarea id="mn-cam-paste" rows="6" style="width:100%;font-family:monospace;font-size:11px;margin-bottom:6px" placeholder="<?php esc_attr_e( 'Paste config here…', 'hoger' ); ?>"></textarea>
+		<button type="button" class="button" id="mn-cam-parse" style="width:100%;margin-bottom:10px">
+			<?php esc_html_e( 'Apply to fields', 'hoger' ); ?>
+		</button>
+
+		<?php
+		$cam_fields = [
+			'mn_cam_x'        => __( 'Cam X', 'hoger' ),
+			'mn_cam_y'        => __( 'Cam Y', 'hoger' ),
+			'mn_cam_z'        => __( 'Cam Z', 'hoger' ),
+			'mn_cam_target_x' => __( 'Target X', 'hoger' ),
+			'mn_cam_target_y' => __( 'Target Y', 'hoger' ),
+			'mn_cam_target_z' => __( 'Target Z', 'hoger' ),
+		];
+		$cam_val_map = [
+			'mn_cam_x'        => $cam_x,
+			'mn_cam_y'        => $cam_y,
+			'mn_cam_z'        => $cam_z,
+			'mn_cam_target_x' => $cam_target_x,
+			'mn_cam_target_y' => $cam_target_y,
+			'mn_cam_target_z' => $cam_target_z,
+		];
+		foreach ( $cam_fields as $key => $label ) :
+		?>
+		<div style="display:flex;align-items:center;gap:6px;margin-bottom:5px">
+			<label style="width:60px;font-size:12px;flex-shrink:0"><?php echo esc_html( $label ); ?></label>
+			<input type="number" step="0.0001"
+				id="<?php echo esc_attr( $key ); ?>"
+				name="<?php echo esc_attr( $key ); ?>"
+				value="<?php echo esc_attr( $cam_val_map[ $key ] ); ?>"
+				placeholder="<?php esc_attr_e( 'auto', 'hoger' ); ?>"
+				style="width:100%">
+		</div>
+		<?php endforeach; ?>
+
+		<label style="display:flex;align-items:center;gap:6px;margin-top:8px;font-size:12px">
+			<input type="checkbox" name="mn_cam_debug" value="1" <?php checked( $cam_debug, '1' ); ?>>
+			<?php esc_html_e( 'Debug mode', 'hoger' ); ?>
+		</label>
+	</div>
 	<?php
 }
 
@@ -586,6 +646,15 @@ function hoger_models_admin_scripts( $hook ) {
 				var target = \$grid.data('target');
 				if (target) \$('#' + target).val($(this).val());
 			});
+
+			// Camera paste config
+			\$('#mn-cam-parse').on('click', function() {
+				var lines = \$('#mn-cam-paste').val().trim().split(/\r?\n/).map(function(l) { return l.trim(); }).filter(Boolean);
+				if (lines.length < 6) { alert('Need 6 values (Camera X, Y, Z, Target X, Y, Z)'); return; }
+				var keys = ['mn_cam_x','mn_cam_y','mn_cam_z','mn_cam_target_x','mn_cam_target_y','mn_cam_target_z'];
+				keys.forEach(function(id, i) { \$('#' + id).val(lines[i]); });
+				\$('#mn-cam-paste').val('');
+			});
 		});
 	" );
 }
@@ -701,4 +770,15 @@ function hoger_models_save_meta( $post_id, $post ) {
 			update_post_meta( $post_id, 'perechen_parametrov_pod_zagolovokom', [] );
 		}
 	}
+
+	// Camera position (per-model override; empty = use global)
+	$cam_keys = [ 'mn_cam_x', 'mn_cam_y', 'mn_cam_z', 'mn_cam_target_x', 'mn_cam_target_y', 'mn_cam_target_z' ];
+	foreach ( $cam_keys as $key ) {
+		if ( isset( $_POST[ $key ] ) && $_POST[ $key ] !== '' ) {
+			update_post_meta( $post_id, $key, (string) round( (float) wp_unslash( $_POST[ $key ] ), 4 ) );
+		} else {
+			delete_post_meta( $post_id, $key );
+		}
+	}
+	update_post_meta( $post_id, 'mn_cam_debug', isset( $_POST['mn_cam_debug'] ) ? '1' : '0' );
 }
