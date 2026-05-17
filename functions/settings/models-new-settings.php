@@ -163,12 +163,23 @@ function hoger_mn_text_field( $args ) {
 	$key  = $args['key'];
 	$val  = hoger_mn_get( $key );
 	$desc = $args['desc'] ?? '';
-	printf(
-		'<input type="url" name="hoger_mn_viewer[%s]" value="%s" style="width:500px;max-width:100%%"> %s',
-		esc_attr( $key ),
-		esc_attr( $val ),
-		$desc ? '<p class="description">' . esc_html( $desc ) . '</p>' : ''
-	);
+	$id   = 'hoger_mn_' . esc_attr( $key );
+	?>
+	<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+		<input type="url" id="<?php echo $id; ?>" name="hoger_mn_viewer[<?php echo esc_attr( $key ); ?>]"
+			value="<?php echo esc_attr( $val ); ?>" style="width:440px;max-width:100%">
+		<button type="button" class="button hoger-mn-upload-btn" data-target="<?php echo $id; ?>">
+			<?php esc_html_e( 'Select File', 'hoger' ); ?>
+		</button>
+		<?php if ( $val ) : ?>
+			<button type="button" class="button hoger-mn-clear-btn" data-target="<?php echo $id; ?>">
+				<?php esc_html_e( 'Clear', 'hoger' ); ?>
+			</button>
+		<?php endif; ?>
+	</div>
+	<?php if ( $desc ) : ?>
+		<p class="description"><?php echo esc_html( $desc ); ?></p>
+	<?php endif;
 }
 
 function hoger_mn_number_field( $args ) {
@@ -187,6 +198,42 @@ function hoger_mn_number_field( $args ) {
 		esc_attr( $step ),
 		$desc ? '<p class="description">' . esc_html( $desc ) . '</p>' : ''
 	);
+}
+
+// ─── Enqueue media on settings page ───────────────────────────────────────
+
+add_action( 'admin_enqueue_scripts', 'hoger_mn_enqueue_settings_media' );
+function hoger_mn_enqueue_settings_media( $hook ) {
+	if ( 'models_page_models-new-viewer-settings' !== $hook ) {
+		return;
+	}
+	wp_enqueue_media();
+	wp_add_inline_script( 'jquery', '
+		jQuery(function($) {
+			$(document).on("click", ".hoger-mn-upload-btn", function() {
+				var targetId = $(this).data("target");
+				var frame = wp.media({
+					title: "Select File",
+					multiple: false,
+					library: { type: ["image", "application"] }
+				});
+				frame.on("select", function() {
+					var att = frame.state().get("selection").first().toJSON();
+					$("#" + targetId).val(att.url);
+					var btn = $(".hoger-mn-upload-btn[data-target=" + targetId + "]");
+					if (!btn.next(".hoger-mn-clear-btn").length) {
+						btn.after(\'<button type="button" class="button hoger-mn-clear-btn" data-target="\' + targetId + \'"><?php esc_html_e( "Clear", "hoger" ); ?></button>\');
+					}
+				});
+				frame.open();
+			});
+			$(document).on("click", ".hoger-mn-clear-btn", function() {
+				var targetId = $(this).data("target");
+				$("#" + targetId).val("");
+				$(this).remove();
+			});
+		});
+	' );
 }
 
 // ─── Settings page HTML ────────────────────────────────────────────────────
