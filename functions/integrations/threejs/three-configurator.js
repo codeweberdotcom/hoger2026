@@ -216,7 +216,10 @@ function initConfigurator(canvas) {
       centerAndFit(model);
 
       if (keepCamera && savedDir) {
-        const newDist = camera.position.clone().sub(controls.target).length();
+        const bSphere = new THREE.Sphere();
+        new THREE.Box3().setFromObject(model).getBoundingSphere(bSphere);
+        const fov = camera.fov * (Math.PI / 180);
+        const newDist = bSphere.radius / Math.sin(fov / 2) * 1.1;
         camera.position.copy(controls.target).addScaledVector(savedDir, newDist);
         controls.update();
       }
