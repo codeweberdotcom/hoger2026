@@ -100,12 +100,17 @@ function initConfigurator(canvas) {
   });
 
   // Expose texture-apply function globally
-  canvas.applyTexture = (url, roughness = 0.9, metalness = 0) => {
+  canvas.applyTexture = (url, roughness = 0.9, metalness = 0, useModelUv = true, repeatX = 1, repeatY = 1, rotation = 0) => {
     if (!url) return;
     textureLoader.load(url, (texture) => {
       texture.colorSpace = THREE.SRGBColorSpace;
-      texture.wrapS = THREE.RepeatWrapping;
-      texture.wrapT = THREE.RepeatWrapping;
+      if (!useModelUv) {
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(repeatX, repeatY);
+        texture.center.set(0.5, 0.5);
+        texture.rotation = rotation * (Math.PI / 180);
+      }
       meshes.forEach((mesh) => {
         mesh.material.map = texture;
         mesh.material.color.set(0xffffff);
@@ -218,7 +223,15 @@ function initSurfacePicker() {
         activeColor = idx;
         renderColors();
         if (color.photo && canvas.applyTexture) {
-          canvas.applyTexture(color.photo, color.roughness ?? 0.9, color.metalness ?? 0);
+          canvas.applyTexture(
+            color.photo,
+            color.roughness  ?? 0.9,
+            color.metalness  ?? 0,
+            color.useModelUv ?? true,
+            color.repeatX    ?? 1,
+            color.repeatY    ?? 1,
+            color.rotation   ?? 0
+          );
         }
       });
 
