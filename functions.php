@@ -177,26 +177,26 @@ function hoger_get_surfaces_json() {
 			$finish   = get_post_meta( $post->ID, "czveta_{$i}_finish", true ) ?: 'matte';
 			$mat      = $finish_map[ $finish ] ?? $finish_map['matte'];
 			if ( $photo ) {
-				$use_model_uv = get_post_meta( $post->ID, "czveta_{$i}_use_model_uv", true );
 				$colors[] = [
-					'name'        => $name ?: __( 'Color', 'hoger' ) . ' ' . ( $i + 1 ),
-					'photo'       => $photo,
-					'thumb'       => $photo_id ? ( wp_get_attachment_image_url( $photo_id, 'thumbnail' ) ?: $photo ) : $photo,
-					'roughness'   => $mat['roughness'],
-					'metalness'   => $mat['metalness'],
-					'useModelUv'  => ( $use_model_uv !== '0' ),
-					'repeatX'     => (float) ( get_post_meta( $post->ID, "czveta_{$i}_repeat_x", true ) ?: 1 ),
-					'repeatY'     => (float) ( get_post_meta( $post->ID, "czveta_{$i}_repeat_y", true ) ?: 1 ),
-					'rotation'    => (float) ( get_post_meta( $post->ID, "czveta_{$i}_rotation", true ) ?: 0 ),
+					'name'      => $name ?: __( 'Color', 'hoger' ) . ' ' . ( $i + 1 ),
+					'photo'     => $photo,
+					'thumb'     => $photo_id ? ( wp_get_attachment_image_url( $photo_id, 'thumbnail' ) ?: $photo ) : $photo,
+					'roughness' => $mat['roughness'],
+					'metalness' => $mat['metalness'],
 				];
 			}
 		}
 
 		if ( ! empty( $colors ) ) {
+			$uv_val = get_post_meta( $post->ID, 'use_model_uv', true );
 			$data[] = [
 				'title'      => get_the_title( $post ),
 				'main_photo' => $main_photo,
 				'colors'     => $colors,
+				'useModelUv' => ( $uv_val !== '0' ),
+				'repeatX'    => (float) ( get_post_meta( $post->ID, 'repeat_x', true ) ?: 1 ),
+				'repeatY'    => (float) ( get_post_meta( $post->ID, 'repeat_y', true ) ?: 1 ),
+				'rotation'   => (float) ( get_post_meta( $post->ID, 'rotation', true ) ?: 0 ),
 			];
 		}
 	}

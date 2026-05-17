@@ -223,14 +223,15 @@ function initSurfacePicker() {
         activeColor = idx;
         renderColors();
         if (color.photo && canvas.applyTexture) {
+          const surface = surfaces[activeType];
           canvas.applyTexture(
             color.photo,
-            color.roughness  ?? 0.9,
-            color.metalness  ?? 0,
-            color.useModelUv ?? true,
-            color.repeatX    ?? 1,
-            color.repeatY    ?? 1,
-            color.rotation   ?? 0
+            color.roughness      ?? 0.9,
+            color.metalness      ?? 0,
+            surface.useModelUv   ?? true,
+            surface.repeatX      ?? 1,
+            surface.repeatY      ?? 1,
+            surface.rotation     ?? 0
           );
         }
       });
