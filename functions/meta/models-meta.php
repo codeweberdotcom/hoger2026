@@ -34,13 +34,6 @@ function hoger_models_meta_boxes() {
 		'normal'
 	);
 	add_meta_box(
-		'models_conf_meshes',
-		__( 'Configurator Meshes', 'hoger' ),
-		'hoger_models_conf_meshes_cb',
-		'models',
-		'normal'
-	);
-	add_meta_box(
 		'models_drawings',
 		__( 'Technical Drawings', 'hoger' ),
 		'hoger_models_drawings_cb',
@@ -361,9 +354,13 @@ function hoger_models_viewer_settings_cb( $post ) {
 // ─── Meta box 4: Mesh Colors ──────────────────────────────────────────────
 
 function hoger_models_mesh_colors_cb( $post ) {
-	$mesh_colors = get_post_meta( $post->ID, 'mn_mesh_colors', true ) ?: '{}';
+	$mesh_colors  = get_post_meta( $post->ID, 'mn_mesh_colors', true ) ?: '{}';
 	if ( json_decode( $mesh_colors ) === null ) {
 		$mesh_colors = '{}';
+	}
+	$conf_meshes = get_post_meta( $post->ID, 'mn_conf_meshes', true ) ?: '[]';
+	if ( json_decode( $conf_meshes ) === null ) {
+		$conf_meshes = '[]';
 	}
 
 	$model_id  = (int) get_post_meta( $post->ID, 'model_fbx', true );
@@ -397,41 +394,17 @@ function hoger_models_mesh_colors_cb( $post ) {
 
 		<input type="hidden" name="mn_mesh_colors" id="mn_mesh_colors"
 			value="<?php echo esc_attr( $mesh_colors ); ?>">
-
-	</div>
-	<?php
-}
-
-// ─── Meta box 5: Configurator Meshes ──────────────────────────────────────
-
-function hoger_models_conf_meshes_cb( $post ) {
-	$model_id   = (int) get_post_meta( $post->ID, 'model_fbx', true );
-	$model_url  = $model_id ? wp_get_attachment_url( $model_id ) : '';
-	$saved_raw  = get_post_meta( $post->ID, 'mn_conf_meshes', true ) ?: '[]';
-	if ( json_decode( $saved_raw ) === null ) {
-		$saved_raw = '[]';
-	}
-	?>
-	<div id="mn-conf-meshes-box" data-model-url="<?php echo esc_url( $model_url ); ?>">
-		<p style="color:#666;font-size:13px;margin:0 0 10px">
-			<?php esc_html_e( 'Choose which meshes the surface configurator texture is applied to. If none are checked, the texture will apply to all meshes.', 'hoger' ); ?>
+		<input type="hidden" name="mn_conf_meshes" id="mn_conf_meshes"
+			value="<?php echo esc_attr( $conf_meshes ); ?>">
+		<p style="color:#666;font-size:12px;margin:8px 0 0">
+			<?php esc_html_e( 'Checked meshes will receive the surface texture in the configurator. If none checked — all meshes receive it.', 'hoger' ); ?>
 		</p>
-		<div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">
-			<button type="button" id="mn-conf-load-btn" class="button">
-				<?php esc_html_e( 'Load Model &amp; Detect Meshes', 'hoger' ); ?>
-			</button>
-			<span id="mn-conf-status" style="font-size:12px;color:#888;"></span>
-		</div>
-		<div id="mn-conf-mesh-list" style="max-height:240px;overflow-y:auto;padding:8px;background:#f9f9f9;border:1px solid #ddd;border-radius:3px;min-height:40px;">
-			<p style="color:#999;font-size:13px;margin:0"><?php esc_html_e( 'Click "Load Model" to detect meshes.', 'hoger' ); ?></p>
-		</div>
-		<input type="hidden" id="mn_conf_meshes" name="mn_conf_meshes"
-			value="<?php echo esc_attr( $saved_raw ); ?>">
+
 	</div>
 	<?php
 }
 
-// ─── Meta box 6: Technical Drawings ───────────────────────────────────────
+// ─── Meta box 5: Technical Drawings ───────────────────────────────────────
 
 function hoger_models_drawings_cb( $post ) {
 	$field_style = 'margin-bottom:16px';

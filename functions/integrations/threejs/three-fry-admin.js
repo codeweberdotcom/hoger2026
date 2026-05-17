@@ -9,16 +9,22 @@ if (!box) throw new Error("three-fry-admin: meta box not found");
 const canvas    = document.getElementById("mn-mesh-preview-canvas");
 const meshList  = document.getElementById("mn-mesh-list");
 const jsonInput = document.getElementById("mn_mesh_colors");
+const confInput = document.getElementById("mn_conf_meshes");
 const loadBtn   = document.getElementById("mn-load-model-btn");
 const statusEl  = document.getElementById("mn-load-status");
 
-let colorMap = {};
-try { colorMap = JSON.parse(jsonInput.value || "{}"); } catch(e) {}
+let confMeshes = [];
+try {
+  const parsed = JSON.parse(confInput ? confInput.value || "[]" : "[]");
+  confMeshes = Array.isArray(parsed) ? parsed : [];
+} catch (e) {}
 
-// mesh name → THREE.Mesh reference (for live preview updates)
 let meshMap = {};
-
 let renderer, animId;
+
+const matDefault  = () => new THREE.MeshStandardMaterial({ color: 0xcccccc, side: THREE.DoubleSide });
+const matSelected = () => new THREE.MeshStandardMaterial({ color: 0x9c886f, side: THREE.DoubleSide, metalness: 0.2, roughness: 0.5 });
+const matHover    = () => new THREE.MeshStandardMaterial({ color: 0xc4a882, side: THREE.DoubleSide });
 
 // ── Get model URL via WP REST API ──────────────────────────────────────────
 function getModelUrl() {
@@ -53,19 +59,7 @@ function centerAndFit(object, camera) {
   camera.lookAt(0, 0, 0);
 }
 
-// ── Apply saved colorMap to preview meshes ─────────────────────────────────
-function applyColorMap() {
-  Object.entries(colorMap).forEach(([name, hex]) => {
-    const mesh = meshMap[name];
-    if (!mesh) return;
-    mesh.material = new THREE.MeshStandardMaterial({
-      color: new THREE.Color(hex),
-      side: THREE.DoubleSide,
-    });
-  });
-}
-
-// ── Build mesh list with wp-color-picker inputs ────────────────────────────
+// ── Build mesh list with checkboxes ────────────────────────────────────────
 function buildMeshList(object) {
   meshList.innerHTML = "";
   meshMap = {};
@@ -77,7 +71,7 @@ function buildMeshList(object) {
     const name = child.name || `mesh_${idx++}`;
     meshes.push({ mesh: child, name });
     meshMap[name] = child;
-    child.userData.origMat = child.material;
+    child.material = confMeshes.includes(name) ? matSelected() : matDefault();
   });
 
   if (!meshes.length) {
@@ -86,85 +80,68 @@ function buildMeshList(object) {
   }
 
   const header = document.createElement("p");
-  header.style.cssText = "font-weight:600;font-size:13px;margin:0 0 10px";
-  header.textContent = `${meshes.length} mesh${meshes.length > 1 ? "es" : ""} found:`;
+  header.style.cssText = "font-weight:600;font-size:13px;margin:0 0 8px;";
+  header.textContent = `${meshes.length} mesh(es) — check to include in configurator:`;
   meshList.appendChild(header);
 
+  const selectAll = document.createElement("label");
+  selectAll.style.cssText = "display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:12px;color:#555;cursor:pointer;border-bottom:1px solid #eee;padding-bottom:8px;";
+  const selectAllCb = document.createElement("input");
+  selectAllCb.type = "checkbox";
+  selectAll.appendChild(selectAllCb);
+  selectAll.appendChild(document.createTextNode("Select all"));
+  selectAll.addEventListener("change", () => {
+    meshList.querySelectorAll(".mn-conf-cb").forEach(cb => {
+      cb.checked = selectAllCb.checked;
+      cb.dispatchEvent(new Event("change"));
+    });
+  });
+  meshList.appendChild(selectAll);
+
   meshes.forEach(({ mesh, name }) => {
-    const current = colorMap[name] || "";
+    const isChecked = confMeshes.includes(name);
 
-    const row = document.createElement("div");
-    row.style.cssText = "display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;";
+    const row = document.createElement("label");
+    row.style.cssText = "display:flex;align-items:center;gap:8px;margin-bottom:4px;cursor:pointer;padding:4px 6px;border-radius:3px;transition:background .1s;";
 
-    // Label
-    const label = document.createElement("span");
-    label.style.cssText = "font-size:12px;font-family:monospace;word-break:break-all;flex:1;padding-top:5px;";
-    label.textContent = name;
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.className = "mn-conf-cb";
+    cb.value = name;
+    cb.checked = isChecked;
 
-    // Color input (will be enhanced by wpColorPicker)
-    const input = document.createElement("input");
-    input.type        = "text";
-    input.value       = current;
-    input.placeholder = "#rrggbb";
-    input.dataset.mesh = name;
-    input.className   = "mn-mesh-color-pick small-text";
-    input.style.cssText = "width:80px;";
-
-    // Reset button
-    const clearBtn = document.createElement("button");
-    clearBtn.type  = "button";
-    clearBtn.title = "Reset to default";
-    clearBtn.style.cssText = "background:none;border:none;cursor:pointer;color:#aaa;font-size:16px;padding:0;line-height:1;flex-shrink:0;padding-top:3px;";
-    clearBtn.textContent = "×";
-
-    clearBtn.addEventListener("click", () => {
-      delete colorMap[name];
-      jsonInput.value = JSON.stringify(colorMap);
-      // reset wpColorPicker value
-      if (window.jQuery) {
-        window.jQuery(input).wpColorPicker("color", "");
-        window.jQuery(input).val("").trigger("change");
+    cb.addEventListener("change", () => {
+      if (cb.checked) {
+        if (!confMeshes.includes(name)) confMeshes.push(name);
+        mesh.material = matSelected();
+      } else {
+        confMeshes = confMeshes.filter(n => n !== name);
+        mesh.material = matDefault();
       }
-      mesh.material = mesh.userData.origMat || new THREE.MeshStandardMaterial({ color: 0xcccccc });
+      if (confInput) confInput.value = JSON.stringify(confMeshes);
+      if (jsonInput) jsonInput.value = "{}";
     });
 
-    row.appendChild(label);
-    row.appendChild(input);
-    row.appendChild(clearBtn);
+    row.addEventListener("mouseenter", () => {
+      if (!cb.checked) mesh.material = matHover();
+      row.style.background = "#f0ece6";
+    });
+    row.addEventListener("mouseleave", () => {
+      mesh.material = cb.checked ? matSelected() : matDefault();
+      row.style.background = "";
+    });
+
+    const nameSpan = document.createElement("span");
+    nameSpan.style.cssText = "font-size:12px;font-family:monospace;word-break:break-all;";
+    nameSpan.textContent = name;
+
+    row.appendChild(cb);
+    row.appendChild(nameSpan);
     meshList.appendChild(row);
   });
 
-  // Apply existing colorMap to preview
-  applyColorMap();
-  jsonInput.value = JSON.stringify(colorMap);
-
-  // Init wpColorPicker after DOM is ready
-  if (window.jQuery && window.jQuery.fn.wpColorPicker) {
-    window.jQuery(".mn-mesh-color-pick").wpColorPicker({
-      change(event, ui) {
-        const name  = event.target.dataset.mesh;
-        const color = ui.color.toString();
-        colorMap[name] = color;
-        jsonInput.value = JSON.stringify(colorMap);
-        const mesh = meshMap[name];
-        if (mesh) {
-          mesh.material = new THREE.MeshStandardMaterial({
-            color: new THREE.Color(color),
-            side: THREE.DoubleSide,
-          });
-        }
-      },
-      clear(event) {
-        const name = event.target.dataset.mesh;
-        delete colorMap[name];
-        jsonInput.value = JSON.stringify(colorMap);
-        const mesh = meshMap[name];
-        if (mesh) {
-          mesh.material = mesh.userData.origMat || new THREE.MeshStandardMaterial({ color: 0xcccccc });
-        }
-      },
-    });
-  }
+  if (confInput) confInput.value = JSON.stringify(confMeshes);
+  if (jsonInput) jsonInput.value = "{}";
 }
 
 // ── Load model & init mini scene ───────────────────────────────────────────
