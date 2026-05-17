@@ -318,7 +318,7 @@ function initConfigurator(canvas) {
         mesh.material.color.set(0xffffff);
         // roughnessMapDepth controls the effective range of roughnessMap (0=no effect, 1=full range).
         // Without it, gloss/chrome (roughness=0.05) would give near-zero variation.
-        mesh.material.roughness = reflectionMaskUrl ? roughnessMapDepth : roughness;
+        mesh.material.roughness = (roughnessMapDepth < 1.0 || reflectionMaskUrl) ? roughnessMapDepth : roughness;
         mesh.material.metalness = metalness;
         mesh.material.envMap = envTexture;
         mesh.material.envMapIntensity = envIntensity * reflectionStrength;
