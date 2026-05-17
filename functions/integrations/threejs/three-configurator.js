@@ -83,19 +83,19 @@ function initConfigurator(canvas) {
 
     model.traverse((child) => {
       if (!child.isMesh) return;
-      if (confMeshes.length && !confMeshes.includes(child.name)) return;
       const origColor = child.material?.color
         ? child.material.color.clone()
         : new THREE.Color(0xcccccc);
+      const isTarget = !confMeshes.length || confMeshes.includes(child.name);
       child.material = new THREE.MeshStandardMaterial({
         color: origColor,
         side: THREE.DoubleSide,
-        envMap: envTexture,
-        envMapIntensity: envIntensity,
-        roughness: 0.5,
-        metalness: 0.1,
+        envMap: isTarget ? envTexture : null,
+        envMapIntensity: isTarget ? envIntensity : 0,
+        roughness: isTarget ? 0.5 : 0.9,
+        metalness: isTarget ? 0.1 : 0,
       });
-      meshes.push(child);
+      if (isTarget) meshes.push(child);
     });
   });
 
