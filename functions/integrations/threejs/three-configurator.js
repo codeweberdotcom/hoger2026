@@ -186,6 +186,7 @@ function initConfigurator(canvas) {
     bumpMapUrl = '', bumpScale = 1
   ) => {
     if (!url) return;
+    console.log('[hoger-conf] applyTexture | reflectionMask:', reflectionMaskUrl || '(none)', '| bumpMap:', bumpMapUrl || '(none)', '| strength:', reflectionStrength, '| bumpScale:', bumpScale);
 
     function applyUv(tex) {
       if (!useModelUv) {
@@ -213,11 +214,14 @@ function initConfigurator(canvas) {
 
     if (reflectionMaskUrl) {
       textureLoader.load(reflectionMaskUrl, (tex) => {
+        console.log('[hoger-conf] roughnessMap loaded:', reflectionMaskUrl);
         applyUv(tex);
         meshes.forEach((mesh) => {
           mesh.material.roughnessMap = tex;
           mesh.material.needsUpdate = true;
         });
+      }, undefined, (err) => {
+        console.error('[hoger-conf] roughnessMap FAILED to load:', reflectionMaskUrl, err);
       });
     } else {
       meshes.forEach((mesh) => { mesh.material.roughnessMap = null; mesh.material.needsUpdate = true; });
@@ -225,12 +229,15 @@ function initConfigurator(canvas) {
 
     if (bumpMapUrl) {
       textureLoader.load(bumpMapUrl, (tex) => {
+        console.log('[hoger-conf] bumpMap loaded:', bumpMapUrl);
         applyUv(tex);
         meshes.forEach((mesh) => {
           mesh.material.bumpMap = tex;
           mesh.material.bumpScale = bumpScale;
           mesh.material.needsUpdate = true;
         });
+      }, undefined, (err) => {
+        console.error('[hoger-conf] bumpMap FAILED to load:', bumpMapUrl, err);
       });
     } else {
       meshes.forEach((mesh) => { mesh.material.bumpMap = null; mesh.material.bumpScale = 1; mesh.material.needsUpdate = true; });
