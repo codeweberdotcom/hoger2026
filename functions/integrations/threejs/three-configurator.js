@@ -32,9 +32,11 @@ function initConfigurator(canvas) {
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(w, h);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = exposure;
   canvas.style.filter = saturation !== 1 ? `saturate(${saturation})` : "";
+
+  console.log("[hoger-conf] exposure:", exposure, "| saturation:", saturation, "| envIntensity:", envIntensity);
 
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment()).texture;
