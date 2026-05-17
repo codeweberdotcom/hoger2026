@@ -35,6 +35,11 @@ function initConfigurator(canvas) {
   dirLight.position.set(10, 20, 15);
   scene.add(dirLight);
 
+  function disableSceneLights() {
+    ambientLight.intensity = 0;
+    dirLight.intensity = 0;
+  }
+
   const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 10000);
   camera.position.set(0, 0, 5);
 
@@ -57,6 +62,7 @@ function initConfigurator(canvas) {
     scene.environment = envTexture;
     tex.dispose();
     pmrem.dispose();
+    disableSceneLights();
   }
 
   if (envHdr) {
