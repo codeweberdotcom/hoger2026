@@ -40,6 +40,8 @@
                 email:     data.email,
                 form_name: data.formName,
                 message:   data.formType,
+            }, function (r) {
+                console.log('[UIS] addOfflineRequest response:', r);
             });
         }
 
