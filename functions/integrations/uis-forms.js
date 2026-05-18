@@ -36,5 +36,6 @@
         }
 
         Comagic.trackEvent('form', 'submit', data.formName, formId);
+        console.log('[UIS] tracked:', data.formName, formId, data);
     });
 }());
