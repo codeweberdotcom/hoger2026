@@ -13,6 +13,7 @@
             name:     fd.get('name')     || fd.get('reg_name')  || '',
             phone:    fd.get('phone')    || fd.get('reg_phone') || '',
             email:    fd.get('email')    || fd.get('reg_email') || '',
+            message:  fd.get('message') || fd.get('reg_message') || '',
             formName: (form && form.dataset.formName) || String(formId),
             formType: (form && form.dataset.formType) || '',
         });
@@ -39,7 +40,7 @@
                 phone:     data.phone,
                 email:     data.email,
                 form_name: data.formName,
-                message:   data.formType,
+                message:   data.message,
             });
         }
 
