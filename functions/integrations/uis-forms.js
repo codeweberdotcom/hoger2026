@@ -35,22 +35,20 @@
                 email: data.email,
             });
 
-            var fileUrls     = (e.detail.apiResponse && e.detail.apiResponse.file_urls) || [];
-            var message      = data.message || '';
-            var fileUrlsList = fileUrls.join(', ');
+            var fileUrls = (e.detail.apiResponse && e.detail.apiResponse.file_urls) || [];
+            var message  = data.message || '';
 
             if (fileUrls.length) {
                 message += (message ? '\n' : '') +
-                    'К этому сообщению прикреплено ' + fileUrls.length + ' файл(ов)';
+                    '[FILES]\n' + fileUrls.join('\n') + '\n[/FILES]';
             }
 
             Comagic.addOfflineRequest({
-                name:        data.name,
-                phone:       data.phone,
-                email:       data.email,
-                form_name:   data.formName,
-                message:     message,
-                description: fileUrlsList,
+                name:      data.name,
+                phone:     data.phone,
+                email:     data.email,
+                form_name: data.formName,
+                message:   message,
             });
         }
 
