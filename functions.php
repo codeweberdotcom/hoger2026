@@ -14,6 +14,7 @@ require_once get_stylesheet_directory() . '/functions/meta/partners-meta.php';
 require_once get_stylesheet_directory() . '/functions/meta/models-meta.php';
 require_once get_stylesheet_directory() . '/functions/blocks/surfaces-block/render.php';
 require_once get_stylesheet_directory() . '/functions/shortcodes/partners-shortcode.php';
+require_once get_stylesheet_directory() . '/functions/integrations/uis-forms.php';
 
 add_action( 'init', 'hoger_register_surfaces_block' );
 function hoger_register_surfaces_block() {
