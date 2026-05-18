@@ -45,12 +45,12 @@
             }
 
             Comagic.addOfflineRequest({
-                name:      data.name,
-                phone:     data.phone,
-                email:     data.email,
-                form_name: data.formName,
-                message:   message,
-                comment:   fileUrlsList,
+                name:        data.name,
+                phone:       data.phone,
+                email:       data.email,
+                form_name:   data.formName,
+                message:     message,
+                description: fileUrlsList,
             });
         }
 
