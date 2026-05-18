@@ -50,7 +50,7 @@
                 email:     data.email,
                 form_name: data.formName,
                 message:   message,
-                note:      fileUrlsList,
+                comment:   fileUrlsList,
             });
         }
 
