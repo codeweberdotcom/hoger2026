@@ -35,10 +35,13 @@
                 email: data.email,
             });
 
-            var fileUrls = (e.detail.apiResponse && e.detail.apiResponse.file_urls) || [];
-            var message  = data.message || '';
+            var fileUrls     = (e.detail.apiResponse && e.detail.apiResponse.file_urls) || [];
+            var message      = data.message || '';
+            var fileUrlsList = fileUrls.join(', ');
+
             if (fileUrls.length) {
-                message += (message ? '\n' : '') + fileUrls.join('\n');
+                message += (message ? '\n' : '') +
+                    'К этому сообщению прикреплено ' + fileUrls.length + ' файл(ов)';
             }
 
             Comagic.addOfflineRequest({
@@ -47,6 +50,7 @@
                 email:     data.email,
                 form_name: data.formName,
                 message:   message,
+                note:      fileUrlsList,
             });
         }
 
