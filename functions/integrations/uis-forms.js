@@ -33,6 +33,14 @@
                 phone: data.phone,
                 email: data.email,
             });
+
+            Comagic.addOfflineRequest({
+                name:      data.name,
+                phone:     data.phone,
+                email:     data.email,
+                form_name: data.formName,
+                message:   data.formType,
+            });
         }
 
         Comagic.trackEvent('form', 'submit', data.formName, formId);
