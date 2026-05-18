@@ -63,6 +63,14 @@ Gulp автоматически определяет активную child те
 
 ---
 
+## Документация hoger
+
+| Задача | Файл |
+|--------|------|
+| 3D конфигуратор (Three.js, surfaces, shapes, camera) | `doc_claude/integrations/THREEJS_CONFIGURATOR.md` |
+
+---
+
 ## Архитектура (унаследована от codeweber)
 
 Child тема наследует всю архитектуру parent:
