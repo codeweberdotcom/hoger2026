@@ -35,12 +35,18 @@
                 email: data.email,
             });
 
+            var fileUrls = (e.detail.apiResponse && e.detail.apiResponse.file_urls) || [];
+            var message  = data.message || '';
+            if (fileUrls.length) {
+                message += (message ? '\n' : '') + fileUrls.join('\n');
+            }
+
             Comagic.addOfflineRequest({
                 name:      data.name,
                 phone:     data.phone,
                 email:     data.email,
                 form_name: data.formName,
-                message:   data.message,
+                message:   message,
             });
         }
 
