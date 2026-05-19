@@ -416,8 +416,44 @@ function initSurfacePicker() {
   const picker = root.querySelector(".hoger-surface-picker");
   if (!picker) return;
 
-  let activeType = null;
-  let activeColor = null;
+  let activeType      = null;
+  let activeColor     = null;
+  let activeColorName = null; // persists across surface type switches
+
+  function applyColorTexture(surfaceIdx, colorIdx) {
+    const surface = surfaces[surfaceIdx];
+    const color   = surface?.colors?.[colorIdx];
+    if (!color?.photo || !canvas.applyTexture) return;
+    canvas.applyTexture(
+      color.photo,
+      surface.roughness              ?? 0.9,
+      surface.metalness              ?? 0,
+      surface.useModelUv             ?? true,
+      surface.repeatX                ?? 1,
+      surface.repeatY                ?? 1,
+      surface.rotation               ?? 0,
+      surface.reflectionMask         ?? "",
+      surface.reflectionStrength     ?? 1,
+      surface.roughnessMapDepth      ?? 1,
+      surface.reflectionMaskRepeatX  ?? 1,
+      surface.reflectionMaskRepeatY  ?? 1,
+      surface.reflectionMaskRotation ?? 0,
+      surface.bumpMap                ?? "",
+      surface.bumpScale              ?? 1,
+      surface.bumpMapRepeatX         ?? 1,
+      surface.bumpMapRepeatY         ?? 1,
+      surface.bumpMapRotation        ?? 0
+    );
+  }
+
+  function resolveColorIdx(surfaceIdx, preferName) {
+    const colors = surfaces[surfaceIdx]?.colors || [];
+    if (preferName) {
+      const found = colors.findIndex((c) => c.name === preferName);
+      if (found !== -1) return found;
+    }
+    return 0;
+  }
 
   function renderTypes() {
     const typesEl = picker.querySelector(".hoger-surface-types");
@@ -441,10 +477,12 @@ function initSurfacePicker() {
       btn.appendChild(label);
 
       btn.addEventListener("click", () => {
-        activeType = idx;
-        activeColor = null;
+        activeType  = idx;
+        activeColor = resolveColorIdx(idx, activeColorName);
+        activeColorName = surfaces[idx]?.colors?.[activeColor]?.name ?? null;
         renderTypes();
         renderColors();
+        applyColorTexture(activeType, activeColor);
       });
 
       typesEl.appendChild(btn);
@@ -480,79 +518,35 @@ function initSurfacePicker() {
       btn.appendChild(label);
 
       btn.addEventListener("click", () => {
-        activeColor = idx;
+        activeColor     = idx;
+        activeColorName = color.name;
         renderColors();
-        if (color.photo && canvas.applyTexture) {
-          const surface = surfaces[activeType];
-          canvas.applyTexture(
-            color.photo,
-            surface.roughness               ?? 0.9,
-            surface.metalness               ?? 0,
-            surface.useModelUv              ?? true,
-            surface.repeatX                 ?? 1,
-            surface.repeatY                 ?? 1,
-            surface.rotation                ?? 0,
-            surface.reflectionMask          ?? '',
-            surface.reflectionStrength      ?? 1,
-            surface.roughnessMapDepth       ?? 1,
-            surface.reflectionMaskRepeatX   ?? 1,
-            surface.reflectionMaskRepeatY   ?? 1,
-            surface.reflectionMaskRotation  ?? 0,
-            surface.bumpMap                 ?? '',
-            surface.bumpScale               ?? 1,
-            surface.bumpMapRepeatX          ?? 1,
-            surface.bumpMapRepeatY          ?? 1,
-            surface.bumpMapRotation         ?? 0
-          );
-        }
+        applyColorTexture(activeType, activeColor);
       });
 
       colorsEl.appendChild(btn);
     });
   }
 
-  renderTypes();
-  renderColors();
-
-  // Auto-apply default surface/color after model meshes are ready
+  // Auto-select first surface/color (or admin default) after model meshes are ready
   const defaultSurfaceAttr = canvas.getAttribute("data-default-surface");
   const defaultColorAttr   = canvas.getAttribute("data-default-color");
   const defaultSurfaceIdx  = defaultSurfaceAttr !== null && defaultSurfaceAttr !== "" ? parseInt(defaultSurfaceAttr, 10) : -1;
   const defaultColorIdx    = defaultColorAttr   !== null && defaultColorAttr   !== "" ? parseInt(defaultColorAttr, 10)   : 0;
 
-  if (defaultSurfaceIdx >= 0 && defaultSurfaceIdx < surfaces.length) {
-    canvas.addEventListener("model:loaded", () => {
-      activeType  = defaultSurfaceIdx;
-      activeColor = defaultColorIdx;
-      renderTypes();
-      renderColors();
+  const initSurfaceIdx = defaultSurfaceIdx >= 0 && defaultSurfaceIdx < surfaces.length ? defaultSurfaceIdx : 0;
+  const initColorIdx   = defaultSurfaceIdx >= 0 ? defaultColorIdx : 0;
 
-      const surface = surfaces[defaultSurfaceIdx];
-      const color   = surface?.colors?.[defaultColorIdx];
-      if (color?.photo && canvas.applyTexture) {
-        canvas.applyTexture(
-          color.photo,
-          surface.roughness              ?? 0.9,
-          surface.metalness              ?? 0,
-          surface.useModelUv             ?? true,
-          surface.repeatX                ?? 1,
-          surface.repeatY                ?? 1,
-          surface.rotation               ?? 0,
-          surface.reflectionMask         ?? "",
-          surface.reflectionStrength     ?? 1,
-          surface.roughnessMapDepth      ?? 1,
-          surface.reflectionMaskRepeatX  ?? 1,
-          surface.reflectionMaskRepeatY  ?? 1,
-          surface.reflectionMaskRotation ?? 0,
-          surface.bumpMap                ?? "",
-          surface.bumpScale              ?? 1,
-          surface.bumpMapRepeatX         ?? 1,
-          surface.bumpMapRepeatY         ?? 1,
-          surface.bumpMapRotation        ?? 0
-        );
-      }
-    }, { once: true });
-  }
+  activeType      = initSurfaceIdx;
+  activeColor     = initColorIdx;
+  activeColorName = surfaces[initSurfaceIdx]?.colors?.[initColorIdx]?.name ?? null;
+
+  renderTypes();
+  renderColors();
+
+  canvas.addEventListener("model:loaded", () => {
+    applyColorTexture(activeType, activeColor);
+  }, { once: true });
 }
 
 document.addEventListener("DOMContentLoaded", initSurfacePicker);
