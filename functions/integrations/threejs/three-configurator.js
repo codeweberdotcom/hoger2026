@@ -364,7 +364,7 @@ function initConfigurator(canvas) {
   };
 
   // Capture a PNG snapshot from the initial camera position
-  canvas.captureRender = () => {
+  canvas.captureRender = (scale = 3) => {
     const savedPos    = camera.position.clone();
     const savedTarget = controls.target.clone();
 
@@ -377,9 +377,15 @@ function initConfigurator(canvas) {
       );
     }
     controls.update();
+
+    renderer.setSize(w * scale, h * scale);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
     renderer.render(scene, camera);
     const dataUrl = canvas.toDataURL("image/png");
 
+    renderer.setSize(w, h);
+    camera.updateProjectionMatrix();
     camera.position.copy(savedPos);
     controls.target.copy(savedTarget);
     controls.update();

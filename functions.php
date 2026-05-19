@@ -89,16 +89,23 @@ function hoger_enqueue_threejs() {
 			true
 		);
 		wp_enqueue_script(
-			'hoger-jspdf',
-			'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
+			'hoger-pdfmake',
+			'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js',
 			[],
-			'2.5.1',
+			'0.2.7',
+			true
+		);
+		wp_enqueue_script(
+			'hoger-pdfmake-fonts',
+			'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js',
+			[ 'hoger-pdfmake' ],
+			'0.2.7',
 			true
 		);
 		wp_enqueue_script(
 			'hoger-threejs-pdf',
 			get_stylesheet_directory_uri() . '/functions/integrations/threejs/three-pdf.js',
-			[ 'hoger-jspdf' ],
+			[ 'hoger-pdfmake-fonts' ],
 			wp_get_theme()->get( 'Version' ),
 			true
 		);
