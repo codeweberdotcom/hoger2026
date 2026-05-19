@@ -52,7 +52,7 @@ function initConfigurator(canvas) {
   const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 10000);
   camera.position.set(0, 0, 5);
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(w, h);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -363,6 +363,33 @@ function initConfigurator(canvas) {
     }
   };
 
+  // Capture a PNG snapshot from the initial camera position
+  canvas.captureRender = () => {
+    const savedPos    = camera.position.clone();
+    const savedTarget = controls.target.clone();
+
+    if (hasSavedCam) {
+      camera.position.set(parseFloat(camX), parseFloat(camY), parseFloat(camZ));
+      controls.target.set(
+        parseFloat(camTargetX || "0"),
+        parseFloat(camTargetY || "0"),
+        parseFloat(camTargetZ || "0")
+      );
+    }
+    controls.update();
+    renderer.render(scene, camera);
+    const dataUrl = canvas.toDataURL("image/png");
+
+    camera.position.copy(savedPos);
+    controls.target.copy(savedTarget);
+    controls.update();
+
+    return dataUrl;
+  };
+
+  // Return the currently selected surface/color names (set by initSurfacePicker)
+  canvas.getActiveConfig = () => canvas._activeConfig || { surfaceTitle: "", colorName: "" };
+
   let envAngle = 0;
 
   function animate() {
@@ -424,6 +451,7 @@ function initSurfacePicker() {
     const surface = surfaces[surfaceIdx];
     const color   = surface?.colors?.[colorIdx];
     if (!color?.photo || !canvas.applyTexture) return;
+    canvas._activeConfig = { surfaceTitle: surface.title, colorName: color.name };
     canvas.applyTexture(
       color.photo,
       surface.roughness              ?? 0.9,

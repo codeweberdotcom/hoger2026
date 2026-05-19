@@ -88,6 +88,20 @@ function hoger_enqueue_threejs() {
 			wp_get_theme()->get( 'Version' ),
 			true
 		);
+		wp_enqueue_script(
+			'hoger-jspdf',
+			'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
+			[],
+			'2.5.1',
+			true
+		);
+		wp_enqueue_script(
+			'hoger-threejs-pdf',
+			get_stylesheet_directory_uri() . '/functions/integrations/threejs/three-pdf.js',
+			[ 'hoger-jspdf' ],
+			wp_get_theme()->get( 'Version' ),
+			true
+		);
 	}
 }
 

@@ -374,7 +374,10 @@ if ( $surfaces_json && $surfaces_json !== '[]' ) :
 				<p class="fw-bold mb-3"><?php esc_html_e( 'Surface type:', 'hoger' ); ?></p>
 				<div class="hoger-surface-types d-flex flex-wrap gap-0 mb-5"></div>
 				<p class="fw-bold mb-3"><?php esc_html_e( 'Color:', 'hoger' ); ?></p>
-				<div class="hoger-surface-colors d-flex flex-wrap gap-0"></div>
+				<div class="hoger-surface-colors d-flex flex-wrap gap-0 mb-6"></div>
+				<button id="hoger-download-pdf" type="button" class="btn btn-primary" data-model-title="<?php echo esc_attr( get_the_title() ); ?>">
+					<?php esc_html_e( 'Download PDF', 'hoger' ); ?>
+				</button>
 			</div>
 
 		</div>
