@@ -49,6 +49,17 @@
                 email:     data.email,
                 form_name: data.formName,
                 message:   message,
+            }, function (response) {
+                if (!response || !response.success) {
+                    var body = new URLSearchParams({
+                        action:    'cwf_uis_log_failure',
+                        form_name: data.formName,
+                        phone:     data.phone,
+                        email:     data.email,
+                        response:  JSON.stringify(response || null),
+                    });
+                    fetch('/wp-admin/admin-ajax.php', { method: 'POST', body: body });
+                }
             });
         }
 

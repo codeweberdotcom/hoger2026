@@ -372,9 +372,9 @@ if ( $surfaces_json && $surfaces_json !== '[]' ) :
 			<div class="col-lg-6 pb-10 py-md-14 hoger-surface-picker">
 				<h2 class="display-4 mb-6"><?php esc_html_e( 'Configure Surface', 'hoger' ); ?></h2>
 				<p class="fw-bold mb-3"><?php esc_html_e( 'Surface type:', 'hoger' ); ?></p>
-				<div class="hoger-surface-types d-flex flex-wrap gap-2 mb-5"></div>
+				<div class="hoger-surface-types d-flex flex-wrap gap-0 mb-5"></div>
 				<p class="fw-bold mb-3"><?php esc_html_e( 'Color:', 'hoger' ); ?></p>
-				<div class="hoger-surface-colors d-flex flex-wrap gap-2"></div>
+				<div class="hoger-surface-colors d-flex flex-wrap gap-0"></div>
 			</div>
 
 		</div>
