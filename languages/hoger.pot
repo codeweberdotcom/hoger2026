@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hoger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 14:51+0000\n"
+"POT-Creation-Date: 2026-05-25 19:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: English\n"
@@ -16,15 +16,36 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Domain: hoger\n"
-"\n"
 "X-Generator: Loco https://localise.biz/"
 
-#: functions/meta/surfaces-meta.php:112
+#: functions/meta/surfaces-meta.php:300
 msgid "+ Add Color"
 msgstr ""
 
-#: functions/cpt/partners.php:9 functions/cpt/surfaces.php:9
+#: functions/cpt/cpt-models.php:8
+msgid "3D Model"
+msgstr ""
+
+#: functions/meta/models-meta.php:9
+msgid "3D Model File"
+msgstr ""
+
+#: functions/cpt/cpt-models.php:7 functions/cpt/cpt-models.php:17
+msgid "3D Models"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:9
+#: functions/settings/models-new-settings.php:341
+msgid "3D Viewer Settings"
+msgstr ""
+
+#: functions/cpt/cpt-models.php:9 functions/cpt/partners.php:9
+#: functions/cpt/surfaces.php:9
 msgid "Add New"
+msgstr ""
+
+#: functions/cpt/cpt-models.php:10
+msgid "Add New 3D Model"
 msgstr ""
 
 #: functions/cpt/partners.php:10
@@ -35,29 +56,229 @@ msgstr ""
 msgid "Add New Surface"
 msgstr ""
 
+#: functions/meta/models-meta.php:182
+msgid "Add Parameter"
+msgstr ""
+
 #: functions/meta/partners-meta.php:83
 msgid "Add Phone"
+msgstr ""
+
+#: functions/meta/models-meta.php:373
+#: functions/settings/models-new-settings.php:105
+msgid "Apply to fields"
+msgstr ""
+
+#: functions/meta/models-meta.php:258
+msgid "Aqua"
+msgstr ""
+
+#: functions/meta/models-meta.php:263
+msgid "Ash"
+msgstr ""
+
+#: functions/meta/models-meta.php:498
+msgid ""
+"Assign colors to individual meshes. Requires a 3D model file to be selected "
+"above."
+msgstr ""
+
+#: templates/content/single-parts/post-author.php:45
+msgid "Author"
+msgstr ""
+
+#: functions/meta/models-meta.php:401
+#: functions/settings/models-new-settings.php:235
+msgid "auto"
+msgstr ""
+
+#: functions/meta/models-meta.php:348
+msgid "Auto Rotate"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:37
+msgid "Auto-Rotation"
+msgstr ""
+
+#: functions/meta/models-meta.php:283
+msgid "Background Color"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:86
+msgid "Best quality. 2–8 MB. Free studio HDRs: polyhaven.com"
+msgstr ""
+
+#: functions/meta/models-meta.php:237 functions/meta/models-meta.php:248
+msgid "Blue"
+msgstr ""
+
+#: functions/meta/models-meta.php:246
+msgid "Blue (fryreglet)"
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:159
+msgid "Bump Map"
+msgstr ""
+
+#: functions/meta/models-meta.php:378
+msgid "Cam X"
+msgstr ""
+
+#: functions/meta/models-meta.php:379
+msgid "Cam Y"
+msgstr ""
+
+#: functions/meta/models-meta.php:380
+msgid "Cam Z"
+msgstr ""
+
+#: functions/meta/models-meta.php:366
+#: functions/settings/models-new-settings.php:102
+msgid "Camera Position"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:109
+msgid "Camera X"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:110
+msgid "Camera Y"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:111
+msgid "Camera Z"
+msgstr ""
+
+#: functions/meta/models-meta.php:526
+msgid ""
+"Checked meshes will receive the surface texture in the configurator. If none "
+"checked — all meshes receive it."
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:28
+msgid "Chrome"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:253
+msgid "Clear"
+msgstr ""
+
+#: functions/meta/models-meta.php:515
+msgid "Click \"Load Model\" to detect meshes."
 msgstr ""
 
 #. Author of the theme
 msgid "codeweber"
 msgstr ""
 
-#: functions/meta/surfaces-meta.php:64
+#: functions.php:209 functions/meta/models-meta.php:443
+msgid "Color"
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:251
 msgid "Color Name"
 msgstr ""
 
-#: functions/meta/surfaces-meta.php:67
+#: functions/meta/surfaces-meta.php:254
 msgid "Color Photo"
 msgstr ""
 
-#: functions/meta/surfaces-meta.php:57
+#: single-models.php:376
+msgid "Color:"
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:244
 msgid "Colors"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:55
+msgid "Configurator Appearance"
+msgstr ""
+
+#: single-models.php:373
+msgid "Configure Surface"
+msgstr ""
+
+#: single-models.php:358
+msgid "Cube"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:126
+msgid "Cube model (.glb)"
+msgstr ""
+
+#: functions/meta/models-meta.php:297 functions/meta/models-meta.php:329
+msgid "Custom hex"
+msgstr ""
+
+#: functions/meta/models-meta.php:233 functions/meta/models-meta.php:260
+msgid "Dark (hoger)"
+msgstr ""
+
+#: functions/meta/models-meta.php:234
+msgid "Dark (theme)"
+msgstr ""
+
+#: functions/meta/models-meta.php:408
+#: functions/settings/models-new-settings.php:119
+msgid "Debug mode"
+msgstr ""
+
+#: functions/meta/models-meta.php:416
+msgid "Default Surface Selection"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:98
+msgid "Default: 0.001. Radians per frame. Higher = faster."
+msgstr ""
+
+#: functions/settings/models-new-settings.php:45
+msgid "Default: 0.5. Higher = faster."
+msgstr ""
+
+#: functions/settings/models-new-settings.php:69
+msgid "Default: 1.0. Applied via CSS filter on the canvas."
+msgstr ""
+
+#: functions/settings/models-new-settings.php:76
+msgid "Default: 1.0. Controls gloss/chrome reflection intensity."
+msgstr ""
+
+#: functions/settings/models-new-settings.php:62
+msgid "Default: 1.0. Lower = darker, higher = brighter."
+msgstr ""
+
+#: functions/meta/models-meta.php:187
+msgid "Description"
 msgstr ""
 
 #: functions/meta/partners-meta.php:42
 #: functions/shortcodes/partners-shortcode.php:83
 msgid "Director"
+msgstr ""
+
+#: single-models.php:134
+msgid "Download Catalog"
+msgstr ""
+
+#: single-models.php:379
+msgid "Download PDF"
+msgstr ""
+
+#: functions/meta/models-meta.php:587
+msgid "Drawing Description"
+msgstr ""
+
+#: single-models.php:282
+msgid "Drawing Notes:"
+msgstr ""
+
+#: functions/meta/models-meta.php:315
+msgid "Edge Color"
+msgstr ""
+
+#: functions/cpt/cpt-models.php:11
+msgid "Edit 3D Model"
 msgstr ""
 
 #: functions/cpt/partners.php:11
@@ -72,9 +293,115 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
+#: functions/settings/models-new-settings.php:39
+msgid "Enable auto-rotate by default"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:52
+msgid "Enable orbit (mouse drag)"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:51
+msgid "Enable zoom (mouse wheel / pinch)"
+msgstr ""
+
+#: functions/meta/models-meta.php:205
+msgid "Enter the WooCommerce product ID for the MKL configurator button."
+msgstr ""
+
+#: functions/settings/models-new-settings.php:80
+msgid "Environment Map (Reflections)"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:88
+msgid "Equirectangular image URL (.jpg / .png)"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:57
+msgid "Exposure (brightness)"
+msgstr ""
+
 #: functions/meta/partners-meta.php:33
 #: functions/shortcodes/partners-shortcode.php:79
 msgid "Factual Address"
+msgstr ""
+
+#: functions/meta/models-meta.php:111
+msgid "FBX / GLB / OBJ File"
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:54
+msgid "Finish"
+msgstr ""
+
+#: functions/meta/models-meta.php:550
+msgid "General View"
+msgstr ""
+
+#: functions/meta/models-meta.php:553
+msgid "General View Title"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:128
+msgid "GLB file of a simple cube used to preview surface textures."
+msgstr ""
+
+#: functions/settings/models-new-settings.php:132
+msgid "GLB file of a smooth sphere used to preview surface textures."
+msgstr ""
+
+#: functions/settings/models-new-settings.php:343
+msgid ""
+"Global defaults for the fry-style 3D viewer used by the \"3D Models (New)\" "
+"post type."
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:27
+msgid "Gloss"
+msgstr ""
+
+#: functions/meta/models-meta.php:239 functions/meta/models-meta.php:250
+msgid "Grape"
+msgstr ""
+
+#: functions/meta/models-meta.php:224
+msgid "Gray ($gray-200)"
+msgstr ""
+
+#: functions/meta/models-meta.php:227
+msgid "Gray ($gray-400)"
+msgstr ""
+
+#: functions/meta/models-meta.php:228
+msgid "Gray ($gray-500)"
+msgstr ""
+
+#: functions/meta/models-meta.php:229
+msgid "Gray ($gray-600)"
+msgstr ""
+
+#: functions/meta/models-meta.php:230
+msgid "Gray ($gray-700)"
+msgstr ""
+
+#: functions/meta/models-meta.php:231
+msgid "Gray ($gray-800)"
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:103
+msgid "Grayscale: dark = reflective, bright = matte (roughnessMap)"
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:161
+msgid "Grayscale: white = raised, black = depressed (bumpMap)"
+msgstr ""
+
+#: functions/meta/models-meta.php:240 functions/meta/models-meta.php:257
+msgid "Green"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:84
+msgid "HDR environment URL (.hdr)"
 msgstr ""
 
 #. Name of the theme
@@ -90,12 +417,74 @@ msgstr ""
 msgid "INN"
 msgstr ""
 
-#: functions/meta/surfaces-meta.php:27
+#: functions/settings/models-new-settings.php:49
+msgid "Interaction"
+msgstr ""
+
+#: functions/meta/models-meta.php:226
+msgid "Inverse ($gray-300)"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:103
+msgid ""
+"Leave all fields empty to use auto-fit. Enable Debug Mode on the frontend, "
+"position the camera, click Copy, then paste the result below."
+msgstr ""
+
+#: functions/meta/models-meta.php:369
+msgid ""
+"Leave empty to use global settings. Enable Debug, copy from frontend, paste "
+"below."
+msgstr ""
+
+#: functions/meta/models-meta.php:223
+msgid "Light ($gray-100)"
+msgstr ""
+
+#: functions/meta/models-meta.php:225
+msgid "Light Gray (default)"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:90
+msgid ""
+"Lighter alternative (200–500 KB). Any studio panorama in equirectangular "
+"format."
+msgstr ""
+
+#: functions/meta/models-meta.php:508
+msgid "Load Model &amp; Detect Meshes"
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:214
 msgid "Main Photo"
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:25
+msgid "Matte"
+msgstr ""
+
+#: functions/meta/models-meta.php:31
+msgid "Mesh Colors"
 msgstr ""
 
 #: functions/meta/partners-meta.php:77
 msgid "Name"
+msgstr ""
+
+#: functions/meta/models-meta.php:259
+msgid "Navy"
+msgstr ""
+
+#: functions/meta/models-meta.php:232
+msgid "Navy ($gray-900)"
+msgstr ""
+
+#: functions/meta/models-meta.php:235 functions/meta/models-meta.php:261
+msgid "Navy (theme)"
+msgstr ""
+
+#: functions/cpt/cpt-models.php:12
+msgid "New 3D Model"
 msgstr ""
 
 #: functions/cpt/partners.php:12
@@ -104,6 +493,14 @@ msgstr ""
 
 #: functions/cpt/surfaces.php:12
 msgid "New Surface"
+msgstr ""
+
+#: functions/cpt/cpt-models.php:15
+msgid "No 3D models found"
+msgstr ""
+
+#: functions/cpt/cpt-models.php:16
+msgid "No 3D models found in trash"
 msgstr ""
 
 #: functions/cpt/partners.php:15
@@ -126,6 +523,22 @@ msgstr ""
 msgid "No surfaces found in trash"
 msgstr ""
 
+#: functions/meta/models-meta.php:255
+msgid "Orange"
+msgstr ""
+
+#: single-models.php:354
+msgid "Original model"
+msgstr ""
+
+#: functions/meta/models-meta.php:177
+msgid "Parameter"
+msgstr ""
+
+#: functions/meta/models-meta.php:168
+msgid "Parameters List"
+msgstr ""
+
 #: functions/cpt/partners.php:8
 msgid "Partner"
 msgstr ""
@@ -138,6 +551,11 @@ msgstr ""
 msgid "Partners"
 msgstr ""
 
+#: functions/meta/models-meta.php:371
+#: functions/settings/models-new-settings.php:104
+msgid "Paste config here…"
+msgstr ""
+
 #: functions/meta/partners-meta.php:67
 #: functions/shortcodes/partners-shortcode.php:98
 msgid "Phone"
@@ -147,13 +565,84 @@ msgstr ""
 msgid "Phones"
 msgstr ""
 
+#: functions/meta/models-meta.php:253
+msgid "Pink"
+msgstr ""
+
 #: functions/meta/partners-meta.php:72
 msgid "Position"
 msgstr ""
 
-#: functions/meta/partners-meta.php:79 functions/meta/surfaces-meta.php:41
-#: functions/meta/surfaces-meta.php:100
+#: functions/meta/models-meta.php:17
+msgid "Product Information"
+msgstr ""
+
+#: functions/meta/models-meta.php:251
+msgid "Purple"
+msgstr ""
+
+#: functions/meta/models-meta.php:242 functions/meta/models-meta.php:254
+msgid "Red"
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:101
+msgid "Reflection Mask"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:71
+msgid "Reflection strength (envMapIntensity)"
+msgstr ""
+
+#: functions/meta/models-meta.php:87 functions/meta/models-meta.php:94
+#: functions/meta/models-meta.php:134 functions/meta/models-meta.php:178
+#: functions/meta/partners-meta.php:79 functions/meta/surfaces-meta.php:120
+#: functions/meta/surfaces-meta.php:178 functions/meta/surfaces-meta.php:228
+#: functions/meta/surfaces-meta.php:288
 msgid "Remove"
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:76 functions/meta/surfaces-meta.php:137
+#: functions/meta/surfaces-meta.php:189
+msgid "Repeat X"
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:81 functions/meta/surfaces-meta.php:143
+#: functions/meta/surfaces-meta.php:195
+msgid "Repeat Y"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:92
+msgid "Rotate environment map"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:40
+#: functions/settings/models-new-settings.php:93
+msgid "Rotation speed"
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:86 functions/meta/surfaces-meta.php:149
+#: functions/meta/surfaces-meta.php:201
+msgid "Rotation °"
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:131
+msgid "Roughness Depth"
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:26
+msgid "Satin"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:64
+msgid "Saturation"
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:183
+msgid "Scale"
+msgstr ""
+
+#: functions/cpt/cpt-models.php:14
+msgid "Search 3D Models"
 msgstr ""
 
 #: functions/cpt/partners.php:14
@@ -164,7 +653,23 @@ msgstr ""
 msgid "Search Surfaces"
 msgstr ""
 
-#: functions/meta/surfaces-meta.php:95 functions/meta/surfaces-meta.php:144
+#: functions/meta/models-meta.php:561
+msgid "Section A-A"
+msgstr ""
+
+#: functions/meta/models-meta.php:564
+msgid "Section A-A Title"
+msgstr ""
+
+#: functions/meta/models-meta.php:574
+msgid "Section B-B"
+msgstr ""
+
+#: functions/meta/models-meta.php:577
+msgid "Section B-B Title"
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:283 functions/meta/surfaces-meta.php:341
 msgid "Select"
 msgstr ""
 
@@ -172,25 +677,131 @@ msgstr ""
 msgid "Select a surface in the block settings."
 msgstr ""
 
-#: functions/meta/surfaces-meta.php:37 functions/meta/surfaces-meta.php:163
-#: functions/meta/surfaces-meta.php:183
+#: functions/meta/models-meta.php:59 functions/meta/models-meta.php:128
+#: functions/settings/models-new-settings.php:249
+msgid "Select File"
+msgstr ""
+
+#: functions/meta/models-meta.php:58 functions/meta/surfaces-meta.php:116
+#: functions/meta/surfaces-meta.php:174 functions/meta/surfaces-meta.php:224
+#: functions/meta/surfaces-meta.php:363 functions/meta/surfaces-meta.php:387
 msgid "Select Image"
 msgstr ""
 
-#: functions/cpt/surfaces.php:8
+#: functions/settings/models-new-settings.php:122
+msgid "Shape Preview Models"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:34
+msgid "Show Edges toggle button (FBX / GLB only)"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:33
+msgid "Show Play / Pause button"
+msgstr ""
+
+#: functions/meta/models-meta.php:238 functions/meta/models-meta.php:249
+msgid "Sky"
+msgstr ""
+
+#: functions/meta/models-meta.php:309 functions/meta/models-meta.php:341
+msgid "Soft (lighten 70%)"
+msgstr ""
+
+#: single-models.php:363
+msgid "Sphere"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:130
+msgid "Sphere model (.glb)"
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:125
+msgid "Strength"
+msgstr ""
+
+#: functions/meta/models-meta.php:158
+msgid "Subtitle"
+msgstr ""
+
+#: functions/cpt/surfaces.php:8 functions/meta/models-meta.php:430
 msgid "Surface"
+msgstr ""
+
+#: functions/meta/models-meta.php:419
+msgid "Surface and color applied automatically on page load."
 msgstr ""
 
 #: functions/meta/surfaces-meta.php:7
 msgid "Surface Fields"
 msgstr ""
 
-#: functions/meta/surfaces-meta.php:49
+#: functions/meta/surfaces-meta.php:236
 msgid "Surface Type Description"
+msgstr ""
+
+#: single-models.php:374
+msgid "Surface type:"
 msgstr ""
 
 #: functions/cpt/surfaces.php:7 functions/cpt/surfaces.php:17
 msgid "Surfaces"
+msgstr ""
+
+#: functions/meta/models-meta.php:381
+#: functions/settings/models-new-settings.php:112
+msgid "Target X"
+msgstr ""
+
+#: functions/meta/models-meta.php:382
+#: functions/settings/models-new-settings.php:113
+msgid "Target Y"
+msgstr ""
+
+#: functions/meta/models-meta.php:383
+#: functions/settings/models-new-settings.php:114
+msgid "Target Z"
+msgstr ""
+
+#: functions/meta/models-meta.php:236 functions/meta/models-meta.php:247
+msgid "Taupe — Primary"
+msgstr ""
+
+#: functions/meta/models-meta.php:193
+msgid "Technical Catalog (PDF)"
+msgstr ""
+
+#: functions/meta/models-meta.php:38
+msgid "Technical Drawings"
+msgstr ""
+
+#: functions/settings/models-new-settings.php:81
+msgid ""
+"Upload a studio panorama to improve reflections. HDR takes priority over "
+"JPEG/PNG if both are set. Leave empty to use the built-in procedural "
+"environment."
+msgstr ""
+
+#: functions/settings/models-new-settings.php:123
+msgid ""
+"Upload GLB models for the Cube and Sphere switcher buttons shown in the "
+"configurator viewport. Leave empty to hide the button."
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:72
+msgid "Use model UV (ignore repeat & rotation)"
+msgstr ""
+
+#: functions/meta/models-meta.php:274
+msgid "Use original FBX / GLB colors"
+msgstr ""
+
+#: functions/meta/surfaces-meta.php:67
+msgid "UV Mapping"
+msgstr ""
+
+#: functions/cpt/cpt-models.php:13
+msgid "View 3D Model"
 msgstr ""
 
 #: functions/cpt/partners.php:13
@@ -201,7 +812,42 @@ msgstr ""
 msgid "View Surface"
 msgstr ""
 
+#: functions/settings/models-new-settings.php:31
+msgid "Viewer Controls"
+msgstr ""
+
+#: functions/meta/models-meta.php:24
+#: functions/settings/models-new-settings.php:10
+msgid "Viewer Settings"
+msgstr ""
+
+#: functions/meta/models-meta.php:252
+msgid "Violet"
+msgstr ""
+
 #: functions/meta/partners-meta.php:97
 #: functions/shortcodes/partners-shortcode.php:113
 msgid "Website"
+msgstr ""
+
+#: functions/meta/models-meta.php:277
+msgid ""
+"When enabled, the model keeps its original material colors. Background and "
+"Edge color settings below are ignored."
+msgstr ""
+
+#: functions/meta/models-meta.php:222 functions/meta/models-meta.php:262
+msgid "White"
+msgstr ""
+
+#: functions/meta/models-meta.php:197
+msgid "WooCommerce Product ID (Configurator)"
+msgstr ""
+
+#: functions/meta/models-meta.php:241 functions/meta/models-meta.php:256
+msgid "Yellow"
+msgstr ""
+
+#: functions/meta/models-meta.php:433
+msgid "— None —"
 msgstr ""

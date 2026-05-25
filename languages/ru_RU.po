@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: hoger\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-25\n"
-"PO-Revision-Date: 2026-05-07 14:54+0000\n"
+"PO-Revision-Date: 2026-05-25 19:09+0000\n"
 "Last-Translator: \n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -16,15 +16,42 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.8.3; wp-6.9.4; php-8.3.30"
 
-#: functions/meta/surfaces-meta.php:112
+#: functions/meta/surfaces-meta.php:300
 #, fuzzy
 msgid "+ Add Color"
 msgstr "+ Добавить цвет"
 
-#: functions/cpt/partners.php:9 functions/cpt/surfaces.php:9
+#: functions/cpt/cpt-models.php:8
+#, fuzzy
+msgid "3D Model"
+msgstr "3D Модель"
+
+#: functions/meta/models-meta.php:9
+#, fuzzy
+msgid "3D Model File"
+msgstr "Файл 3D-модели"
+
+#: functions/cpt/cpt-models.php:7 functions/cpt/cpt-models.php:17
+#, fuzzy
+msgid "3D Models"
+msgstr "3D Модели"
+
+#: functions/settings/models-new-settings.php:9
+#: functions/settings/models-new-settings.php:341
+#, fuzzy
+msgid "3D Viewer Settings"
+msgstr "Настройки 3D-просмотра"
+
+#: functions/cpt/cpt-models.php:9 functions/cpt/partners.php:9
+#: functions/cpt/surfaces.php:9
 #, fuzzy
 msgid "Add New"
 msgstr "Добавить новый"
+
+#: functions/cpt/cpt-models.php:10
+#, fuzzy
+msgid "Add New 3D Model"
+msgstr "Добавить новую 3D-модель"
 
 #: functions/cpt/partners.php:10
 #, fuzzy
@@ -36,36 +63,290 @@ msgstr "Добавить нового партнера"
 msgid "Add New Surface"
 msgstr "Добавить новую поверхность"
 
+#: functions/meta/models-meta.php:182
+#, fuzzy
+msgid "Add Parameter"
+msgstr "Добавить параметр"
+
 #: functions/meta/partners-meta.php:83
 #, fuzzy
 msgid "Add Phone"
 msgstr "Добавить телефон"
+
+#: functions/meta/models-meta.php:373
+#: functions/settings/models-new-settings.php:105
+#, fuzzy
+msgid "Apply to fields"
+msgstr "Применить к полям"
+
+#: functions/meta/models-meta.php:258
+#, fuzzy
+msgid "Aqua"
+msgstr "Аква"
+
+#: functions/meta/models-meta.php:263
+#, fuzzy
+msgid "Ash"
+msgstr "Пепел"
+
+#: functions/meta/models-meta.php:498
+#, fuzzy
+msgid ""
+"Assign colors to individual meshes. Requires a 3D model file to be selected "
+"above."
+msgstr ""
+"Назначить цвета отдельным сеткам. Требуется, чтобы выше был выбран файл 3D-"
+"модели."
+
+#: templates/content/single-parts/post-author.php:45
+#, fuzzy
+msgid "Author"
+msgstr "Автор"
+
+#: functions/meta/models-meta.php:401
+#: functions/settings/models-new-settings.php:235
+#, fuzzy
+msgid "auto"
+msgstr "авто"
+
+#: functions/meta/models-meta.php:348
+#, fuzzy
+msgid "Auto Rotate"
+msgstr "Автоповорот"
+
+#: functions/settings/models-new-settings.php:37
+#, fuzzy
+msgid "Auto-Rotation"
+msgstr "Автоповорот"
+
+#: functions/meta/models-meta.php:283
+#, fuzzy
+msgid "Background Color"
+msgstr "Цвет фона"
+
+#: functions/settings/models-new-settings.php:86
+#, fuzzy
+msgid "Best quality. 2–8 MB. Free studio HDRs: polyhaven.com"
+msgstr "Лучшее качество. 2-8 МБ. Бесплатные студийные HDR: polyhaven.com"
+
+#: functions/meta/models-meta.php:237 functions/meta/models-meta.php:248
+#, fuzzy
+msgid "Blue"
+msgstr "Синий"
+
+#: functions/meta/models-meta.php:246
+#, fuzzy
+msgid "Blue (fryreglet)"
+msgstr "Синий (fryreglet)"
+
+#: functions/meta/surfaces-meta.php:159
+#, fuzzy
+msgid "Bump Map"
+msgstr "Карта нормалей"
+
+#: functions/meta/models-meta.php:378
+#, fuzzy
+msgid "Cam X"
+msgstr "Камера X"
+
+#: functions/meta/models-meta.php:379
+#, fuzzy
+msgid "Cam Y"
+msgstr "Кам И"
+
+#: functions/meta/models-meta.php:380
+#, fuzzy
+msgid "Cam Z"
+msgstr "Кэм З"
+
+#: functions/meta/models-meta.php:366
+#: functions/settings/models-new-settings.php:102
+#, fuzzy
+msgid "Camera Position"
+msgstr "Положение камеры"
+
+#: functions/settings/models-new-settings.php:109
+#, fuzzy
+msgid "Camera X"
+msgstr "Камера X"
+
+#: functions/settings/models-new-settings.php:110
+#, fuzzy
+msgid "Camera Y"
+msgstr "Камера Y"
+
+#: functions/settings/models-new-settings.php:111
+#, fuzzy
+msgid "Camera Z"
+msgstr "Камера Z"
+
+#: functions/meta/models-meta.php:526
+#, fuzzy
+msgid ""
+"Checked meshes will receive the surface texture in the configurator. If none "
+"checked — all meshes receive it."
+msgstr ""
+"Отмеченные сетки получат текстуру поверхности в конфигураторе. Если ни одна "
+"не отмечена — все сетки ее получат."
+
+#: functions/meta/surfaces-meta.php:28
+#, fuzzy
+msgid "Chrome"
+msgstr "Хром"
+
+#: functions/settings/models-new-settings.php:253
+#, fuzzy
+msgid "Clear"
+msgstr "Очистить"
+
+#: functions/meta/models-meta.php:515
+#, fuzzy
+msgid "Click \"Load Model\" to detect meshes."
+msgstr "Нажмите «Загрузить модель», чтобы обнаружить сетки."
 
 #. Author of the theme
 #, fuzzy
 msgid "codeweber"
 msgstr "codeweber"
 
-#: functions/meta/surfaces-meta.php:64
+#: functions.php:209 functions/meta/models-meta.php:443
+#, fuzzy
+msgid "Color"
+msgstr "Цвет"
+
+#: functions/meta/surfaces-meta.php:251
 #, fuzzy
 msgid "Color Name"
 msgstr "Название цвета"
 
-#: functions/meta/surfaces-meta.php:67
+#: functions/meta/surfaces-meta.php:254
 #, fuzzy
 msgid "Color Photo"
 msgstr "Цветное фото"
 
-#: functions/meta/surfaces-meta.php:57
+#: single-models.php:376
+#, fuzzy
+msgid "Color:"
+msgstr "Цвет:"
+
+#: functions/meta/surfaces-meta.php:244
 #, fuzzy
 msgid "Colors"
 msgstr "Цвета"
+
+#: functions/settings/models-new-settings.php:55
+#, fuzzy
+msgid "Configurator Appearance"
+msgstr "Внешний вид конфигуратора"
+
+#: single-models.php:373
+#, fuzzy
+msgid "Configure Surface"
+msgstr "Настроить поверхность"
+
+#: single-models.php:358
+#, fuzzy
+msgid "Cube"
+msgstr "Куб"
+
+#: functions/settings/models-new-settings.php:126
+#, fuzzy
+msgid "Cube model (.glb)"
+msgstr "Кубическая модель (.glb)"
+
+#: functions/meta/models-meta.php:297 functions/meta/models-meta.php:329
+#, fuzzy
+msgid "Custom hex"
+msgstr "Пользовательский шестнадцатеричный код"
+
+#: functions/meta/models-meta.php:233 functions/meta/models-meta.php:260
+#, fuzzy
+msgid "Dark (hoger)"
+msgstr "Темный (высокий)"
+
+#: functions/meta/models-meta.php:234
+#, fuzzy
+msgid "Dark (theme)"
+msgstr "Темная (тема)"
+
+#: functions/meta/models-meta.php:408
+#: functions/settings/models-new-settings.php:119
+#, fuzzy
+msgid "Debug mode"
+msgstr "Режим отладки"
+
+#: functions/meta/models-meta.php:416
+#, fuzzy
+msgid "Default Surface Selection"
+msgstr "Выбор поверхности по умолчанию"
+
+#: functions/settings/models-new-settings.php:98
+#, fuzzy
+msgid "Default: 0.001. Radians per frame. Higher = faster."
+msgstr "По умолчанию: 0.001. Радианы за кадр. Больше = быстрее."
+
+#: functions/settings/models-new-settings.php:45
+#, fuzzy
+msgid "Default: 0.5. Higher = faster."
+msgstr "По умолчанию: 0.5. Больше = быстрее."
+
+#: functions/settings/models-new-settings.php:69
+#, fuzzy
+msgid "Default: 1.0. Applied via CSS filter on the canvas."
+msgstr "По умолчанию: 1.0. Применяется через CSS-фильтр к холсту."
+
+#: functions/settings/models-new-settings.php:76
+#, fuzzy
+msgid "Default: 1.0. Controls gloss/chrome reflection intensity."
+msgstr ""
+"По умолчанию: 1.0. Управляет интенсивностью глянцевого/хромированного "
+"отражения."
+
+#: functions/settings/models-new-settings.php:62
+#, fuzzy
+msgid "Default: 1.0. Lower = darker, higher = brighter."
+msgstr "По умолчанию: 1.0. Ниже = темнее, выше = ярче."
+
+#: functions/meta/models-meta.php:187
+#, fuzzy
+msgid "Description"
+msgstr "Описание"
 
 #: functions/meta/partners-meta.php:42
 #: functions/shortcodes/partners-shortcode.php:83
 #, fuzzy
 msgid "Director"
 msgstr "Директор"
+
+#: single-models.php:134
+#, fuzzy
+msgid "Download Catalog"
+msgstr "Скачать каталог"
+
+#: single-models.php:379
+#, fuzzy
+msgid "Download PDF"
+msgstr "Скачать PDF"
+
+#: functions/meta/models-meta.php:587
+#, fuzzy
+msgid "Drawing Description"
+msgstr "Описание рисунка"
+
+#: single-models.php:282
+#, fuzzy
+msgid "Drawing Notes:"
+msgstr "Заметки к чертежу:"
+
+#: functions/meta/models-meta.php:315
+#, fuzzy
+msgid "Edge Color"
+msgstr "Цвет кромки"
+
+#: functions/cpt/cpt-models.php:11
+#, fuzzy
+msgid "Edit 3D Model"
+msgstr "Редактировать 3D-модель"
 
 #: functions/cpt/partners.php:11
 #, fuzzy
@@ -82,11 +363,151 @@ msgstr "Редактировать поверхность"
 msgid "Email"
 msgstr "Электронная почта"
 
+#: functions/settings/models-new-settings.php:39
+#, fuzzy
+msgid "Enable auto-rotate by default"
+msgstr "Включить автоповорот по умолчанию"
+
+#: functions/settings/models-new-settings.php:52
+#, fuzzy
+msgid "Enable orbit (mouse drag)"
+msgstr "Включить орбиту (перетаскивание мышью)"
+
+#: functions/settings/models-new-settings.php:51
+#, fuzzy
+msgid "Enable zoom (mouse wheel / pinch)"
+msgstr "Включить зум (колесо мыши / щипок)"
+
+#: functions/meta/models-meta.php:205
+#, fuzzy
+msgid "Enter the WooCommerce product ID for the MKL configurator button."
+msgstr ""
+"Введите идентификатор продукта WooCommerce для кнопки конфигуратора MKL."
+
+#: functions/settings/models-new-settings.php:80
+#, fuzzy
+msgid "Environment Map (Reflections)"
+msgstr "Карта окружения (Отражения)"
+
+#: functions/settings/models-new-settings.php:88
+#, fuzzy
+msgid "Equirectangular image URL (.jpg / .png)"
+msgstr "URL эквидистантного изображения (.jpg / .png)"
+
+#: functions/settings/models-new-settings.php:57
+#, fuzzy
+msgid "Exposure (brightness)"
+msgstr "Экспозиция (яркость)"
+
 #: functions/meta/partners-meta.php:33
 #: functions/shortcodes/partners-shortcode.php:79
 #, fuzzy
 msgid "Factual Address"
 msgstr "Фактический адрес"
+
+#: functions/meta/models-meta.php:111
+#, fuzzy
+msgid "FBX / GLB / OBJ File"
+msgstr "Файл FBX / GLB / OBJ"
+
+#: functions/meta/surfaces-meta.php:54
+#, fuzzy
+msgid "Finish"
+msgstr "Завершить"
+
+#: functions/meta/models-meta.php:550
+#, fuzzy
+msgid "General View"
+msgstr "Общий вид"
+
+#: functions/meta/models-meta.php:553
+#, fuzzy
+msgid "General View Title"
+msgstr "Общий вид Заголовок"
+
+#: functions/settings/models-new-settings.php:128
+#, fuzzy
+msgid "GLB file of a simple cube used to preview surface textures."
+msgstr ""
+"Файл GLB простого куба, используемый для предварительного просмотра текстур "
+"поверхности."
+
+#: functions/settings/models-new-settings.php:132
+#, fuzzy
+msgid "GLB file of a smooth sphere used to preview surface textures."
+msgstr ""
+"Файл GLB гладкой сферы, используемый для предварительного просмотра текстур "
+"поверхности."
+
+#: functions/settings/models-new-settings.php:343
+#, fuzzy
+msgid ""
+"Global defaults for the fry-style 3D viewer used by the \"3D Models (New)\" "
+"post type."
+msgstr ""
+"Глобальные настройки по умолчанию для 3D-просмотрщика в стиле \"fry\", "
+"используемого типом записи \"3D-модели (новые)\"."
+
+#: functions/meta/surfaces-meta.php:27
+#, fuzzy
+msgid "Gloss"
+msgstr "Блеск"
+
+#: functions/meta/models-meta.php:239 functions/meta/models-meta.php:250
+#, fuzzy
+msgid "Grape"
+msgstr "Виноград"
+
+#: functions/meta/models-meta.php:224
+#, fuzzy
+msgid "Gray ($gray-200)"
+msgstr "Серый ($gray-200)"
+
+#: functions/meta/models-meta.php:227
+#, fuzzy
+msgid "Gray ($gray-400)"
+msgstr "Серый ($gray-400)"
+
+#: functions/meta/models-meta.php:228
+#, fuzzy
+msgid "Gray ($gray-500)"
+msgstr "Серый ($gray-500)"
+
+#: functions/meta/models-meta.php:229
+#, fuzzy
+msgid "Gray ($gray-600)"
+msgstr "Серый ($gray-600)"
+
+#: functions/meta/models-meta.php:230
+#, fuzzy
+msgid "Gray ($gray-700)"
+msgstr "Серый ($gray-700)"
+
+#: functions/meta/models-meta.php:231
+#, fuzzy
+msgid "Gray ($gray-800)"
+msgstr "Серый ($gray-800)"
+
+#: functions/meta/surfaces-meta.php:103
+#, fuzzy
+msgid "Grayscale: dark = reflective, bright = matte (roughnessMap)"
+msgstr "Оттенки серого: темный = отражающий, светлый = матовый (roughnessMap)"
+
+#: functions/meta/surfaces-meta.php:161
+#, fuzzy
+msgid "Grayscale: white = raised, black = depressed (bumpMap)"
+msgstr ""
+"Оттенки серого: белый = выпуклый, черный = вогнутый (карта неровностей)"
+
+#: functions/meta/models-meta.php:240 functions/meta/models-meta.php:257
+#, fuzzy
+msgid "Green"
+msgstr "Зеленый"
+
+#: functions/settings/models-new-settings.php:84
+#, fuzzy
+msgid "HDR environment URL (.hdr)"
+msgstr "URL среды HDR (.hdr)"
 
 #. Name of the theme
 #, fuzzy
@@ -104,15 +525,98 @@ msgstr "https://codeweber.com"
 msgid "INN"
 msgstr "ИНН"
 
-#: functions/meta/surfaces-meta.php:27
+#: functions/settings/models-new-settings.php:49
+#, fuzzy
+msgid "Interaction"
+msgstr "Взаимодействие"
+
+#: functions/meta/models-meta.php:226
+#, fuzzy
+msgid "Inverse ($gray-300)"
+msgstr "Инверсия ($gray-300)"
+
+#: functions/settings/models-new-settings.php:103
+#, fuzzy
+msgid ""
+"Leave all fields empty to use auto-fit. Enable Debug Mode on the frontend, "
+"position the camera, click Copy, then paste the result below."
+msgstr ""
+"Оставьте все поля пустыми, чтобы использовать автоматическую подгонку. "
+"Включите режим отладки на фронтенде, расположите камеру, нажмите Копировать, "
+"затем вставьте результат ниже."
+
+#: functions/meta/models-meta.php:369
+#, fuzzy
+msgid ""
+"Leave empty to use global settings. Enable Debug, copy from frontend, paste "
+"below."
+msgstr ""
+"Оставьте пустым, чтобы использовать глобальные настройки. Включите отладку, "
+"скопируйте из фронтенда, вставьте ниже."
+
+#: functions/meta/models-meta.php:223
+#, fuzzy
+msgid "Light ($gray-100)"
+msgstr "Светлый ($gray-100)"
+
+#: functions/meta/models-meta.php:225
+#, fuzzy
+msgid "Light Gray (default)"
+msgstr "Светло-серый (по умолчанию)"
+
+#: functions/settings/models-new-settings.php:90
+#, fuzzy
+msgid ""
+"Lighter alternative (200–500 KB). Any studio panorama in equirectangular "
+"format."
+msgstr ""
+"Облегченная версия (200-500 КБ). Любая студийная панорама в эквидистантной "
+"проекции."
+
+#: functions/meta/models-meta.php:508
+#, fuzzy
+msgid "Load Model &amp; Detect Meshes"
+msgstr "Загрузить модель и обнаружить сетки"
+
+#: functions/meta/surfaces-meta.php:214
 #, fuzzy
 msgid "Main Photo"
 msgstr "Основное фото"
+
+#: functions/meta/surfaces-meta.php:25
+#, fuzzy
+msgid "Matte"
+msgstr "Матовый"
+
+#: functions/meta/models-meta.php:31
+#, fuzzy
+msgid "Mesh Colors"
+msgstr "Цвета сетки"
 
 #: functions/meta/partners-meta.php:77
 #, fuzzy
 msgid "Name"
 msgstr "Имя"
+
+#: functions/meta/models-meta.php:259
+#, fuzzy
+msgid "Navy"
+msgstr "Темно-синий"
+
+#: functions/meta/models-meta.php:232
+#, fuzzy
+msgid "Navy ($gray-900)"
+msgstr "Темно-синий ($gray-900)"
+
+#: functions/meta/models-meta.php:235 functions/meta/models-meta.php:261
+#, fuzzy
+msgid "Navy (theme)"
+msgstr "Морской (тема)"
+
+#: functions/cpt/cpt-models.php:12
+#, fuzzy
+msgid "New 3D Model"
+msgstr "Новая 3D-модель"
 
 #: functions/cpt/partners.php:12
 #, fuzzy
@@ -123,6 +627,16 @@ msgstr "Новый партнер"
 #, fuzzy
 msgid "New Surface"
 msgstr "Новая поверхность"
+
+#: functions/cpt/cpt-models.php:15
+#, fuzzy
+msgid "No 3D models found"
+msgstr "3D модели не найдены"
+
+#: functions/cpt/cpt-models.php:16
+#, fuzzy
+msgid "No 3D models found in trash"
+msgstr "3D-модели в корзине не найдены"
 
 #: functions/cpt/partners.php:15
 #, fuzzy
@@ -149,6 +663,26 @@ msgstr "Поверхности не найдены"
 msgid "No surfaces found in trash"
 msgstr "Поверхности в корзине не найдены"
 
+#: functions/meta/models-meta.php:255
+#, fuzzy
+msgid "Orange"
+msgstr "Оранжевый"
+
+#: single-models.php:354
+#, fuzzy
+msgid "Original model"
+msgstr "Оригинальная модель"
+
+#: functions/meta/models-meta.php:177
+#, fuzzy
+msgid "Parameter"
+msgstr "Параметр"
+
+#: functions/meta/models-meta.php:168
+#, fuzzy
+msgid "Parameters List"
+msgstr "Список параметров"
+
 #: functions/cpt/partners.php:8
 #, fuzzy
 msgid "Partner"
@@ -164,6 +698,12 @@ msgstr "Сведения о партнере"
 msgid "Partners"
 msgstr "Партнеры"
 
+#: functions/meta/models-meta.php:371
+#: functions/settings/models-new-settings.php:104
+#, fuzzy
+msgid "Paste config here…"
+msgstr "Вставьте конфигурацию сюда…"
+
 #: functions/meta/partners-meta.php:67
 #: functions/shortcodes/partners-shortcode.php:98
 #, fuzzy
@@ -175,16 +715,103 @@ msgstr "Телефон"
 msgid "Phones"
 msgstr "Телефоны"
 
+#: functions/meta/models-meta.php:253
+#, fuzzy
+msgid "Pink"
+msgstr "Розовый"
+
 #: functions/meta/partners-meta.php:72
 #, fuzzy
 msgid "Position"
 msgstr "Позиция"
 
-#: functions/meta/partners-meta.php:79 functions/meta/surfaces-meta.php:41
-#: functions/meta/surfaces-meta.php:100
+#: functions/meta/models-meta.php:17
+#, fuzzy
+msgid "Product Information"
+msgstr "Информация о товаре"
+
+#: functions/meta/models-meta.php:251
+#, fuzzy
+msgid "Purple"
+msgstr "Фиолетовый"
+
+#: functions/meta/models-meta.php:242 functions/meta/models-meta.php:254
+#, fuzzy
+msgid "Red"
+msgstr "Красный"
+
+#: functions/meta/surfaces-meta.php:101
+#, fuzzy
+msgid "Reflection Mask"
+msgstr "Маска отражения"
+
+#: functions/settings/models-new-settings.php:71
+#, fuzzy
+msgid "Reflection strength (envMapIntensity)"
+msgstr "Сила отражения (envMapIntensity)"
+
+#: functions/meta/models-meta.php:87 functions/meta/models-meta.php:94
+#: functions/meta/models-meta.php:134 functions/meta/models-meta.php:178
+#: functions/meta/partners-meta.php:79 functions/meta/surfaces-meta.php:120
+#: functions/meta/surfaces-meta.php:178 functions/meta/surfaces-meta.php:228
+#: functions/meta/surfaces-meta.php:288
 #, fuzzy
 msgid "Remove"
 msgstr "Удалить"
+
+#: functions/meta/surfaces-meta.php:76 functions/meta/surfaces-meta.php:137
+#: functions/meta/surfaces-meta.php:189
+#, fuzzy
+msgid "Repeat X"
+msgstr "Повторить X"
+
+#: functions/meta/surfaces-meta.php:81 functions/meta/surfaces-meta.php:143
+#: functions/meta/surfaces-meta.php:195
+#, fuzzy
+msgid "Repeat Y"
+msgstr "Повторить Y"
+
+#: functions/settings/models-new-settings.php:92
+#, fuzzy
+msgid "Rotate environment map"
+msgstr "Повернуть карту окружения"
+
+#: functions/settings/models-new-settings.php:40
+#: functions/settings/models-new-settings.php:93
+#, fuzzy
+msgid "Rotation speed"
+msgstr "Скорость вращения"
+
+#: functions/meta/surfaces-meta.php:86 functions/meta/surfaces-meta.php:149
+#: functions/meta/surfaces-meta.php:201
+#, fuzzy
+msgid "Rotation °"
+msgstr "Поворот °"
+
+#: functions/meta/surfaces-meta.php:131
+#, fuzzy
+msgid "Roughness Depth"
+msgstr "Глубина шероховатости"
+
+#: functions/meta/surfaces-meta.php:26
+#, fuzzy
+msgid "Satin"
+msgstr "Атлас"
+
+#: functions/settings/models-new-settings.php:64
+#, fuzzy
+msgid "Saturation"
+msgstr "Насыщенность"
+
+#: functions/meta/surfaces-meta.php:183
+#, fuzzy
+msgid "Scale"
+msgstr "Масштаб"
+
+#: functions/cpt/cpt-models.php:14
+#, fuzzy
+msgid "Search 3D Models"
+msgstr "Поиск 3D-моделей"
 
 #: functions/cpt/partners.php:14
 #, fuzzy
@@ -196,7 +823,27 @@ msgstr "Партнеры по поиску"
 msgid "Search Surfaces"
 msgstr "Поиск по поверхностям"
 
-#: functions/meta/surfaces-meta.php:95 functions/meta/surfaces-meta.php:144
+#: functions/meta/models-meta.php:561
+#, fuzzy
+msgid "Section A-A"
+msgstr "Секция А-А"
+
+#: functions/meta/models-meta.php:564
+#, fuzzy
+msgid "Section A-A Title"
+msgstr "Раздел А-А Заголовок"
+
+#: functions/meta/models-meta.php:574
+#, fuzzy
+msgid "Section B-B"
+msgstr "Секция Б-Б"
+
+#: functions/meta/models-meta.php:577
+#, fuzzy
+msgid "Section B-B Title"
+msgstr "Раздел Б-Б Заголовок"
+
+#: functions/meta/surfaces-meta.php:283 functions/meta/surfaces-meta.php:341
 #, fuzzy
 msgid "Select"
 msgstr "Выбрать"
@@ -206,31 +853,166 @@ msgstr "Выбрать"
 msgid "Select a surface in the block settings."
 msgstr "Выберите поверхность в настройках блока."
 
-#: functions/meta/surfaces-meta.php:37 functions/meta/surfaces-meta.php:163
-#: functions/meta/surfaces-meta.php:183
+#: functions/meta/models-meta.php:59 functions/meta/models-meta.php:128
+#: functions/settings/models-new-settings.php:249
+#, fuzzy
+msgid "Select File"
+msgstr "Выбрать файл"
+
+#: functions/meta/models-meta.php:58 functions/meta/surfaces-meta.php:116
+#: functions/meta/surfaces-meta.php:174 functions/meta/surfaces-meta.php:224
+#: functions/meta/surfaces-meta.php:363 functions/meta/surfaces-meta.php:387
 #, fuzzy
 msgid "Select Image"
 msgstr "Выбрать изображение"
 
-#: functions/cpt/surfaces.php:8
+#: functions/settings/models-new-settings.php:122
+#, fuzzy
+msgid "Shape Preview Models"
+msgstr "Предварительный просмотр моделей форм"
+
+#: functions/settings/models-new-settings.php:34
+#, fuzzy
+msgid "Show Edges toggle button (FBX / GLB only)"
+msgstr "Кнопка переключения \"Показать ребра\" (только для FBX / GLB)"
+
+#: functions/settings/models-new-settings.php:33
+#, fuzzy
+msgid "Show Play / Pause button"
+msgstr "Показать кнопку Воспроизведение / Пауза"
+
+#: functions/meta/models-meta.php:238 functions/meta/models-meta.php:249
+#, fuzzy
+msgid "Sky"
+msgstr "Небо"
+
+#: functions/meta/models-meta.php:309 functions/meta/models-meta.php:341
+#, fuzzy
+msgid "Soft (lighten 70%)"
+msgstr "Мягкий (осветлить 70%)"
+
+#: single-models.php:363
+#, fuzzy
+msgid "Sphere"
+msgstr "Сфера"
+
+#: functions/settings/models-new-settings.php:130
+#, fuzzy
+msgid "Sphere model (.glb)"
+msgstr "Сферическая модель (.glb)"
+
+#: functions/meta/surfaces-meta.php:125
+#, fuzzy
+msgid "Strength"
+msgstr "Сила"
+
+#: functions/meta/models-meta.php:158
+#, fuzzy
+msgid "Subtitle"
+msgstr "Подзаголовок"
+
+#: functions/cpt/surfaces.php:8 functions/meta/models-meta.php:430
 #, fuzzy
 msgid "Surface"
 msgstr "Поверхность"
+
+#: functions/meta/models-meta.php:419
+#, fuzzy
+msgid "Surface and color applied automatically on page load."
+msgstr "Поверхность и цвет применяются автоматически при загрузке страницы."
 
 #: functions/meta/surfaces-meta.php:7
 #, fuzzy
 msgid "Surface Fields"
 msgstr "Поверхностные поля"
 
-#: functions/meta/surfaces-meta.php:49
+#: functions/meta/surfaces-meta.php:236
 #, fuzzy
 msgid "Surface Type Description"
 msgstr "Описание типа поверхности"
+
+#: single-models.php:374
+#, fuzzy
+msgid "Surface type:"
+msgstr "Тип поверхности:"
 
 #: functions/cpt/surfaces.php:7 functions/cpt/surfaces.php:17
 #, fuzzy
 msgid "Surfaces"
 msgstr "Поверхности"
+
+#: functions/meta/models-meta.php:381
+#: functions/settings/models-new-settings.php:112
+#, fuzzy
+msgid "Target X"
+msgstr "Цель X"
+
+#: functions/meta/models-meta.php:382
+#: functions/settings/models-new-settings.php:113
+#, fuzzy
+msgid "Target Y"
+msgstr "Цель Y"
+
+#: functions/meta/models-meta.php:383
+#: functions/settings/models-new-settings.php:114
+#, fuzzy
+msgid "Target Z"
+msgstr "Цель Z"
+
+#: functions/meta/models-meta.php:236 functions/meta/models-meta.php:247
+#, fuzzy
+msgid "Taupe — Primary"
+msgstr "Серо-коричневый - Основной"
+
+#: functions/meta/models-meta.php:193
+#, fuzzy
+msgid "Technical Catalog (PDF)"
+msgstr "Технический каталог (PDF)"
+
+#: functions/meta/models-meta.php:38
+#, fuzzy
+msgid "Technical Drawings"
+msgstr "Технические чертежи"
+
+#: functions/settings/models-new-settings.php:81
+#, fuzzy
+msgid ""
+"Upload a studio panorama to improve reflections. HDR takes priority over "
+"JPEG/PNG if both are set. Leave empty to use the built-in procedural "
+"environment."
+msgstr ""
+"Загрузите студийную панораму для улучшения отражений. HDR имеет приоритет "
+"над JPEG/PNG, если оба установлены. Оставьте пустым, чтобы использовать "
+"встроенную процедурную среду."
+
+#: functions/settings/models-new-settings.php:123
+#, fuzzy
+msgid ""
+"Upload GLB models for the Cube and Sphere switcher buttons shown in the "
+"configurator viewport. Leave empty to hide the button."
+msgstr ""
+"Загрузите GLB-модели для кнопок переключения Куба и Сферы, отображаемых в "
+"окне конфигуратора. Оставьте пустым, чтобы скрыть кнопку."
+
+#: functions/meta/surfaces-meta.php:72
+#, fuzzy
+msgid "Use model UV (ignore repeat & rotation)"
+msgstr "Использовать модель УФ (игнорировать повтор и вращение)"
+
+#: functions/meta/models-meta.php:274
+#, fuzzy
+msgid "Use original FBX / GLB colors"
+msgstr "Использовать оригинальные цвета FBX / GLB"
+
+#: functions/meta/surfaces-meta.php:67
+#, fuzzy
+msgid "UV Mapping"
+msgstr "UV-развертка"
+
+#: functions/cpt/cpt-models.php:13
+#, fuzzy
+msgid "View 3D Model"
+msgstr "Просмотр 3D-модели"
 
 #: functions/cpt/partners.php:13
 #, fuzzy
@@ -242,8 +1024,53 @@ msgstr "Посмотреть партнера"
 msgid "View Surface"
 msgstr "Посмотреть поверхность"
 
+#: functions/settings/models-new-settings.php:31
+#, fuzzy
+msgid "Viewer Controls"
+msgstr "Элементы управления просмотром"
+
+#: functions/meta/models-meta.php:24
+#: functions/settings/models-new-settings.php:10
+#, fuzzy
+msgid "Viewer Settings"
+msgstr "Настройки просмотра"
+
+#: functions/meta/models-meta.php:252
+#, fuzzy
+msgid "Violet"
+msgstr "Фиолетовый"
+
 #: functions/meta/partners-meta.php:97
 #: functions/shortcodes/partners-shortcode.php:113
 #, fuzzy
 msgid "Website"
 msgstr "Сайт"
+
+#: functions/meta/models-meta.php:277
+#, fuzzy
+msgid ""
+"When enabled, the model keeps its original material colors. Background and "
+"Edge color settings below are ignored."
+msgstr ""
+"При включении модель сохраняет свои исходные цвета материала. Настройки "
+"цвета фона и краев ниже игнорируются."
+
+#: functions/meta/models-meta.php:222 functions/meta/models-meta.php:262
+#, fuzzy
+msgid "White"
+msgstr "Белый"
+
+#: functions/meta/models-meta.php:197
+#, fuzzy
+msgid "WooCommerce Product ID (Configurator)"
+msgstr "ID товара WooCommerce (Конфигуратор)"
+
+#: functions/meta/models-meta.php:241 functions/meta/models-meta.php:256
+#, fuzzy
+msgid "Yellow"
+msgstr "Желтый"
+
+#: functions/meta/models-meta.php:433
+#, fuzzy
+msgid "— None —"
+msgstr "- Нет -"
