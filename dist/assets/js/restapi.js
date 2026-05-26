@@ -990,6 +990,18 @@ document.addEventListener("DOMContentLoaded", () => {
       newForm.classList.remove("was-validated");
 
       const formData = new FormData(newForm);
+
+      // Set readable form name from modal title for UIS tracking
+      const docTitle = (modalContent.querySelector('.modal-title') || {}).textContent || '';
+      newForm.dataset.formName = 'Document Email' + (docTitle.trim() ? ': ' + docTitle.trim() : '');
+
+      // Dispatch codeweberFormSubmitting so UIS/analytics integrations can capture this
+      const docFormId = 'doc-email-' + Date.now();
+      document.dispatchEvent(new CustomEvent('codeweberFormSubmitting', {
+        bubbles: true,
+        detail: { formId: docFormId, form: newForm, formData: formData }
+      }));
+
       const submitButton = newForm.querySelector('button[type="submit"]');
       const originalButtonHTML = submitButton ? submitButton.innerHTML : '';
       const originalButtonDisabled = submitButton ? submitButton.disabled : false;
@@ -1064,6 +1076,12 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(function(data) {
         
         if (data.success) {
+          // Dispatch codeweberFormSubmitted so UIS/analytics integrations can capture this
+          document.dispatchEvent(new CustomEvent('codeweberFormSubmitted', {
+            bubbles: true,
+            detail: { formId: docFormId, form: newForm, apiResponse: data }
+          }));
+
           // Получаем шаблон успешной отправки через REST API
           const successText = typeof codeweberDocumentEmail !== 'undefined' ? codeweberDocumentEmail.successText : 'Document sent successfully!';
           const message = data.message || successText;
