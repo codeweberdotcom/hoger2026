@@ -1,5 +1,10 @@
 <?php
 
+// Keep REST API enabled but use classic editor — meta boxes rely on wp.media (classic frame).
+add_filter( 'use_block_editor_for_post_type', function( $use, $post_type ) {
+	return $post_type === 'models' ? false : $use;
+}, 10, 2 );
+
 add_action( 'init', 'hoger_register_cpt_models' );
 function hoger_register_cpt_models() {
 	register_post_type( 'models', [
