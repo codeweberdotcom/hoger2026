@@ -20,6 +20,7 @@ $headings-color: null;      // null → CSS cascade; позволяет text-inv
 
 // Глобальное скругление — умеренное (pill только для кнопок и инпутов)
 $border-radius: 0.25rem;    // 4px (было: 0.4rem)
+$border-color:  #a4aec661;  // полупрозрачный (было: #a4aec6)
 
 // ── Типографика ──
 $path-to-fonts:          '';       // отключить Google Fonts Manrope (дефолт из parent)
