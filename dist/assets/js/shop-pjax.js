@@ -442,6 +442,12 @@
 			delete el.dataset.cwLimitInit;
 		} );
 		initFilterLimits();
+
+		// Swiper-слайдеры из подменённого HTML (напр. блок подкатегорий в режиме Slider).
+		// theme.swiperSlider() пропускает уже инициализированные инстансы.
+		if ( window.theme && typeof window.theme.swiperSlider === 'function' ) {
+			window.theme.swiperSlider();
+		}
 	} );
 
 } )();
