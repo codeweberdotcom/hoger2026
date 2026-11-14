@@ -436,6 +436,46 @@
 		} );
 	}
 
+	/**
+	 * Overlay: добавить span.bg внутрь .overlay > a / .overlay > span.
+	 * Аналог theme.imageHoverOverlay(), но в пределах контейнера и без дублей.
+	 * @param {HTMLElement} root
+	 */
+	function initOverlayBg( root ) {
+		root.querySelectorAll( '.overlay > a, .overlay > span' ).forEach( function ( el ) {
+			if ( el.querySelector( ':scope > span.bg' ) ) {
+				return;
+			}
+			const bg = document.createElement( 'span' );
+			bg.className = 'bg';
+			el.appendChild( bg );
+		} );
+	}
+
+	/**
+	 * Bootstrap-тултипы в контейнере (те же опции, что в theme.bsTooltips()).
+	 * Элементы, у которых тултип уже создан, пропускаются.
+	 * @param {HTMLElement} root
+	 */
+	function initTooltips( root ) {
+		if ( ! window.bootstrap || ! window.bootstrap.Tooltip ) {
+			return;
+		}
+		const Tooltip = window.bootstrap.Tooltip;
+
+		root.querySelectorAll( '[data-bs-toggle="tooltip"]' ).forEach( function ( el ) {
+			if ( ! Tooltip.getInstance( el ) ) {
+				new Tooltip( el, { trigger: 'hover' } );
+			}
+		} );
+
+		root.querySelectorAll( '[data-bs-toggle="white-tooltip"]' ).forEach( function ( el ) {
+			if ( ! Tooltip.getInstance( el ) ) {
+				new Tooltip( el, { customClass: 'white-tooltip', trigger: 'hover', placement: 'left' } );
+			}
+		} );
+	}
+
 	document.addEventListener( 'cw:pjax:complete', function () {
 		// Reset init flags so limits are re-applied to fresh DOM
 		document.querySelectorAll( '.cw-filter-limit[data-cw-limit-init]' ).forEach( function ( el ) {
@@ -447,6 +487,15 @@
 		// theme.swiperSlider() пропускает уже инициализированные инстансы.
 		if ( window.theme && typeof window.theme.swiperSlider === 'function' ) {
 			window.theme.swiperSlider();
+		}
+
+		// Остальные инициализации theme.js выполняются один раз при загрузке страницы,
+		// поэтому для подменённого HTML повторяем их здесь — только внутри контейнера
+		// и идемпотентно (не зависим от версии theme.js: у child-тем он может быть старее).
+		const container = getContainer();
+		if ( container ) {
+			initOverlayBg( container );
+			initTooltips( container );
 		}
 	} );
 
