@@ -23,6 +23,16 @@
 			} );
 		},
 
+		// Bootstrap tooltips are appended to <body>. If the trigger leaves the DOM while its tooltip is
+		// shown, mouseleave never fires and the tooltip hangs forever, so dispose them explicitly.
+		disposeTooltips: function ( root ) {
+			if ( typeof bootstrap === 'undefined' || typeof bootstrap.Tooltip === 'undefined' ) return;
+			root.querySelectorAll( '[data-bs-toggle="white-tooltip"], [data-bs-toggle="tooltip"]' ).forEach( function ( el ) {
+				var instance = bootstrap.Tooltip.getInstance( el );
+				if ( instance ) instance.dispose();
+			} );
+		},
+
 		bindEvents: function () {
 			document.addEventListener( 'click', function ( e ) {
 				var btn = e.target.closest( '.cw-wishlist-btn' );
@@ -192,6 +202,7 @@
 		removeCard: function ( productId ) {
 			var card = document.querySelector( '.cw-wishlist-card[data-product-id="' + productId + '"]' );
 			if ( card ) {
+				CWWishlist.disposeTooltips( card );
 				card.style.transition = 'opacity .2s';
 				card.style.opacity    = '0';
 				setTimeout( function () {
