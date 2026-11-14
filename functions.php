@@ -329,3 +329,13 @@ function hoger_allow_3d_filetype( $data, $file, $filename, $mimes ) {
 	}
 	return $data;
 }
+
+/**
+ * Rank Math: sitemap index at /sitemap.xml instead of /sitemap_index.xml.
+ *
+ * After deploying, re-save permalinks (Settings → Permalinks) to flush rewrite rules.
+ */
+add_filter( 'rank_math/sitemap/index/slug', 'hoger_rank_math_sitemap_index_slug' );
+function hoger_rank_math_sitemap_index_slug(): string {
+	return 'sitemap';
+}
