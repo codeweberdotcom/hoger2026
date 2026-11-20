@@ -554,11 +554,6 @@ msgstr ""
 "Оставьте пустым, чтобы использовать глобальные настройки. Включите отладку, "
 "скопируйте из фронтенда, вставьте ниже."
 
-#: functions/woocommerce/product-length.php:110
-#, php-format
-msgid "Length: %s mm"
-msgstr "Длина: %s мм"
-
 #: functions/meta/models-meta.php:223
 #, fuzzy
 msgid "Light ($gray-100)"

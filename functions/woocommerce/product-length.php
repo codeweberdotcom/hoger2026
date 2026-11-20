@@ -1,17 +1,15 @@
 <?php
 /**
- * Product length line on single product pages ("Length: 3000 mm").
+ * Bar length (mm) of plinths and profiles for the "Hoger EPO Summary" plugin
+ * (row "Длина изделия" of the selection summary: "Длина 3000 мм").
  *
- * Plinths and profiles are sold as bars. The bar length (mm) is stored in the
- * ACF field `mod_len`; the same value feeds the EPO price / weight formulas
- * through the [acf_field] shortcode, so the length shown here always matches
- * what the calculator uses.
+ * The length is stored in the ACF field `mod_len`; the same value feeds the EPO
+ * price / weight formulas through the [acf_field] shortcode, so the length shown
+ * always matches what the calculator uses.
  *
- * ACF saves `mod_len` (default 3000) on EVERY product, so the line is limited
- * to the plinth / profile categories (and their sub-categories).
- *
- * The same value is handed to the "Hoger EPO Summary" plugin (row "Длина изделия"
- * of the selection summary) through the hoger_epo_summary_length filter.
+ * ACF saves `mod_len` (default 3000) on EVERY product, so the length is given
+ * only for the plinth / profile categories (and their sub-categories). The
+ * plugin asks for it through the hoger_epo_summary_length filter.
  *
  * Filters:
  * - hoger_product_length_categories (array)  product_cat slugs that show the length.
@@ -90,30 +88,6 @@ function hoger_get_product_length_mm( $product_id ): int {
 
 	return max( 0, $mm );
 }
-
-/**
- * Print the length line right before the add-to-cart form.
- *
- * Runs on the single product page and in the quick view.
- */
-function hoger_render_product_length(): void {
-	global $product;
-
-	if ( ! $product instanceof WC_Product ) {
-		return;
-	}
-
-	$mm = hoger_get_product_length_mm( $product->get_id() );
-	if ( $mm <= 0 ) {
-		return;
-	}
-
-	printf(
-		'<p class="hoger-product-length mb-3">%s</p>',
-		esc_html( sprintf( __( 'Length: %s mm', 'hoger' ), $mm ) )
-	);
-}
-add_action( 'woocommerce_before_add_to_cart_form', 'hoger_render_product_length', 5 );
 
 /**
  * Give the length (mm) to the selection summary of the Hoger EPO Summary plugin.
