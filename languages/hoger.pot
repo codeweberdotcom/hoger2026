@@ -437,6 +437,11 @@ msgid ""
 "below."
 msgstr ""
 
+#: functions/woocommerce/product-length.php:110
+#, php-format
+msgid "Length: %s mm"
+msgstr ""
+
 #: functions/meta/models-meta.php:223
 msgid "Light ($gray-100)"
 msgstr ""

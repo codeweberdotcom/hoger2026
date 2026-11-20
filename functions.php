@@ -15,6 +15,7 @@ require_once get_stylesheet_directory() . '/functions/meta/models-meta.php';
 require_once get_stylesheet_directory() . '/functions/blocks/surfaces-block/render.php';
 require_once get_stylesheet_directory() . '/functions/shortcodes/partners-shortcode.php';
 require_once get_stylesheet_directory() . '/functions/integrations/uis-forms.php';
+require_once get_stylesheet_directory() . '/functions/woocommerce/product-length.php';
 
 add_action( 'after_setup_theme', 'hoger_register_image_sizes' );
 function hoger_register_image_sizes(): void {
