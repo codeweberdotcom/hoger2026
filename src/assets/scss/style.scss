@@ -47,3 +47,8 @@ Uses Inter font via _user-variables.scss
   right: -700px;
   bottom: 90px;
 }
+
+// Extra Product Options: no margin around the divider lines inside form cells
+.tm-extra-product-options .tc-cell hr {
+  margin: 0;
+}

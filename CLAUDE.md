@@ -68,6 +68,7 @@ Gulp автоматически определяет активную child те
 | Задача | Файл |
 |--------|------|
 | 3D конфигуратор (Three.js, surfaces, shapes, camera) | `doc_claude/integrations/THREEJS_CONFIGURATOR.md` |
+| Шаблоны страницы товара (выбор в товаре, `description-under-image`) | `doc_claude/integrations/PRODUCT_TEMPLATES.md` |
 
 ---
 

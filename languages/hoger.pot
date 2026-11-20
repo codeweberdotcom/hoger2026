@@ -437,6 +437,10 @@ msgid ""
 "below."
 msgstr ""
 
+#: functions/woocommerce/product-templates.php:25
+msgid "Description under the image"
+msgstr ""
+
 #: functions/meta/models-meta.php:223
 msgid "Light ($gray-100)"
 msgstr ""

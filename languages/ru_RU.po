@@ -554,6 +554,10 @@ msgstr ""
 "Оставьте пустым, чтобы использовать глобальные настройки. Включите отладку, "
 "скопируйте из фронтенда, вставьте ниже."
 
+#: functions/woocommerce/product-templates.php:25
+msgid "Description under the image"
+msgstr "Описание под изображением"
+
 #: functions/meta/models-meta.php:223
 #, fuzzy
 msgid "Light ($gray-100)"
