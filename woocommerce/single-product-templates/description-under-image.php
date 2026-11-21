@@ -4,7 +4,7 @@
  *
  * Copy of woocommerce/single-product.php with one change: the short description
  * (excerpt) is not shown under the title in the right column, but in the left
- * column under the gallery, in a "card card-body text-dark" block.
+ * column under the gallery, in a "card card-body bg-transparent border border-primary text-white" block.
  *
  * Chosen per product in the "Product template" box (meta _cw_product_template),
  * see functions/woocommerce/product-template.php.
@@ -286,7 +286,7 @@ while ( have_posts() ) :
 
 					<?php // Short description under the gallery (was under the title in the right column). ?>
 					<?php if ( $show_excerpt && '' !== trim( (string) $product->get_short_description() ) ) : ?>
-					<div class="card card-body text-dark mt-5">
+					<div class="card card-body bg-transparent border border-primary text-white mt-5">
 						<?php // Printed here (not via woocommerce_template_single_excerpt) to drop its mb-6; mb-n4 cancels the last paragraph margin. ?>
 						<div class="woocommerce-product-details__short-description mb-n4">
 							<?php echo apply_filters( 'woocommerce_short_description', $product->get_short_description() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
